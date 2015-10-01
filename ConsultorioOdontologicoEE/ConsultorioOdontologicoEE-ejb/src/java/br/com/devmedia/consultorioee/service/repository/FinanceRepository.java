@@ -37,16 +37,35 @@ public class FinanceRepository extends BasicRepository{
         removeEntity(par);
     }
     
-    public List<Parcela> getParcelas(int idOfOrcamento) {
+    public List<Parcela> getParcelasOfOrcamento(int idOfOrcamento) {
         return getPureList(Parcela.class,"select par from Parcela par where par.parOrcamento.orcId = ?1",idOfOrcamento);
     }
     
-    public List<Parcela> getParcelasEmAberto(int idOfOrcamento) {
+    public List<Parcela> getParcelasOfOrcamentoEmAberto(int idOfOrcamento) {
         return getPureList(Parcela.class,"select par from Parcela par where par.parOrcamento.orcId = ?1 and par.parPago = ?2",idOfOrcamento,Boolean.FALSE);
     }
     
-    public List<Parcela> getParcelasPagas(int idOfOrcamento) {
+    public List<Parcela> getParcelasOfOrcamentoPagas(int idOfOrcamento) {
         return getPureList(Parcela.class,"select par from Parcela par where par.parOrcamento.orcId = ?1 and par.parPago = ?2",idOfOrcamento,Boolean.TRUE);
+    }
+    
+    public List<Parcela> getParcelasOfCustomer(int idOfCustomer) {
+        return getPureList(Parcela.class, "select par from Parcela par where par.parOrcamento.orcCustomer.cusId = ?1", idOfCustomer);
+    }
+    
+    public List<Parcela> getParcelasOfCustomerEmAberto(int idOfCustomer) {
+        return getPureList(Parcela.class,"select par from Parcela par where par.parOrcamento.orcCustomer.cusId = ?1 and par.parPago = ?2", idOfCustomer,Boolean.FALSE);
+    }
+    
+    public List<Parcela> getParcelasOfCustomerPagas(int idOfCustomer) {
+        return getPureList(Parcela.class,"select par from Parcela par where par.parOrcamento.orcCustomer.cusId = ?1 and par.parPago = ?2", idOfCustomer,Boolean.TRUE);
+    }
+    
+    public Parcela setPagamentoParcela(int idOfParcela) {
+        Parcela par = getParcela(idOfParcela);
+        par.setParPago(true);
+        par = setParcela(par);
+        return par;
     }
     
     
