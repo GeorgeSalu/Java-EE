@@ -6,6 +6,8 @@
 package br.com.devmedia.consultorioee.service.repository;
 
 import br.com.devmedia.consultorioee.entities.Users;
+import java.security.MessageDigest;
+import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
@@ -20,6 +22,55 @@ public class UserRepository extends BasicRepository{
     
     public Users getUser(int id){
         return getEntityManager().find(Users.class, id);
+    }
+    
+    public Users setUser(Users usr){
+        return setEntity(Users.class, usr);
+    }
+    
+    public void removeUser(Users usr){
+        removeEntity(usr);
+    }
+    
+    public Users getUserByLoginPassword(String login,String password){
+        return getPurePojo(Users.class,"select user from Users user where usr.usuLogin = ?1 and usr.usuPassword = ?2", login, getMd5( password));
+    }
+    
+    public List<Users> getUsers(){
+        return getPureList(Users.class, "select usr from Users usr");
+    }
+    
+    public List<Users> getUsersByName(String name){
+        return getPureList(Users.class,"select usr from Users usr where usr.usuName like ?1",name+"%");
+    }
+    
+    public void setPassword(String newPassword,int idOfUser){
+        String np = getMd5(newPassword);
+        Users usr = getUser(idOfUser);
+        usr.setUsuPassword(np);
+        setUser(usr);
+    }
+    
+    public Users addUser(Users usr){
+        usr.setUsuPassword(getMd5(usr.getUsuPassword()));
+        addEntity(Users.class, usr);
+        return usr;
+    }
+    
+    private String getMd5(String message) {
+        String digest = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] hash = md.digest(message.getBytes("UTF-8"));
+            StringBuilder sb = new StringBuilder(2 * hash.length);
+            for (byte b : hash) {
+                sb.append(String.format("%02x", b & 0xff));
+            }
+            digest = sb.toString();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return digest;
     }
     
 }

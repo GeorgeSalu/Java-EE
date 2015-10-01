@@ -5,6 +5,7 @@
  */
 package br.com.devmedia.consultorioee.service.repository;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -23,6 +24,25 @@ public abstract class BasicRepository {
     
     protected EntityManager getEntityManager(){
         return entityManager;
+    }
+    
+    protected <T> T addEntity(Class<T> classToCast,Object entity){
+        getEntityManager().persist(entity);
+        return (T) entity;
+    }
+    
+    protected <T> T getEntity(Class<T> classToCast,Serializable pk){
+        return getEntityManager().find(classToCast, pk);
+    }
+    
+    protected <T> T setEntity(Class<T> classToCast, Object entity){
+        Object updateObj = getEntityManager().merge(entity);
+        return (T) updateObj;
+    }
+    
+    protected void removeEntity(Object entity){
+        Object updateObj = getEntityManager().merge(entity);
+        getEntityManager().remove(updateObj);
     }
     
     protected <T> List<T> getPureList (Class<T> classToCast,String query,Object... values){
