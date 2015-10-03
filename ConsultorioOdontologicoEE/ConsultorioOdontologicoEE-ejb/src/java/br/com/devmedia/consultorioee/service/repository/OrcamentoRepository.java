@@ -14,11 +14,11 @@ import javax.persistence.EntityManager;
  *
  * @author George
  */
-public class OracamentoRepository extends BasicRepository{
+public class OrcamentoRepository extends BasicRepository{
 
     private static final long serialVersionUID = 1L;
 
-    public OracamentoRepository(EntityManager entityManager) {
+    public OrcamentoRepository(EntityManager entityManager) {
         super(entityManager);
     }
     

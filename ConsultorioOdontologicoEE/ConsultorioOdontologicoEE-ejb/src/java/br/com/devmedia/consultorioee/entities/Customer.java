@@ -7,6 +7,7 @@ package br.com.devmedia.consultorioee.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -35,9 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
 public class Customer implements Serializable {
-    private static final long serialVersionUID = 1L;
+     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "cus_id", nullable = false)
     private Integer cusId;
@@ -111,9 +112,9 @@ public class Customer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date cusBorndate;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orcCustomer")
-    private List<Orcamento> orcamentoList;
+    private List<Orcamento> orcamentoList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansCustomer")
-    private List<Anaminese> anamineseList;
+    private List<Anaminese> anamineseList = new LinkedList<>();;
 
     public Customer() {
     }
@@ -122,6 +123,17 @@ public class Customer implements Serializable {
         this.cusId = cusId;
     }
 
+    public void addOrcamento(Orcamento orc) {
+        orc.setOrcCustomer(this);
+        getOrcamentoList().add(orc);
+    }
+    
+    public void addAnaminese(Anaminese anam) {
+        anam.setAnsCustomer(this);
+        getAnamineseList().add(anam);
+    }
+    
+    
     public Customer(Integer cusId, String cusName, int cusAge, String cusAddress, String cusState, String cusCity, String cusFather, String cusMother, Date cusBorndate) {
         this.cusId = cusId;
         this.cusName = cusName;
