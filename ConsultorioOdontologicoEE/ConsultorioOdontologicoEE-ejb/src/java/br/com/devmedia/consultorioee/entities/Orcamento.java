@@ -8,6 +8,7 @@ package br.com.devmedia.consultorioee.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -75,11 +76,11 @@ public class Orcamento implements Serializable {
     @ManyToOne(optional = false)
     private Customer orcCustomer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansOrcamento")
-    private List<Anaminese> anamineseList;
+    private List<Anaminese> anamineseList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "oriOrcamento")
-    private List<Orcamentoitem> orcamentoitemList;
+    private List<Orcamentoitem> orcamentoitemList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parOrcamento")
-    private List<Parcela> parcelaList;
+    private List<Parcela> parcelaList = new LinkedList<>();
 
     public Orcamento() {
     }
@@ -99,6 +100,11 @@ public class Orcamento implements Serializable {
         return orcId;
     }
 
+    public void addItem(Orcamentoitem ori) {
+        ori.setOriOrcamento(this);
+        orcamentoitemList.add(ori);
+    }
+    
     public void setOrcId(Integer orcId) {
         this.orcId = orcId;
     }
