@@ -63,7 +63,7 @@ public abstract class BasicRepository {
     private Query createQuery(String query,Object... values){
         Query qr = getEntityManager().createQuery(query);
         for(int i = 0;i < values.length;i++){
-            qr.setParameter(i, values[i]);
+            qr.setParameter((i+1), values[i]);
         }
         return qr;
     }
