@@ -17,8 +17,8 @@ import javax.persistence.EntityManager;
  */
 public class CustomerRepository extends BasicRepository{
 
-    private static final long serialVersionUID = 1L;
-    
+private static final long serialVersionUID = 1L;
+
     public CustomerRepository(EntityManager entityManager) {
         super(entityManager);
     }
@@ -35,8 +35,8 @@ public class CustomerRepository extends BasicRepository{
         removeEntity(customer);
     }
     
-    public Customer getCustomer(Customer customer) {
-        return getEntity(Customer.class, customer);
+    public Customer getCustomer(int  idOfCustomer) {
+        return getEntity(Customer.class, idOfCustomer);
     }
     
     public List<Customer> getCustomerByName(String name) {
@@ -59,6 +59,5 @@ public class CustomerRepository extends BasicRepository{
 
     public List<Customer> getCustomersComPagamentoEmAberto(int idOfCustomer) {
         return getPureList(Customer.class,"select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?1",idOfCustomer,Boolean.FALSE);
-    }
-    
+    }    
 }
