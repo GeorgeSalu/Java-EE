@@ -8,6 +8,7 @@ package br.com.devmedia.consultorioee.service.repository;
 import br.com.devmedia.consultorioee.entities.Anaminese;
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -38,6 +39,7 @@ public class AnamineseRepository extends BasicRepository{
     }
     
     public List<Anaminese> getAnaminesesByCustomer(Customer customer) {
+        if (customer == null) return Collections.emptyList();
         return getPureList(Anaminese.class,"select anam from Anaminese anam wher anam.ansCustomer.cusId = ?1",customer.getCusId());
     }
 
