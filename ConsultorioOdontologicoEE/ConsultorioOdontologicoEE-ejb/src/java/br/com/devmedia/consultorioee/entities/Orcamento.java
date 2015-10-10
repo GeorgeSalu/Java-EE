@@ -44,7 +44,7 @@ public class Orcamento implements Serializable {
 private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orc_id", nullable = false)
     private Integer orcId;
     @Basic(optional = false)
