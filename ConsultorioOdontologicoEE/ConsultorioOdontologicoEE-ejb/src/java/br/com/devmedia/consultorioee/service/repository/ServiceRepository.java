@@ -21,26 +21,26 @@ public class ServiceRepository extends BasicRepository{
         super(entityManager);
     }
     
-    public Service addService(Service service){
+    public Service addService(Service service) {
         return addEntity(Service.class, service);
     }
     
-    public Service setService(Service service){
+    public Service setService(Service service) {
         return setEntity(Service.class, service);
     }
     
-    public void removeService(Service service){
+    public void removeService(Service service) {
         removeEntity(service);
     }
     
-    public Service getService(int idOfService){
+    public Service getService(int idOfService) {
         return getEntity(Service.class, idOfService);
     }
     
-    public List<Service> getService(){
+    public List<Service> getServices() {
         return getPureList(Service.class, "select srv from Service srv");
     }
-    
+
     public List<Service> getServiceByName(String name) {
         return getPureList(Service.class,"select srv from Service srv where srv.srvName like ?1",name+"%");
     }
