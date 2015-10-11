@@ -1,0 +1,95 @@
+/*
+ * Copyright (C) 2014 dyego.carmo
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package br.com.devmedia.consultorioee.service;
+
+import br.com.devmedia.consultorioee.entities.Parcela;
+import br.com.devmedia.consultorioee.service.repository.FinanceRepository;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.Stateless;
+import javax.ejb.LocalBean;
+import javax.ejb.PostActivate;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+/**
+ *
+ * @author dyego.carmo
+ */
+@Stateless
+@LocalBean
+public class FinanceService extends BasicService {
+
+    private static final long serialVersionUID = 1L;
+
+    @PersistenceContext
+    private EntityManager em;
+    private FinanceRepository financeRepository;
+    
+    
+    @PostActivate
+    @PostConstruct
+    private void postConstruct() {
+        financeRepository = new FinanceRepository(em);
+    }
+    
+    public Parcela addParcela(Parcela par) {
+        return financeRepository.addParcela(par);
+    }
+    
+    public Parcela getParcela(Integer idOfParcela) {
+        return financeRepository.getParcela(idOfParcela);
+    }
+    
+    public Parcela setParcela(Parcela par) {
+        return financeRepository.setParcela(par);
+    }
+    
+    public void removeParcela(Parcela par) {
+        financeRepository.removeParcela(par);
+    }
+    
+    public List<Parcela> getParcelasByOrcamento(int orcamentoId) {
+        return financeRepository.getParcelasOfOrcamento(orcamentoId);
+    }
+    
+    public List<Parcela> getParcelasOfOrcamentoPagas(int orcamentoId) {
+        return financeRepository.getParcelasOfOrcamentoPagas(orcamentoId);
+    }
+    
+    public List<Parcela> getParcelasOfOrcamentoEmAberto(int orcamentoId) {
+        return financeRepository.getParcelasOfOrcamentoEmAberto(orcamentoId);
+    }
+    
+    public List<Parcela> getParcelasOfCustomer(int customerId) {
+        return financeRepository.getParcelasOfCustomer(customerId);
+    }
+    
+    public List<Parcela> getParcelasOfCustomerPagas(int orcamentoId) {
+        return financeRepository.getParcelasOfCustomerPagas(orcamentoId);
+    }
+    
+    public List<Parcela> getParcelasOfCustomerEmAberto(int orcamentoId) {
+        return financeRepository.getParcelasOfCustomerEmAberto(orcamentoId);
+    }
+    
+    public Parcela setPagamentoParcela(int idOfParcela) {
+        return financeRepository.setPagamentoParcela(idOfParcela);
+    }
+    
+}
