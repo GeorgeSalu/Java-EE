@@ -3,21 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.UserService;
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+
 /**
  *
- * @author George
+ * @author Dyego Souza do Carmo
+ * @version 1.0
+ * @since 06/2014
  */
+
 @Named
 @SessionScoped
-public class UsersControl extends BasicControl implements Serializable {
+public class UserControl extends BasicControl implements java.io.Serializable {
 
     @EJB
     private UserService userService;
@@ -27,4 +31,3 @@ public class UsersControl extends BasicControl implements Serializable {
     private String password;
     
 }
-
