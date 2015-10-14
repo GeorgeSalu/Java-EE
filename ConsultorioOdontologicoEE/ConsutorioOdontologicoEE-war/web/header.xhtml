@@ -4,9 +4,10 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-        <h:graphicImage value="/resources/images/logo.jpg" styleClass="logoConsultorioEE"/>
-        <c:if test="#{userControl.loggedUser ne null}">
-            <span style="float: right;">Usuario Logado: #{userControl.loggedUser.usuName} - <a href="SairServlet">Sair</a></span>
-        </c:if>
-    <span style="font-weight: bolder;font-size: x-large;">Consultorio Enterprise Edition 7 - DevMedia</span></ui:composition>
+    <h:graphicImage value="/resources/images/logo.jpg" styleClass="logoConsultorioEE"/>
+    <c:if test="#{userControl.loggedUser ne null}">
+        <span style="float: right;">Usuario Logado: #{userControl.loggedUser.usuName} - <a href="/ConsutorioOdontologicoEE-war/SairServlet">Sair</a></span>
+    </c:if>
+    <span style="font-weight: bolder;font-size: x-large;">Consultorio Enterprise Edition 7 - DevMedia</span>
+</ui:composition>
 
