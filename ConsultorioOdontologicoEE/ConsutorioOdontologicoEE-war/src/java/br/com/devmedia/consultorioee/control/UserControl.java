@@ -10,7 +10,12 @@ import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.UserService;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 
 /**
  *
@@ -26,8 +31,52 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     @EJB
     private UserService userService;
     private Users loggedUser;
-    
+
+    @NotNull(message = "Você deve especificar o usuário")
+    @NotEmpty(message = "Você deve especificar o usuário")
     private String userName;
+    @NotNull
+    @NotEmpty(message = "Você precisa especificar uma senha")
+    @Length(min = 3,message = "Sua senha deve conter no minimo 3 caracteres.")
     private String password;
+
+    public Users getLoggedUser() {
+        return loggedUser;
+    }
+
+    public void setLoggedUser(Users loggedUser) {
+        this.loggedUser = loggedUser;
+    }
+
+    
+    public String doLogin() {
+        loggedUser = null;
+        loggedUser = userService.getUserByLoginPassword(userName, password);
+        if (loggedUser == null) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario / Senha Inválidos", "Usuario / Senha Inválidos");
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return "/login.faces";
+        } else {
+            return "/index.faces";
+        }
+        
+    }
+    
+    
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
     
 }

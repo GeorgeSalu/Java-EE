@@ -20,19 +20,22 @@
             <div id="content" class="center_content">
                 <div>
                     <center>
-                        <table style="border-collapse: inherit;border-style: double;">
-                            <tr>
-                                <td>Login</td>
-                                <td><input/></td>
-                            </tr>
-                            <tr>
-                                <td>Password</td>
-                                <td><input/></td>
-                            </tr>
-                            <tr>
-                                <td colspan="2" style="text-align: center"><input type="submit"/></td>
-                            </tr>
-                        </table>  
+                        <h:messages errorClass="msg_erro"/>
+                        <h:form>
+                            <table style="border-collapse: inherit;border-style: double;">
+                                <tr>
+                                    <td>Login</td>
+                                    <td><h:inputText value="#{userControl.userName}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                    <td><h:inputSecret value="#{userControl.password}"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="text-align: center"><h:commandButton action="#{userControl.doLogin()}" value="Entrar"/></td>
+                                </tr>
+                            </table>
+                        </h:form>
                     </center>
                 </div>
             </div>
