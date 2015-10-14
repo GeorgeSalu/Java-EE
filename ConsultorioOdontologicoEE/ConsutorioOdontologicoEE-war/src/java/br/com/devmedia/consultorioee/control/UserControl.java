@@ -8,6 +8,7 @@ package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.UserService;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -48,6 +49,10 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         this.loggedUser = loggedUser;
     }
 
+    @PostConstruct
+    public void postContrsuct() {
+        System.out.println(" UserControl Started ! "+hashCode());
+    }
     
     public String doLogin() {
         loggedUser = null;
