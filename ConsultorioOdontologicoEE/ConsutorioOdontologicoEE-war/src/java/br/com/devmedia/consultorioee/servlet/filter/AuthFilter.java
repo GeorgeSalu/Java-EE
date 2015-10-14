@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebFilter(filterName = "AuthFilter", urlPatterns = {"/restrito/*"})
 public class AuthFilter implements Filter {
     
-    @Inject
+     @Inject
     private UserControl userControl;
     
     private static final boolean debug = true;
@@ -114,12 +114,27 @@ public class AuthFilter implements Filter {
         
         doBeforeProcessing(request, response);
         
-        System.out.println("See "+((HttpServletRequest)request).getRequestURL());
-        
+        // Verifico se estou autenticado
         if (userControl.getLoggedUser() == null) {
             ((HttpServletResponse)response).sendRedirect("/ConsutorioOdontologicoEE-war/login.faces");
             return;
         }
+        
+        // Verifico possiveis erros de cadastro dos usuarios
+        // quando um usuario nao e administrador e nem dentista
+        if (!userControl.getLoggedUser().getUsuDentist() && !userControl.getLoggedUser().getUsuAdministrator()) {
+            ((HttpServletResponse)response).sendRedirect("/ConsutorioOdontologicoEE-war/login.faces?msg_erro=Usuario Invalido");
+            return;
+        }
+        
+        // Verifico a Autorização de Administrador
+        String requestPath = ((HttpServletRequest)request).getRequestURI().toLowerCase();
+        if (requestPath.contains("/restrito/admin") && !userControl.getLoggedUser().getUsuAdministrator()) {
+           ((HttpServletResponse)response).sendRedirect("/ConsutorioOdontologicoEE-war/restrito/sempermissao.faces");
+           return;
+        }
+        
+        
         
         Throwable problem = null;
         try {
@@ -242,5 +257,6 @@ public class AuthFilter implements Filter {
     public void log(String msg) {
         filterConfig.getServletContext().log(msg);        
     }
+
     
 }
