@@ -29,7 +29,7 @@ import javax.persistence.PersistenceContext;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserService extends BasicService{
     
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @PersistenceContext
     private EntityManager em;
@@ -65,6 +65,11 @@ public class UserService extends BasicService{
         return usrRepository.addUser(user);
     }
     
+    
+    public List<Users> getUsersByName(String name) {
+        return usrRepository.getUsersByName(name);
+    }
+    
     public Users getUserByLoginPassword(String login,String password) {
         try {
             return usrRepository.getUserByLoginPassword(login, password);
@@ -76,6 +81,5 @@ public class UserService extends BasicService{
     public List<Users> getUsers() {
         return usrRepository.getUsers();
     }
-
     
 }
