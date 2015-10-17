@@ -19,12 +19,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- *
- * @author Dyego Souza do Carmo
- * @version 1.0
- * @since 06/2014
- */
 
 @Named
 @SessionScoped
@@ -43,11 +37,14 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     private String password;
 
     
-    @NotEmpty(message = "Você precisa especificar um nome válido")
+/*    @NotEmpty(message = "Você precisa especificar um nome válido")
     @NotNull(message = "Você precisa especificar um nome válido")
-    @Length(min=3,message = "Você deve especificar um nome com mais de 3 letras.")
+    @Length(min=3,message = "Você deve especificar um nome com mais de 3 letras.")*/
     private String localizar;
     private List<Users> usrFiltrado;
+    
+    private Users usuarioSelected;
+    
     
     
     public Users getLoggedUser() {
@@ -111,6 +108,9 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     }
 
     public List<Users> getUsrFiltrado() {
+        if (usrFiltrado == null) {
+            return getUsers();
+        }
         return usrFiltrado;
     }
 
@@ -118,4 +118,7 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         this.usrFiltrado = usrFiltrado;
     }
     
+    public String doStartAddUsuario() {
+        return "/restrito/addUser.faces";
+    }    
 }
