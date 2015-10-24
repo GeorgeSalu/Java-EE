@@ -46,7 +46,7 @@
                     #{item.usuDentist}
                 </h:column>
             </h:dataTable>
-            <h:commandButton action="" value="Adicionar Usuário"/>
+            <h:commandButton rendered="#{userControl.loggedUser.usuAdministrator eq true}" action="#{userControl.doStartAddUsuario()}" value="Adicionar Usuario"/>
         </h:form>
     </ui:define>
 

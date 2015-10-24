@@ -44,8 +44,14 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     private List<Users> usrFiltrado;
     
     private Users usuarioSelected;
-    
-    
+
+    public Users getUsuarioSelected() {
+        return usuarioSelected;
+    }
+
+    public void setUsuarioSelected(Users usuarioSelected) {
+        this.usuarioSelected = usuarioSelected;
+    }
     
     public Users getLoggedUser() {
         return loggedUser;
@@ -119,6 +125,14 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     }
     
     public String doStartAddUsuario() {
+        setUsuarioSelected(new Users());
         return "/restrito/addUser.faces";
-    }    
+    }
+    
+    public String doFinishAddUsuario() {
+        setUsrFiltrado(null);
+        
+        return "/restrito/users.faces";
+    }
+        
 }

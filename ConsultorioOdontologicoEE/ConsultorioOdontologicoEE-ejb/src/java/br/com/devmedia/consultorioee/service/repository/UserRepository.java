@@ -16,45 +16,47 @@ import javax.persistence.EntityManager;
  */
 public class UserRepository extends BasicRepository{
 
+    private static final long serialVersionUID = 1L;
+
     public UserRepository(EntityManager entityManager) {
         super(entityManager);
     }
-    
-    public Users getUser(int id){
-        return getEntityManager().find(Users.class, id);
+
+    public Users getUser(int id) {
+        return getEntity(Users.class,id);
     }
     
-    public Users setUser(Users usr){
+    public Users setUser(Users usr) {
         return setEntity(Users.class, usr);
     }
     
-    public void removeUser(Users usr){
+    public void removeUser(Users usr) {
         removeEntity(usr);
     }
     
-    public Users getUserByLoginPassword(String login,String password){
-        return getPurePojo(Users.class,"select user from Users user where usr.usuLogin = ?1 and usr.usuPassword = ?2", login, getMd5( password));
+    public Users addUser(Users usr) {
+        usr.setUsuPassword(getMd5(usr.getUsuPassword()));
+        addEntity(Users.class, usr);
+        return usr;
     }
-    
-    public List<Users> getUsers(){
+
+    public Users getUserByLoginPassword(String login, String password) {
+        return getPurePojo(Users.class, "select usr from Users usr where usr.usuLogin = ?1 and usr.usuPassword = ?2", login, getMd5(password));
+    }
+
+    public List<Users> getUsers() {
         return getPureList(Users.class, "select usr from Users usr");
     }
     
-    public List<Users> getUsersByName(String name){
+    public List<Users> getUsersByName(String name) {
         return getPureList(Users.class,"select usr from Users usr where usr.usuName like ?1",name+"%");
     }
     
-    public void setPassword(String newPassword,int idOfUser){
+    public void setPassword(String newPassword,int idOfUser) {
         String np = getMd5(newPassword);
         Users usr = getUser(idOfUser);
         usr.setUsuPassword(np);
         setUser(usr);
-    }
-    
-    public Users addUser(Users usr){
-        usr.setUsuPassword(getMd5(usr.getUsuPassword()));
-        addEntity(Users.class, usr);
-        return usr;
     }
     
     private String getMd5(String message) {

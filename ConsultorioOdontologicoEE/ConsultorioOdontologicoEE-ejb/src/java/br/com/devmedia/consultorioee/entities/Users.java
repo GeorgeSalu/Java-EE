@@ -21,6 +21,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.constraints.Length;
 
 /**
  *
@@ -39,27 +40,27 @@ public class Users implements Serializable {
     private Integer usuId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
     @Column(name = "usu_name", nullable = false, length = 255)
+    @Length(min=3, max = 255,message = "Você precisa especificar um nome com no mínimo 3 caracteres")
     private String usuName;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Length(min=5, max = 255,message = "Você precisa de um login com no mínimo 5 caracteres.")
     @Column(name = "usu_login", nullable = false, length = 255)
     private String usuLogin;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 32)
     @Column(name = "usu_password", nullable = false, length = 32)
+    @Length(min=5,max=32,message = "Você precisa de uma senha com no mínimo 5 caracteres.")
     private String usuPassword;
     @Basic(optional = false)
     @NotNull
     @Column(name = "usu_administrator", nullable = false)
-    private boolean usuAdministrator;
+    private boolean usuAdministrator = false;
     @Basic(optional = false)
     @NotNull
     @Column(name = "usu_dentist", nullable = false)
-    private boolean usuDentist;
+    private boolean usuDentist = true;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orcDentist")
     private List<Orcamento> orcamentoList;
 
