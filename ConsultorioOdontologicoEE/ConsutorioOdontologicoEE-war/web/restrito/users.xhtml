@@ -11,7 +11,7 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:messages/>
+        <h:messages errorClass="msg_erro"/>
         <h:form>
             <table>
                 <tr>
@@ -29,9 +29,15 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Name
+                        Nome
                     </f:facet>
                     #{item.usuName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Login
+                    </f:facet>
+                    #{item.usuLogin}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -47,15 +53,15 @@
                     <h:graphicImage rendered="#{item.usuDentist eq true}" value="/resources/images/check.gif"/>
                     <h:graphicImage rendered="#{item.usuDentist eq false}"  value="/resources/images/uncheck.png"/>
                 </h:column>
-                <h:column>
+                <h:column rendered="#{userControl.loggedUser.usuAdministrator eq true}">
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink title="Alterar Usuario" action="#{userControl.doStartAlterar()}">
+                    <h:commandLink  title="Alterar Usuario" action="#{userControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{userControl.usuarioSelected}"/>
                     </h:commandLink>   
-                    <h:commandLink title="Alterar Senha do Usuario" action="#{userControl.doStartAlterarSenha()}">
+                    <h:commandLink  title="Alterar Senha do Usuario" action="#{userControl.doStartAlterarSenha()}">
                         <h:graphicImage value="/resources/images/senha.png"/>
                         <f:setPropertyActionListener value="#{item}" target="#{userControl.usuarioSelected}"/>
                     </h:commandLink>   

@@ -24,7 +24,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SessionScoped
 public class UserControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+        @EJB
     private UserService userService;
     private Users loggedUser;
 
@@ -35,7 +35,6 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     @NotEmpty(message = "Você precisa especificar uma senha")
     @Length(min = 3,message = "Sua senha deve conter no minimo 3 caracteres.")
     private String password;
-
     
 /*    @NotEmpty(message = "Você precisa especificar um nome válido")
     @NotNull(message = "Você precisa especificar um nome válido")
@@ -136,13 +135,35 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     }
     
     public String doFinishExcluir() {
+        setUsrFiltrado(null);
+        if (usuarioSelected.equals(loggedUser)) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Você não pode apagar a si mesmo.","Você não pode apagar a si mesmo.");
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return "/restrito/users.faces";
+        }
+        userService.removeUser(usuarioSelected);
         return "/restrito/users.faces";
     }
 
     public String doStartAlterar() {
         return "/restrito/editUser.faces";
     }
+    
+    public String doFinishAlterar() {
+        setUsrFiltrado(null);
+        userService.setUser(usuarioSelected);
+        return "/restrito/users.faces";
+    }
+    
     public String doStartAlterarSenha() {
+        getUsuarioSelected().setUsuPassword("");
         return "/restrito/editUserPassword.faces";
-    }        
+    }
+
+    public String doFinishAlterarSenha() {
+        setUsrFiltrado(null);
+        userService.setPassword(getUsuarioSelected().getUsuId(), getUsuarioSelected().getUsuPassword());
+        return "/restrito/users.faces";
+    }
+        
 }
