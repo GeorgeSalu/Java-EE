@@ -131,8 +131,18 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     
     public String doFinishAddUsuario() {
         setUsrFiltrado(null);
-        
+        userService.addUser(usuarioSelected);
         return "/restrito/users.faces";
     }
-        
+    
+    public String doFinishExcluir() {
+        return "/restrito/users.faces";
+    }
+
+    public String doStartAlterar() {
+        return "/restrito/editUser.faces";
+    }
+    public String doStartAlterarSenha() {
+        return "/restrito/editUserPassword.faces";
+    }        
 }

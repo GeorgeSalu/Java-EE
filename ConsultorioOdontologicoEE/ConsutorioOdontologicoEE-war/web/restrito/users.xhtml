@@ -37,13 +37,32 @@
                     <f:facet name="header">
                         Administrador?
                     </f:facet>
-                    #{item.usuAdministrator}
+                    <h:graphicImage rendered="#{item.usuAdministrator eq true}" value="/resources/images/check.gif"/>
+                    <h:graphicImage rendered="#{item.usuAdministrator eq false}"  value="/resources/images/uncheck.png"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         Dentista?
                     </f:facet>
-                    #{item.usuDentist}
+                    <h:graphicImage rendered="#{item.usuDentist eq true}" value="/resources/images/check.gif"/>
+                    <h:graphicImage rendered="#{item.usuDentist eq false}"  value="/resources/images/uncheck.png"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Acoes
+                    </f:facet>
+                    <h:commandLink title="Alterar Usuario" action="#{userControl.doStartAlterar()}">
+                        <h:graphicImage value="/resources/images/alterar.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{userControl.usuarioSelected}"/>
+                    </h:commandLink>   
+                    <h:commandLink title="Alterar Senha do Usuario" action="#{userControl.doStartAlterarSenha()}">
+                        <h:graphicImage value="/resources/images/senha.png"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{userControl.usuarioSelected}"/>
+                    </h:commandLink>   
+                    <h:commandLink title="Excluir Usuario" action="#{userControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este usuario ?');" >
+                        <h:graphicImage value="/resources/images/excluir.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{userControl.usuarioSelected}"/>
+                    </h:commandLink>   
                 </h:column>
             </h:dataTable>
             <h:commandButton rendered="#{userControl.loggedUser.usuAdministrator eq true}" action="#{userControl.doStartAddUsuario()}" value="Adicionar Usuario"/>
