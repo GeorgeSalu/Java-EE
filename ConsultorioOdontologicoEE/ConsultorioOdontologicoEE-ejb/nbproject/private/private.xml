@@ -3,34 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/ServiceServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Parcela.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Orcamentoitem.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/UserRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/BasicRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Users.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/AnamineseRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/FinanceService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/AnamineseServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/UserServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/UserService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/OrcamentoService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/SessionBean.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Service.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Customer.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/ServiceService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/CustomerService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Orcamento.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/CustomerRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/FinanceRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/PaymentType.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/OrcamentoRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/ServiceRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/OrcamentoServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/FinanceServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Anaminese.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/BasicService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/CustomerServiceTest.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/AnamineseService.java</file>
         </group>
     </open-files>
 </project-private>

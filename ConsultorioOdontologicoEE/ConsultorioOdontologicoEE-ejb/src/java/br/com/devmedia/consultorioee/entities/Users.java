@@ -5,6 +5,7 @@
  */
 package br.com.devmedia.consultorioee.entities;
 
+import br.com.devmedia.consultorioee.entities.validator.LoginPadrao;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -32,7 +33,8 @@ import org.hibernate.validator.constraints.Length;
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")})
 public class Users implements Serializable {
-    private static final long serialVersionUID = 1L;
+
+    private static final long serialVersionUID = 2L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,6 +49,7 @@ public class Users implements Serializable {
     @NotNull
     @Length(min=5, max = 255,message = "Você precisa de um login com no mínimo 5 caracteres.")
     @Column(name = "usu_login", nullable = false, length = 255)
+    @LoginPadrao(message = "Este login não está dentro dos padrões estabelecidos")
     private String usuLogin;
     @Basic(optional = false)
     @NotNull

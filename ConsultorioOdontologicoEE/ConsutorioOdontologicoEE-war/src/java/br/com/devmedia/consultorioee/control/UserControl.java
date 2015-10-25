@@ -7,6 +7,7 @@
 package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Users;
+import br.com.devmedia.consultorioee.entities.validator.LoginPadrao;
 import br.com.devmedia.consultorioee.service.UserService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,18 +25,19 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SessionScoped
 public class UserControl extends BasicControl implements java.io.Serializable {
 
-        @EJB
+    @EJB
     private UserService userService;
     private Users loggedUser;
 
     @NotNull(message = "Você deve especificar o usuário")
     @NotEmpty(message = "Você deve especificar o usuário")
+    @LoginPadrao(message = "Este login não está dentro dos padrões estabelecidos")
     private String userName;
     @NotNull
     @NotEmpty(message = "Você precisa especificar uma senha")
     @Length(min = 3,message = "Sua senha deve conter no minimo 3 caracteres.")
     private String password;
-    
+
 /*    @NotEmpty(message = "Você precisa especificar um nome válido")
     @NotNull(message = "Você precisa especificar um nome válido")
     @Length(min=3,message = "Você deve especificar um nome com mais de 3 letras.")*/
