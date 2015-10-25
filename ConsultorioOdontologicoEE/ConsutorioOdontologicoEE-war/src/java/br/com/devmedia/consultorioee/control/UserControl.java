@@ -26,7 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SessionScoped
 public class UserControl extends BasicControl implements java.io.Serializable {
 
-        @EJB
+    @EJB
     private UserService userService;
     private Users loggedUser;
 
@@ -81,8 +81,7 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         loggedUser = null;
         loggedUser = userService.getUserByLoginPassword(userName, password);
         if (loggedUser == null) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario / Senha Inválidos", "Usuario / Senha Inválidos");
-            FacesContext.getCurrentInstance().addMessage(null, fm);
+            createFacesErrorMessage("Usuario / Senha Inválidos");
             return "/login.faces";
         } else {
             return "/restrito/index.faces?faces-redirect=true";
