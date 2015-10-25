@@ -8,6 +8,7 @@ package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.entities.validator.LoginPadrao;
+import br.com.devmedia.consultorioee.service.AcessoInvalidoException;
 import br.com.devmedia.consultorioee.service.UserService;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -25,7 +26,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @SessionScoped
 public class UserControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+        @EJB
     private UserService userService;
     private Users loggedUser;
 
@@ -35,15 +36,15 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     private String userName;
     @NotNull
     @NotEmpty(message = "Você precisa especificar uma senha")
-    @Length(min = 3,message = "Sua senha deve conter no minimo 3 caracteres.")
+    @Length(min = 3, message = "Sua senha deve conter no minimo 3 caracteres.")
     private String password;
 
-/*    @NotEmpty(message = "Você precisa especificar um nome válido")
-    @NotNull(message = "Você precisa especificar um nome válido")
-    @Length(min=3,message = "Você deve especificar um nome com mais de 3 letras.")*/
+    /*    @NotEmpty(message = "Você precisa especificar um nome válido")
+     @NotNull(message = "Você precisa especificar um nome válido")
+     @Length(min=3,message = "Você deve especificar um nome com mais de 3 letras.")*/
     private String localizar;
     private List<Users> usrFiltrado;
-    
+
     private Users usuarioSelected;
 
     public Users getUsuarioSelected() {
@@ -53,7 +54,7 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     public void setUsuarioSelected(Users usuarioSelected) {
         this.usuarioSelected = usuarioSelected;
     }
-    
+
     public Users getLoggedUser() {
         return loggedUser;
     }
@@ -62,20 +63,20 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         usrFiltrado = userService.getUsersByName(getLocalizar());
         return "users.faces";
     }
-    
+
     public void setLoggedUser(Users loggedUser) {
         this.loggedUser = loggedUser;
     }
 
     @PostConstruct
     public void postContrsuct() {
-        System.out.println("[DevMedia] UserControl Started ! "+hashCode());
+        System.out.println("[DevMedia] UserControl Started ! " + hashCode());
     }
 
     public List<Users> getUsers() {
         return userService.getUsers();
     }
-    
+
     public String doLogin() {
         loggedUser = null;
         loggedUser = userService.getUserByLoginPassword(userName, password);
@@ -86,10 +87,9 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         } else {
             return "/restrito/index.faces?faces-redirect=true";
         }
-        
+
     }
-    
-    
+
     public String getUserName() {
         return userName;
     }
@@ -124,22 +124,28 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     public void setUsrFiltrado(List<Users> usrFiltrado) {
         this.usrFiltrado = usrFiltrado;
     }
-    
+
     public String doStartAddUsuario() {
         setUsuarioSelected(new Users());
         return "/restrito/addUser.faces";
     }
-    
+
     public String doFinishAddUsuario() {
         setUsrFiltrado(null);
-        userService.addUser(usuarioSelected);
+        try {
+            userService.addUser(usuarioSelected);
+        } catch (AcessoInvalidoException ex) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "O acesso deste usuário é invalido, favor selecionar o acesso de administrador e/ou dentista.", "O acesso deste usuário é invalido, favor selecionar o acesso de administrador e/ou dentista.");
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return "/restrito/addUser.faces";
+        }
         return "/restrito/users.faces";
     }
-    
+
     public String doFinishExcluir() {
         setUsrFiltrado(null);
         if (usuarioSelected.equals(loggedUser)) {
-            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Você não pode apagar a si mesmo.","Você não pode apagar a si mesmo.");
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Você não pode apagar a si mesmo.", "Você não pode apagar a si mesmo.");
             FacesContext.getCurrentInstance().addMessage(null, fm);
             return "/restrito/users.faces";
         }
@@ -150,13 +156,19 @@ public class UserControl extends BasicControl implements java.io.Serializable {
     public String doStartAlterar() {
         return "/restrito/editUser.faces";
     }
-    
+
     public String doFinishAlterar() {
         setUsrFiltrado(null);
-        userService.setUser(usuarioSelected);
+        try {
+            userService.setUser(usuarioSelected);
+        } catch (AcessoInvalidoException ex) {
+            FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "O acesso deste usuário é invalido, favor selecionar o acesso de administrador e/ou dentista.", "O acesso deste usuário é invalido, favor selecionar o acesso de administrador e/ou dentista.");
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return "/restrito/editUser.faces";
+        }
         return "/restrito/users.faces";
     }
-    
+
     public String doStartAlterarSenha() {
         getUsuarioSelected().setUsuPassword("");
         return "/restrito/editUserPassword.faces";
@@ -167,5 +179,6 @@ public class UserControl extends BasicControl implements java.io.Serializable {
         userService.setPassword(getUsuarioSelected().getUsuId(), getUsuarioSelected().getUsuPassword());
         return "/restrito/users.faces";
     }
+
         
 }

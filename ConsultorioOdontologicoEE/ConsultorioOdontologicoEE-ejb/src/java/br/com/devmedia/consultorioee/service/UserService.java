@@ -49,7 +49,10 @@ public class UserService extends BasicService{
         return usrRepository.getUser(id);
     }
     
-    public Users setUser(Users user) {
+    public Users setUser(Users user) throws AcessoInvalidoException {
+        if (!user.getUsuAdministrator() && !user.getUsuDentist()) {
+            throw new AcessoInvalidoException("O usuário atual não possui um acesso válido.");
+        }
         return usrRepository.setUser(user);
     }
     
@@ -61,7 +64,10 @@ public class UserService extends BasicService{
         usrRepository.setPassword(password, ifOfUser);
     }
     
-    public Users addUser(Users user) {
+    public Users addUser(Users user) throws AcessoInvalidoException {
+        if (!user.getUsuAdministrator() && !user.getUsuDentist()) {
+            throw new AcessoInvalidoException("O usuário atual não possui um acesso válido.");
+        }
         return usrRepository.addUser(user);
     }
     
