@@ -19,23 +19,33 @@
                     <td width="73%"><h:inputText style="width: 100%;" value="#{serviceControl.localizar}"/></td>
                     <td width="5%"><h:commandButton action="#{serviceControl.doLocalizar()}" value="Localizar"/></td>
                 </tr>
-                <h:dataTable var="item" value="#{serviceControl.srvFiltrado}">
-                    <h:column>
-                        <f:facet name="header">
-                            Nome
-                        </f:facet>
-                        #{item.srvName}
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            Custo
-                        </f:facet>
-                        
-                    </h:column>
-                    
-                </h:dataTable>
             </table>
-            
+            <h:dataTable styleClass="tabelaBasica" var="item" value="#{serviceControl.srvFiltrado}">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.srvId}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{item.srvName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Custo
+                    </f:facet>
+                    <h:outputText value="#{item.srvCost}"><f:convertNumber type="currency"/></h:outputText>
+                </h:column>
+                <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
+                    <f:facet name="header">
+                        Acoes
+                    </f:facet>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton action="#{serviceControl.doStartAddService()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo servico"/>
         </h:form>
     </ui:define>
 

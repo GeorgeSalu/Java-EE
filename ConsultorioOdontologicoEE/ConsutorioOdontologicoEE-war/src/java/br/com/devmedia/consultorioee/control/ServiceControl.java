@@ -24,10 +24,22 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
         srvFiltrado = serviceService.getServicesByName(localizar);
         return "/restrito/services.faces";
     }
+
+    public String doStartAddService() {
+        setServiceSelected(new Service());
+        return "/restrito/addService.faces";
+    }
+
+    public String doFinishAddService() {
+        srvFiltrado = null;
+        serviceService.addService(serviceSelected);
+        return "/restrito/services.faces";
+    }
     
     public List<Service> getServices() {
         return serviceService.getServices();
     }
+    
     
     
     public String getLocalizar() {
@@ -54,9 +66,5 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
     public void setServiceSelected(Service serviceSelected) {
         this.serviceSelected = serviceSelected;
     }
-    
-    
-    
-    
     
 }

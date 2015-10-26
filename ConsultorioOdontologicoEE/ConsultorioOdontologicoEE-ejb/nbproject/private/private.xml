@@ -4,6 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/UserRepository.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/AcessoInvalidoException.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadrao.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/UserService.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadraoValidator.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/BasicRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Users.java</file>
         </group>
