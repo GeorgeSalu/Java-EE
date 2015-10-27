@@ -1,3 +1,11 @@
+.linhaPar {
+    background-color: lavender;
+}
+
+.linhaImpar {
+    background-color: antiquewhite;
+}
+
 .tabelaBasica {
     font-size: small;
     border-width: thin;
@@ -5,6 +13,15 @@
     width: 100%;
     text-align: center;
 }
+
+.tabelaBasica th:hover  {
+}
+
+.tabelaBasica tr:hover  {
+    background-color: #045491;
+    color: white;
+}
+
 
 .msg_erro {
     color: red;
