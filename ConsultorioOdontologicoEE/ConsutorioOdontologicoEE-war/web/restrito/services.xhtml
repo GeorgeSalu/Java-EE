@@ -43,6 +43,14 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
+                    <h:commandLink  title="Alterar Servico" action="#{serviceControl.doStartAlterar()}">
+                        <h:graphicImage value="/resources/images/alterar.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{serviceControl.serviceSelected}"/>
+                    </h:commandLink>   
+                    <h:commandLink title="Excluir Servico" action="#{serviceControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este servico ?');" >
+                        <h:graphicImage value="/resources/images/excluir.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{serviceControl.serviceSelected}"/>
+                    </h:commandLink>   
                 </h:column>
             </h:dataTable>
             <h:commandButton action="#{serviceControl.doStartAddService()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo servico"/>

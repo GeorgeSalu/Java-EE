@@ -40,7 +40,21 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
         return serviceService.getServices();
     }
     
+    public String doFinishExcluir() {
+        srvFiltrado = null;
+        serviceService.removeService(serviceSelected);
+        return "/restrito/services.faces";
+    }
     
+    public String doStartAlterar() {
+        return "/restrito/editService.faces";
+    }
+    
+    public String doFinishAlterar() {
+        srvFiltrado = null;
+        serviceService.setService(serviceSelected);
+        return "/restrito/services.faces";
+    }
     
     public String getLocalizar() {
         return localizar;
@@ -66,5 +80,6 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
     public void setServiceSelected(Service serviceSelected) {
         this.serviceSelected = serviceSelected;
     }
+
     
 }
