@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titleOfPage">
+        Clientes do Sistema - Novo
+    </ui:define>
+
+    <ui:define name="content">
+        <h:messages errorClass="msg_erro"/>
+        <h:form>
+            <table>
+                <tr>
+                    <td>Nome</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.usuName}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Idade</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.usuLogin}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Endereco</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusAddress}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Estado</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusState}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Cidade</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusCity}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Complemento</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusComplement}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Pai</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusFather}"/></td>
+                </tr>
+
+                <tr>
+                    <td>Mae</td>
+                    <td><h:inputText value="#{customerControl.selectedCustomer.cusMother}"/></td>
+                </tr>
+
+
+                <tr>
+                    <td>Dentista ?</td>
+                    <td><h:selectBooleanCheckbox value="#{customerControl.selectedCustomer.usuDentist}"/></td>
+                </tr>
+                <tr>
+                    <td>Administrador ?</td>
+                    <td><h:selectBooleanCheckbox value="#{customerControl.selectedCustomer.usuAdministrator}"/></td>
+                </tr>
+            </table>
+            <h:commandButton action="#{customerControl.doFinishAddUsuario()}" value="Cadastrar"/> &nbsp; <h:commandButton action="users.faces" value="Cancelar" immediate="true"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

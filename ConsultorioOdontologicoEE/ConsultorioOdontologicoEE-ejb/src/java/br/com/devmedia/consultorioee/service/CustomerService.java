@@ -19,6 +19,7 @@ package br.com.devmedia.consultorioee.service;
 
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.repository.CustomerRepository;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -79,5 +80,13 @@ public class CustomerService extends BasicService {
     
     public List<Customer> getCustomersComPagamentoEmAberto(int ifOfCustomer) {
         return customerRepository.getCustomersComPagamentoEmAberto(ifOfCustomer);
+    }
+    
+    public Date getUltimoAtendimento(int idOfCustomer) {
+        return customerRepository.getUltimoAtendimento(idOfCustomer);
+    }
+    
+    public int getCustomersCount() {
+        return customerRepository.getCustomersCount();
     }
 }
