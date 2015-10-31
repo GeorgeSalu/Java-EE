@@ -5,6 +5,7 @@
  */
 package br.com.devmedia.consultorioee.entities;
 
+import br.com.devmedia.consultorioee.entities.validator.DescricaoServicoUnico;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,6 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @XmlRootElement
+@DescricaoServicoUnico
 @NamedQueries({
     @NamedQuery(name = "Service.findAll", query = "SELECT s FROM Service s")})
 public class Service implements Serializable {
