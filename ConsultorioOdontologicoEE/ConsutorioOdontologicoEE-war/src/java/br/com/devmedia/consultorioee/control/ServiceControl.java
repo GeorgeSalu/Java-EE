@@ -12,7 +12,7 @@ import javax.inject.Named;
 @SessionScoped
 public class ServiceControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+       @EJB
     private ServiceService serviceService;
     
     private String localizar;
@@ -32,6 +32,9 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
 
     public String doFinishAddService() {
         srvFiltrado = null;
+        if (existsViolationsForJSF(serviceSelected)) {
+           return "/restrito/addService.faces"; 
+        }
         serviceService.addService(serviceSelected);
         return "/restrito/services.faces";
     }
@@ -52,6 +55,9 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
     
     public String doFinishAlterar() {
         srvFiltrado = null;
+        if (existsViolationsForJSF(serviceSelected)) {
+           return "/restrito/editService.faces"; 
+        }
         serviceService.setService(serviceSelected);
         return "/restrito/services.faces";
     }
@@ -80,6 +86,5 @@ public class ServiceControl extends BasicControl implements java.io.Serializable
     public void setServiceSelected(Service serviceSelected) {
         this.serviceSelected = serviceSelected;
     }
-
-    
+ 
 }
