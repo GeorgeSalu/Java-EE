@@ -19,7 +19,7 @@ import javax.inject.Named;
 @SessionScoped
 public class CustomerControl extends BasicControl implements java.io.Serializable {
 
-        @EJB
+    @EJB
     private CustomerService customerService;
     
     private List<Customer> customers;
@@ -76,7 +76,10 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
     
     
     public String doFinishAddCustomer() {
-        return "duh !";
+        if (existsViolationsForJSF(getSelectedCustomer())) {
+            return "/restrito/addCustomer.faces";
+        }        
+        
+        return "/restrito/customers.faces";
     }
-
 }
