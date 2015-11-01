@@ -13,58 +13,95 @@
     <ui:define name="content">
         <h:messages errorClass="msg_erro"/>
         <h:form>
-            <table>
+            <table width="100%">
                 <tr>
-                    <td>Nome</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.usuName}"/></td>
+                    <td width="20%">Nome</td>
+                    <td width="80%"><h:inputText style="width: 100%" value="#{customerControl.selectedCustomer.cusName}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Idade</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.usuLogin}"/></td>
+                    <td width="20%">Data Nascimento</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusBorndate}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Endereco</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusAddress}"/></td>
+                    <td width="20%">Endereco</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusAddress}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Estado</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusState}"/></td>
+                    <td width="20%">Estado</td>
+                    <td width="80%"><h:inputText style="width: 100%"  maxlength="2" value="#{customerControl.selectedCustomer.cusState}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Cidade</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusCity}"/></td>
+                    <td width="20%">Cidade</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusCity}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Complemento</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusComplement}"/></td>
+                    <td width="20%">Complemento</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusComplement}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Pai</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusFather}"/></td>
+                    <td width="20%">Pai</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusFather}"/></td>
                 </tr>
 
                 <tr>
-                    <td>Mae</td>
-                    <td><h:inputText value="#{customerControl.selectedCustomer.cusMother}"/></td>
+                    <td width="20%">Mae</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusMother}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Observacoes</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusObs}"/></td>
+                </tr>
+                <tr>
+                    <td width="20%">Celular</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cuscelNumber}"/></td>
+                </tr>
+                
+                <tr>
+                    <td width="20%">Telefone</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusTelephone}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="10%">Profissional</td>
+                    <td width="90%"><hr/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Empresa que Trabalha</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkName}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Ocupacao</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusOcupation}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Tel Comercial</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkNumber}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Endereco Comercial</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkAddress}"/></td>
+                </tr>
+
+                <tr>
+                    <td width="20%">Observacoes da Empresa</td>
+                    <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkObs}"/></td>
                 </tr>
 
 
-                <tr>
-                    <td>Dentista ?</td>
-                    <td><h:selectBooleanCheckbox value="#{customerControl.selectedCustomer.usuDentist}"/></td>
-                </tr>
-                <tr>
-                    <td>Administrador ?</td>
-                    <td><h:selectBooleanCheckbox value="#{customerControl.selectedCustomer.usuAdministrator}"/></td>
-                </tr>
+
             </table>
-            <h:commandButton action="#{customerControl.doFinishAddUsuario()}" value="Cadastrar"/> &nbsp; <h:commandButton action="users.faces" value="Cancelar" immediate="true"/>
+            <h:commandButton action="#{customerControl.doFinishAddCustomer()}" value="Cadastrar"/> &nbsp; <h:commandButton action="users.faces" value="Cancelar" immediate="true"/>
         </h:form>
     </ui:define>
 

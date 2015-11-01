@@ -19,7 +19,9 @@ package br.com.devmedia.consultorioee.service;
 
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.repository.CustomerRepository;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -32,10 +34,6 @@ import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author dyego.carmo
- */
 @Stateless
 @LocalBean
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -47,45 +45,59 @@ public class CustomerService extends BasicService {
     @PersistenceContext
     private EntityManager em;
     private CustomerRepository customerRepository;
-    
+
     @PostActivate
     @PostConstruct
     private void postConstruct() {
         customerRepository = new CustomerRepository(em);
     }
-    
+
     public Customer addCustomer(Customer cus) {
+        cus.setCusAge(getIdade(cus.getCusBorndate()));
         return customerRepository.addCustomer(cus);
     }
-    
+
     public Customer setCustomer(Customer cus) {
+        cus.setCusAge(getIdade(cus.getCusBorndate()));
         return customerRepository.setCustomer(cus);
     }
-    
+
+    private int getIdade(Date nascimento) {
+        Calendar dateOfBirth = new GregorianCalendar();
+        dateOfBirth.setTime(nascimento);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+        dateOfBirth.add(Calendar.YEAR, age);
+        if (today.before(dateOfBirth)) {
+            age--;
+        }
+        return age;
+    }
+
     public void removeCustomer(Customer cus) {
         customerRepository.removeCustomer(cus);
     }
-    
-    public Customer getCustomer(int idOfCustomer)  {
+
+    public Customer getCustomer(int idOfCustomer) {
         return customerRepository.getCustomer(idOfCustomer);
     }
-    
+
     public List<Customer> getCustomerByName(String nameOfCustomer) {
         return customerRepository.getCustomerByName(nameOfCustomer);
     }
-    
-    public List<Customer> getCustomersToCall(int month,int year) {
+
+    public List<Customer> getCustomersToCall(int month, int year) {
         return customerRepository.getCustomersToCall(month, year);
     }
-    
+
     public List<Customer> getCustomersComPagamentoEmAberto(int ifOfCustomer) {
         return customerRepository.getCustomersComPagamentoEmAberto(ifOfCustomer);
     }
-    
+
     public Date getUltimoAtendimento(int idOfCustomer) {
         return customerRepository.getUltimoAtendimento(idOfCustomer);
     }
-    
+
     public int getCustomersCount() {
         return customerRepository.getCustomersCount();
     }

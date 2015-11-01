@@ -19,7 +19,7 @@ import javax.inject.Named;
 @SessionScoped
 public class CustomerControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+        @EJB
     private CustomerService customerService;
     
     private List<Customer> customers;
@@ -72,6 +72,11 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
     public String doStartAddCustomer() {
         cleanCache();
         return "/restrito/addCustomer.faces";
+    }
+    
+    
+    public String doFinishAddCustomer() {
+        return "duh !";
     }
 
 }

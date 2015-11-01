@@ -30,7 +30,7 @@ public class CustomerRepository extends BasicRepository{
     public Customer setCustomer(Customer customer) {
         return setEntity(Customer.class, customer);
     }
-
+    
     public void removeCustomer(Customer customer) {
         removeEntity(customer);
     }
