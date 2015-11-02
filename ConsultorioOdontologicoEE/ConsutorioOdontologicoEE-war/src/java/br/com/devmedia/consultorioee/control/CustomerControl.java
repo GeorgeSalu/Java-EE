@@ -9,6 +9,7 @@ package br.com.devmedia.consultorioee.control;
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.CustomerService;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -53,7 +54,7 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
     }
     
     private void cleanCache() {
-        customers = null;
+        customers = new LinkedList<>();
         setSelectedCustomer(new Customer());
     }
 
@@ -78,8 +79,11 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
     public String doFinishAddCustomer() {
         if (existsViolationsForJSF(getSelectedCustomer())) {
             return "/restrito/addCustomer.faces";
-        }        
-        
+        }
+        Customer cus = customerService.addCustomer(selectedCustomer);
+        cleanCache();
+        getCustomers().add(cus);
+        setLocalizar(cus.getCusName());
         return "/restrito/customers.faces";
     }
 }

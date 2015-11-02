@@ -6,7 +6,9 @@
 package br.com.devmedia.consultorioee.entities;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.Basic;
@@ -20,6 +22,8 @@ import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -36,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
 public class Customer implements Serializable {
-     private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -44,7 +48,7 @@ public class Customer implements Serializable {
     private Integer cusId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, max = 255, message = "Você deve especificar o nome do cliente entre 1 e 255 caracteres")
     @Column(name = "cus_name", nullable = false, length = 255)
     private String cusName;
     @Basic(optional = false)
@@ -58,7 +62,7 @@ public class Customer implements Serializable {
     private String cusAddress;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 2)
+    @Size(min = 2, max = 2, message = "O estado deve conter 2 caracteres")
     @Column(name = "cus_state", nullable = false, length = 2)
     private String cusState;
     @Basic(optional = false)
@@ -114,7 +118,27 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orcCustomer")
     private List<Orcamento> orcamentoList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansCustomer")
-    private List<Anaminese> anamineseList = new LinkedList<>();;
+    private List<Anaminese> anamineseList = new LinkedList<>();
+
+
+    @PrePersist
+    @PreUpdate
+    public void updateAge() {
+        System.out.println("[Customer Entity] Calling getIdade()..");
+        setCusAge(getIdade(getCusBorndate()));
+    }
+    
+    private int getIdade(Date nascimento) {
+        Calendar dateOfBirth = new GregorianCalendar();
+        dateOfBirth.setTime(nascimento);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+        dateOfBirth.add(Calendar.YEAR, age);
+        if (today.before(dateOfBirth)) {
+            age--;
+        }
+        return age;
+    }
 
     public Customer() {
     }
@@ -127,13 +151,12 @@ public class Customer implements Serializable {
         orc.setOrcCustomer(this);
         getOrcamentoList().add(orc);
     }
-    
+
     public void addAnaminese(Anaminese anam) {
         anam.setAnsCustomer(this);
         getAnamineseList().add(anam);
     }
-    
-    
+
     public Customer(Integer cusId, String cusName, int cusAge, String cusAddress, String cusState, String cusCity, String cusFather, String cusMother, Date cusBorndate) {
         this.cusId = cusId;
         this.cusName = cusName;
