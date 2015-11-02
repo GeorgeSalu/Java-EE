@@ -53,12 +53,12 @@ public class CustomerService extends BasicService {
     }
 
     public Customer addCustomer(Customer cus) {
-        cus.setCusAge(getIdade(cus.getCusBorndate()));
+        //cus.setCusAge(getIdade(cus.getCusBorndate()));
         return customerRepository.addCustomer(cus);
     }
 
     public Customer setCustomer(Customer cus) {
-        cus.setCusAge(getIdade(cus.getCusBorndate()));
+        //cus.setCusAge(getIdade(cus.getCusBorndate()));
         return customerRepository.setCustomer(cus);
     }
 
@@ -89,6 +89,12 @@ public class CustomerService extends BasicService {
     public List<Customer> getCustomersToCall(int month, int year) {
         return customerRepository.getCustomersToCall(month, year);
     }
+    
+    public Customer refreshCustomer(Customer customer) {
+        customerRepository.refreshEntity(Customer.class, customer);
+        return customer;
+    }
+    
 
     public List<Customer> getCustomersComPagamentoEmAberto(int ifOfCustomer) {
         return customerRepository.getCustomersComPagamentoEmAberto(ifOfCustomer);

@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class CustomerRepository extends BasicRepository{
 
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     public CustomerRepository(EntityManager entityManager) {
         super(entityManager);

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titleOfPage">
+        Clientes do Sistema - Editando #{customerControl.selectedCustomer.cusName}
+    </ui:define>
+
+    <ui:define name="content">
+        <h:messages errorClass="msg_erro"/>
+        <h:form>
+            <f:validateBean>
+                <table width="100%">
+                    <tr>
+                        <td width="20%">Nome</td>
+                        <td width="80%"><h:inputText style="width: 100%" value="#{customerControl.selectedCustomer.cusName}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Endereco</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusAddress}"/></td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td width="20%">Data Nascimento</td>
+                        <td width="10%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusBorndate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:inputText></td>
+                        <td width="10%">Estado</td>
+                        <td width="10%"><h:inputText style="width: 100%"  maxlength="2" value="#{customerControl.selectedCustomer.cusState}"/></td>
+                        <td width="10%">Cidade</td>
+                        <td width="40%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusCity}"/></td>
+                    </tr>
+                </table>
+                <table width="100%">
+                    <tr>
+                        <td width="20%">Celular</td>
+                        <td width="30%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cuscelNumber}"/></td>
+                        <td width="20%">Telefone</td>
+                        <td width="30%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusTelephone}"/></td>
+                    </tr>
+                </table>
+                <table width="100%">
+
+                    <tr>
+                        <td width="20%">Complemento</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusComplement}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Pai</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusFather}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Mae</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusMother}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Observacoes</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusObs}"/></td>
+                    </tr>
+
+                </table>
+                <br/>
+                <br/>
+                Informacoes Comerciais
+                <hr/>
+                <br/>
+                <table width="100%">
+
+                    <tr>
+                        <td width="20%">Empresa</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkName}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Ocupacao</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusOcupation}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Telefone</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkNumber}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Endereco</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkAddress}"/></td>
+                    </tr>
+
+                    <tr>
+                        <td width="20%">Observacoes</td>
+                        <td width="80%"><h:inputText style="width: 100%"  value="#{customerControl.selectedCustomer.cusworkObs}"/></td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+            </f:validateBean>
+            <h:commandButton action="#{customerControl.doFinishAlterar()}" value="Salvar"/> &nbsp; <h:commandButton action="customers.faces" value="Cancelar" immediate="true"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

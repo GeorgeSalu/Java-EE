@@ -75,6 +75,19 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
         return "/restrito/addCustomer.faces";
     }
     
+    public String doStartAlterar() {
+        return "/restrito/editCustomer.faces";
+    }
+    
+    public String doFinishAlterar() {
+        if (existsViolationsForJSF(getSelectedCustomer())) {
+            return "/restrito/editCustomer.faces";
+        }
+        customerService.setCustomer(getSelectedCustomer());
+        customerService.refreshCustomer(getSelectedCustomer());
+        setSelectedCustomer(null);
+        return "/restrito/customers.faces";
+    }
     
     public String doFinishAddCustomer() {
         if (existsViolationsForJSF(getSelectedCustomer())) {
