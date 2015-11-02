@@ -1,6 +1,8 @@
 package br.com.devmedia.consultorioee.control;
 
+import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
+import br.com.devmedia.consultorioee.entities.Orcamentoitem;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
 import java.util.List;
 import javax.ejb.EJB;
@@ -15,6 +17,7 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
 
     @EJB
     private OrcamentoService orcamentoService;
+    private Customer selectedCustomer;
     private Orcamento selectedOrcamento;
     private List<Orcamento> orcamentos;
 
@@ -22,6 +25,14 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return orcamentoService;
     }
 
+    public Customer getSelectedCustomer() {
+        return selectedCustomer;
+    }
+
+    public void setSelectedCustomer(Customer selectedCustomer) {
+        this.selectedCustomer = selectedCustomer;
+    }
+    
     public void setOrcamentoService(OrcamentoService orcamentoService) {
         this.orcamentoService = orcamentoService;
     }
@@ -40,6 +51,28 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
 
     public void setOrcamentos(List<Orcamento> orcamentos) {
         this.orcamentos = orcamentos;
+    }
+    
+    public String doStartAtenderOCliente(Customer customer) {
+        setSelectedCustomer(customer);
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
+
+    public String getItensOfOrcamento(Orcamento orc) {
+        StringBuilder sb = new StringBuilder();
+        for (Orcamentoitem item : orc.getOrcamentoitemList()) {
+            if (sb.length() >0) {
+               sb.append(",");
+            }
+            sb.append(item.getOriService().getSrvName());
+        }
+        return sb.toString();
+    }
+    private void cleanCache() {
+        setSelectedOrcamento(new Orcamento());
+        getSelectedOrcamento().setOrcCustomer(getSelectedCustomer());
+        setOrcamentos(orcamentoService.getOrcamentos(getSelectedCustomer().getCusId()));
     }
     
 }
