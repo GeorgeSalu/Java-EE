@@ -56,10 +56,13 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
+                    <h:commandLink  title="Atender o Cliente" action="#{OrcamentoControl.doStartAtenderOCliente(customerControl.selectedCustomer)}">
+                        <h:graphicImage value="/resources/images/atendimento.gif"/>
+                    </h:commandLink>&nbsp; 
                     <h:commandLink  title="Alterar Cliente" action="#{customerControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
-                    </h:commandLink>   
+                    </h:commandLink>&nbsp;
                     <h:commandLink title="Excluir Cliente" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>

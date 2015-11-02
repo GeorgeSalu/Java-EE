@@ -86,6 +86,7 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
         customerService.setCustomer(getSelectedCustomer());
         customerService.refreshCustomer(getSelectedCustomer());
         setSelectedCustomer(null);
+        cleanCache();doLocalizar();
         return "/restrito/customers.faces";
     }
     
@@ -97,6 +98,12 @@ public class CustomerControl extends BasicControl implements java.io.Serializabl
         cleanCache();
         getCustomers().add(cus);
         setLocalizar(cus.getCusName());
+        return "/restrito/customers.faces";
+    }
+    
+    public String doFinishExcluir() {
+        customerService.removeCustomer(selectedCustomer);
+        getCustomers().remove(getSelectedCustomer());
         return "/restrito/customers.faces";
     }
 }
