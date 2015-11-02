@@ -25,6 +25,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Orcamento.findAll", query = "SELECT o FROM Orcamento o")})
 public class Orcamento implements Serializable {
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,8 +79,8 @@ private static final long serialVersionUID = 1L;
     @JoinColumn(name = "orc_customer", referencedColumnName = "cus_id", nullable = false)
     @ManyToOne(optional = false)
     private Customer orcCustomer;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansOrcamento")
-    private List<Anaminese> anamineseList = new LinkedList<>();
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "ansOrcamento")
+    private Anaminese orcAnaminese;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "oriOrcamento")
     private List<Orcamentoitem> orcamentoitemList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "parOrcamento")
@@ -108,10 +109,6 @@ private static final long serialVersionUID = 1L;
         orcamentoitemList.add(ori);
     }
     
-    public void addAnaminese(Anaminese anam) {
-        anam.setAnsOrcamento(this);
-        getAnamineseList().add(anam);
-    }
     
     public void addParcela(Parcela par) {
         par.setParOrcamento(this);
@@ -186,13 +183,12 @@ private static final long serialVersionUID = 1L;
         this.orcCustomer = orcCustomer;
     }
 
-    @XmlTransient
-    public List<Anaminese> getAnamineseList() {
-        return anamineseList;
+    public Anaminese getOrcAnaminese() {
+        return orcAnaminese;
     }
 
-    public void setAnamineseList(List<Anaminese> anamineseList) {
-        this.anamineseList = anamineseList;
+    public void setOrcAnaminese(Anaminese anaminese) {
+        this.orcAnaminese = anaminese;
     }
 
     @XmlTransient
@@ -236,5 +232,5 @@ private static final long serialVersionUID = 1L;
     @Override
     public String toString() {
         return "br.com.devmedia.consultorioee.entities.Orcamento[ orcId=" + orcId + " ]";
-    }    
+    }
 }

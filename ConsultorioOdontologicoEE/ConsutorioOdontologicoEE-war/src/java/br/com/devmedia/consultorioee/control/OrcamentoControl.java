@@ -73,6 +73,5 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         setSelectedOrcamento(new Orcamento());
         getSelectedOrcamento().setOrcCustomer(getSelectedCustomer());
         setOrcamentos(orcamentoService.getOrcamentos(getSelectedCustomer().getCusId()));
-    }
-    
+    }    
 }

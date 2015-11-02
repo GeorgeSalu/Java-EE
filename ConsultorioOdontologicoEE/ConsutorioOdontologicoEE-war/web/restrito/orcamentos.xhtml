@@ -4,7 +4,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./base.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="titleOfPage">
         Orcamentos do Cliente #{orcamentoControl.selectedCustomer.cusName}
@@ -13,12 +14,14 @@
     <ui:define name="content">
         <h2>Atendendo Cliente #{orcamentoControl.selectedCustomer.cusName}</h2>
         <h:messages errorClass="msg_erro"/>
-        <br/>
         <hr/>
         <br/>
         <h3>Lista de Orcamentos Cadastrados</h3>
         <h:form>
-            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{orcamentoControl.orcamentos}">
+            <c:if test="#{orcamentoControl.orcamentos.size() eq 0}">
+            Nenhum Orcamento Cadastrado.
+            </c:if>
+            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{orcamentoControl.orcamentos}" rendered="#{orcamentoControl.orcamentos.size() ne 0}">
                 <h:column>
                     <f:facet name="header">
                         Data
@@ -45,34 +48,36 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Idade
+                        Obs Anamnese
                     </f:facet>
-                    #{item.cusAge}
+                    #{item.orcAnaminese.ansObs}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         Ultimo Atendimento
                     </f:facet>
-                    #{customerControl.getUltimoAtendimento(item.cusId)}
+                    #{customerControl.getUltimoAtendimento(item.orcCustomer.cusId)}
                 </h:column>
-                
+
                 <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Atender o Cliente" action="#{OrcamentoControl.doStartAtenderOCliente(customerControl.selectedCustomer)}">
-                        <h:graphicImage value="/resources/images/atendimento.gif"/>
-                    </h:commandLink>&nbsp; 
-                    <h:commandLink  title="Alterar Cliente" action="#{customerControl.doStartAlterar()}">
+                    <h:commandLink  title="Alterar Orcamento" action="#{customerControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
                     </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Cliente" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
+                    <h:commandLink title="Excluir Orcamento" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
                     </h:commandLink>   
                 </h:column>
             </h:dataTable>
+            <br/>
+            <h3>Lista de Anamneses Feitas</h3>
+            <br/>
+
+
             <h:commandButton action="#{customerControl.doStartAddCustomer()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo cliente"/>
         </h:form>
     </ui:define>
