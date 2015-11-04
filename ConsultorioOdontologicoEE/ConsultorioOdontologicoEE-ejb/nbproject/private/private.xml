@@ -4,17 +4,20 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Service.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Customer.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/CustomerService.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Orcamento.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/CustomerRepository.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadraoValidator.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/BasicRepository.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Users.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/DescricaoServicoUnico.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/UserRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/DescricaoServicoUnicoValidator.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/AcessoInvalidoException.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/CustomerService.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadrao.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/CustomerRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/UserService.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadraoValidator.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/BasicRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/DescricaoServicoUnico.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Users.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/BasicService.java</file>
         </group>
     </open-files>
 </project-private>
