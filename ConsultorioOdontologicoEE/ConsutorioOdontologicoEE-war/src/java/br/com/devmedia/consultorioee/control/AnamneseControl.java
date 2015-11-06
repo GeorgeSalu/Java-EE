@@ -12,7 +12,6 @@ import javax.inject.Named;
 @SessionScoped
 public class AnamneseControl extends BasicControl implements java.io.Serializable {
     
-
     @EJB 
     private AnamineseService anamneseService;
     private Anaminese selectedAnaminese;
@@ -45,10 +44,13 @@ public class AnamneseControl extends BasicControl implements java.io.Serializabl
     
     public void cleanCache() {
         setSelectedAnaminese(new Anaminese());
+        getSelectedAnaminese().setAnsCustomer(selectedCustomer);
         anamneses = anamneseService.getAnaminesesByCustomer(selectedCustomer);
     }
     
+    public String doStartAddAnamnese() {
+        cleanCache();
+        return "/restrito/addAnamnese.faces";
+    }
     
-    
-
 }

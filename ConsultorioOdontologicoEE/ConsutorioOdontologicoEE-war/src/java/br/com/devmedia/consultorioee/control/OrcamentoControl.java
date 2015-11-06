@@ -7,6 +7,7 @@ import br.com.devmedia.consultorioee.service.OrcamentoService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 
@@ -17,6 +18,11 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
 
     @EJB
     private OrcamentoService orcamentoService;
+    @Inject
+    private AnamneseControl anamneseControl;
+
+    public OrcamentoControl() {
+    }
     private Customer selectedCustomer;
     private Orcamento selectedOrcamento;
     private List<Orcamento> orcamentos;
@@ -55,6 +61,8 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     
     public String doStartAtenderOCliente(Customer customer) {
         setSelectedCustomer(customer);
+        anamneseControl.setSelectedCustomer(selectedCustomer);
+        anamneseControl.cleanCache();
         cleanCache();
         return "/restrito/orcamentos.faces";
     }
@@ -73,5 +81,5 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         setSelectedOrcamento(new Orcamento());
         getSelectedOrcamento().setOrcCustomer(getSelectedCustomer());
         setOrcamentos(orcamentoService.getOrcamentos(getSelectedCustomer().getCusId()));
-    }    
+    }
 }
