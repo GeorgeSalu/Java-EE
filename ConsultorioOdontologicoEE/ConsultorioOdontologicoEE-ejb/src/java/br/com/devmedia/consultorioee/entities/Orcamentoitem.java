@@ -33,8 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Orcamentoitem implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ori_id", nullable = false)
     private Integer oriId;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -42,6 +42,12 @@ public class Orcamentoitem implements Serializable {
     @NotNull
     @Column(name = "ori_cost", nullable = false, precision = 16, scale = 2)
     private BigDecimal oriCost;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ori_qnt", nullable = false)
+    private int oriQnt = 1;
+
     @Lob
     @Size(max = 65535)
     @Column(name = "ori_obs", length = 65535)
@@ -128,6 +134,14 @@ public class Orcamentoitem implements Serializable {
     @Override
     public String toString() {
         return "br.com.devmedia.consultorioee.entities.Orcamentoitem[ oriId=" + oriId + " ]";
+    }
+
+    public int getOriQnt() {
+        return oriQnt;
+    }
+
+    public void setOriQnt(int oriQnt) {
+        this.oriQnt = oriQnt;
     }
     
 }

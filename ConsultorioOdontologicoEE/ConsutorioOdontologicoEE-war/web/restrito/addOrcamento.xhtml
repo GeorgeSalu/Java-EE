@@ -17,7 +17,6 @@
         </script>
 
 
-        <h3>Novo Orcamento para #{orcamentoControl.selectedCustomer.cusName}</h3>
         <h4>Anamnese sendo utilizada :</h4>
         <h:messages errorClass="msg_erro"/>
         <table>
@@ -54,8 +53,53 @@
                 <td><h:inputTextarea disabled="true"  value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
             </tr>
         </table>
+        <h3>Itens do Orcamento para #{orcamentoControl.selectedCustomer.cusName}</h3>
+
         <h:form id="frmAddOrcamento">
-            <h:commandButton action="#{anamneseControl.doFinishAddAnamnese()}" value="Cadastrar nova anamnese"/> &nbsp; <h:commandButton action="orcamentos.faces" value="Cancelar" immediate="true"/>
+            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{orcamentoControl.selectedOrcamento.orcamentoitemList}" rendered="#{orcamentoControl.selectedOrcamento.orcamentoitemList.size() ne 0}">
+                <h:column>
+                    <f:facet name="header">
+                        Servico
+                    </f:facet>
+                    #{item.oriService.srvName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Quantidade
+                    </f:facet>
+                    #{item.oriQnt}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Valor Total
+                    </f:facet>
+                    <h:outputText value="#{item.oriCost}"><f:convertNumber type="currency"/></h:outputText>
+                </h:column>
+            </h:dataTable>
+            <h:commandButton action="#{orcamentoControl.doStartAddItemAoOrcamento()}" value="Cadastrar um novo item ao orcamento"/>
+            <table> 
+                <tr>
+                    <td>Total</td>
+                    <td><h:inputText value="#{orcamentoControl.selectedOrcamento}"/></td>
+                </tr>
+                <tr>
+                    <td>Dentista</td>
+                    <td><h:inputText value="#{orcamentoControl.selectedOrcamento}"/></td>
+                </tr>
+                <tr>
+                    <td>Forma de pagamento</td>
+                    <td><h:inputText value="#{orcamentoControl.selectedOrcamento}"/></td>
+                </tr>
+                <tr>
+                    <td>Prestacoes</td>
+                    <td><h:inputText value="#{orcamentoControl.selectedOrcamento}"/></td>
+                </tr>
+                <tr>
+                    <td>Observações</td>
+                    <td><h:inputTextarea  value="#{orcamentoControl.selectedOrcamento.orcObs}"/></td>
+                </tr>
+            </table>
+            <h:commandButton action="#{orcamentoControl.doFinishAddOrcamento()}" value="Cadastrar um novo orcamento"/> &nbsp; <h:commandButton action="orcamentos.faces" value="Cancelar" immediate="true"/>
         </h:form>
     </ui:define>
 
