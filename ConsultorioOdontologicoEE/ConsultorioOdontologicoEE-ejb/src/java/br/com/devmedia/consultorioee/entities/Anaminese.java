@@ -84,7 +84,7 @@ public class Anaminese implements Serializable {
     @Column(name = "ans_obs", length = 65535)
     private String ansObs;
     @JoinColumn(name = "ans_orcamento", referencedColumnName = "orc_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Orcamento ansOrcamento;
     @JoinColumn(name = "ans_customer", referencedColumnName = "cus_id", nullable = false)
     @ManyToOne(optional = false)

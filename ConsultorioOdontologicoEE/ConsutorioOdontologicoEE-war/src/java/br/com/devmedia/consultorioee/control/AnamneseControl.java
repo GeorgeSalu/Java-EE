@@ -6,6 +6,7 @@ import br.com.devmedia.consultorioee.service.AnamineseService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named
@@ -17,6 +18,8 @@ public class AnamneseControl extends BasicControl implements java.io.Serializabl
     private Anaminese selectedAnaminese;
     private Customer selectedCustomer;
     private List<Anaminese> anamneses;
+    @Inject
+    private OrcamentoControl orcamentoControl;
 
     public Anaminese getSelectedAnaminese() {
         return selectedAnaminese;
@@ -53,4 +56,10 @@ public class AnamneseControl extends BasicControl implements java.io.Serializabl
         return "/restrito/addAnamnese.faces";
     }
     
+    public String doFinishAddAnamnese() {
+        selectedAnaminese.setAnsCustomer(selectedCustomer);
+        anamneseService.addAnaminese(selectedAnaminese);
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
 }
