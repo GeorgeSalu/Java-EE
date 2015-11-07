@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titleOfPage">
+        Novo Orcamento para #{orcamentoControl.selectedCustomer.cusName}
+    </ui:define>
+
+    <ui:define name="content">
+        <script>
+            $(document).ready(function () {
+            });
+        </script>
+
+
+        <h3>Novo Orcamento para #{orcamentoControl.selectedCustomer.cusName}</h3>
+        <h4>Anamnese sendo utilizada :</h4>
+        <h:messages errorClass="msg_erro"/>
+        <table>
+            <tr>
+                <td>Fuma ?</td>
+                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.ansFuma}"/></td>
+            </tr>
+            <tr>
+                <td>Pratica Exercicios Regularmente ?</td>
+                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.anspraticaExercicio}"/></td>
+            </tr>
+            <tr>
+                <td>Possui Doenca Hereditaria ?</td>
+                <td><h:selectBooleanCheckbox disabled="true" onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual Doenca ? <h:inputText disabled="true"  id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
+            </tr>
+            <tr>
+                <td>Fez alguma operacao Recente ?</td>
+                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoOperacaoRecente" value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
+            </tr>
+            <tr>
+                <td>Utiliza Medicacao Continua ?</td>
+                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoMedicacao" value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
+            </tr>
+            <tr>
+                <td>Possui Alergia a algum medicamento ?</td>
+                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoAlergia" value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
+            </tr>
+            <tr>
+                <td>Possui alguma D.S.T. ?</td>
+                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDescricaoDST" value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
+            </tr>
+            <tr>
+                <td>Observacoes</td>
+                <td><h:inputTextarea disabled="true"  value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
+            </tr>
+        </table>
+        <h:form id="frmAddOrcamento">
+            <h:commandButton action="#{anamneseControl.doFinishAddAnamnese()}" value="Cadastrar nova anamnese"/> &nbsp; <h:commandButton action="orcamentos.faces" value="Cancelar" immediate="true"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

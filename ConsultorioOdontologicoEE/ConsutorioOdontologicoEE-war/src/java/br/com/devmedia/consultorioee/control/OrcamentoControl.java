@@ -1,5 +1,6 @@
 package br.com.devmedia.consultorioee.control;
 
+import br.com.devmedia.consultorioee.entities.Anaminese;
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Orcamentoitem;
@@ -81,5 +82,12 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         setSelectedOrcamento(new Orcamento());
         getSelectedOrcamento().setOrcCustomer(getSelectedCustomer());
         setOrcamentos(orcamentoService.getOrcamentos(getSelectedCustomer().getCusId()));
+    }
+    
+    public String doStartOrcamentoComUmaAnamnese(Anaminese ans) {
+        cleanCache();
+        getSelectedOrcamento().setOrcAnaminese(ans);
+        ans.setAnsOrcamento(selectedOrcamento);
+        return "/restrito/addOrcamento.faces";
     }
 }

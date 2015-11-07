@@ -108,13 +108,12 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Utilizar Anamnese" action="#{anamneseControl.doUseThisAnamnese()}">
+                    <h:commandLink  title="Utilizar Anamnese" action="#{orcamentoControl.doStartOrcamentoComUmaAnamnese(item)}">
                         <h:graphicImage value="/resources/images/usar.jpg"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
                     </h:commandLink>&nbsp;
                     <h:commandLink  title="Alterar Anamnese" action="#{anamneseControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{anamneseControl.selectedAnaminese}"/>
                     </h:commandLink>&nbsp;
                     <h:commandLink title="Excluir Anamnese" action="#{anamneseControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir esta anamnese ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
