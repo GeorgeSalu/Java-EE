@@ -6,6 +6,7 @@
 package br.com.devmedia.consultorioee.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -89,7 +92,36 @@ public class Anaminese implements Serializable {
     @JoinColumn(name = "ans_customer", referencedColumnName = "cus_id", nullable = false)
     @ManyToOne(optional = false)
     private Customer ansCustomer;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ans_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date ansDate  = new Date();
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ans_hour", nullable = false)
+    @Temporal(TemporalType.TIME)
+    private Date ansHour = new Date();
 
+    public Date getAnsDate() {
+        return ansDate;
+    }
+
+    public void setAnsDate(Date ansDate) {
+        this.ansDate = ansDate;
+    }
+
+    public Date getAnsHour() {
+        return ansHour;
+    }
+
+    public void setAnsHour(Date ansHour) {
+        this.ansHour = ansHour;
+    }
+
+    
+    
+    
     public Anaminese() {
     }
 

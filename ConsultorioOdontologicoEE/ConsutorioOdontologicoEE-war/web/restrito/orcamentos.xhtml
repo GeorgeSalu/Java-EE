@@ -81,19 +81,13 @@
             <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{anamneseControl.anamneses}" rendered="#{anamneseControl.anamneses.size() ne 0}">
                 <h:column>
                     <f:facet name="header">
-                        Data do Orcamento
+                        Data da Anamnese
                     </f:facet>
-                    <h:outputText value="#{item.ansOrcamento.orcDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>&nbsp;<h:outputText value="#{item.orcHour}"><f:convertDateTime pattern="hh:mm:ss"/></h:outputText>
+                    <h:outputText value="#{item.ansDate}"><f:convertDateTime pattern="dd/MM/yyyy"/></h:outputText>&nbsp;<h:outputText value="#{item.ansHour}"><f:convertDateTime pattern="hh:mm:ss"/></h:outputText>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
-                        Dentista
-                    </f:facet>
-                    #{item.ansOrcamento.orcDentist.usuName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Obs Anamnese
+                        Observacoes
                     </f:facet>
                     #{item.ansObs}
                 </h:column>
@@ -102,6 +96,13 @@
                         Ultimo Atendimento
                     </f:facet>
                     #{customerControl.getUltimoAtendimento(item.ansCustomer.cusId)}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Utilmo Dentista
+                    </f:facet>
+                    <h:outputText value="#{item.ansOrcamento.orcDentist.usuName}" rendered="#{!empty item.ansOrcamento.orcDentist.usuName}"/>
+                    <h:outputText value="Nenhum" rendered="#{empty item.ansOrcamento.orcDentist.usuName}"/>
                 </h:column>
                 <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
                     <f:facet name="header">
@@ -117,7 +118,7 @@
                     </h:commandLink>&nbsp;
                     <h:commandLink title="Excluir Anamnese" action="#{anamneseControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir esta anamnese ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{anamneseControl.selectedAnaminese}"/>
                     </h:commandLink>   
                 </h:column>
             </h:dataTable>

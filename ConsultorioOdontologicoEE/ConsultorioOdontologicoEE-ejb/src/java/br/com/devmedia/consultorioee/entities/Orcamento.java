@@ -52,12 +52,12 @@ public class Orcamento implements Serializable {
     @NotNull
     @Column(name = "orc_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date orcDate;
+    private Date orcDate = new Date();
     @Basic(optional = false)
     @NotNull
     @Column(name = "orc_hour", nullable = false)
     @Temporal(TemporalType.TIME)
-    private Date orcHour;
+    private Date orcHour = new Date();
     @Lob
     @Size(max = 65535)
     @Column(name = "orc_obs", length = 65535)

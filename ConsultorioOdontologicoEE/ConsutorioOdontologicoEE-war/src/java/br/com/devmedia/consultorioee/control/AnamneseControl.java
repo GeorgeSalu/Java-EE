@@ -13,7 +13,7 @@ import javax.inject.Named;
 @SessionScoped
 public class AnamneseControl extends BasicControl implements java.io.Serializable {
     
-    @EJB 
+        @EJB 
     private AnamineseService anamneseService;
     private Anaminese selectedAnaminese;
     private Customer selectedCustomer;
@@ -62,4 +62,11 @@ public class AnamneseControl extends BasicControl implements java.io.Serializabl
         cleanCache();
         return "/restrito/orcamentos.faces";
     }
+    
+    public String doFinishExcluir() {
+        anamneseService.removeAnaminese(selectedAnaminese);
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
+
 }
