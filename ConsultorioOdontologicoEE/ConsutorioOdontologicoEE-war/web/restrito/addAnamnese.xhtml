@@ -11,45 +11,58 @@
     </ui:define>
 
     <ui:define name="content">
+        <script>
+            function enableDisable(compo, nomeText) {
+                if (compo.checked) {
+                    $('input[id=' + nomeText + ']').attr("disabled", true);
+                } else {
+                    $('input[id=' + nomeText + ']').attr("disabled", false);
+                }
+                return true;
+            }
+            $(document).ready(function() {
+                $('input[type=text]').attr("disabled", true);
+            });
+        </script>
+
         <h3>Nova Anmnese para #{anamneseControl.selectedCustomer.cusName}</h3>
         <h:messages errorClass="msg_erro"/>
-        <h:form>
+        <h:form id="frmAnamnese">
             <table>
                 <tr>
                     <td>Fuma ?</td>
                     <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansFuma}"/></td>
                 </tr>
                 <tr>
-                    <td>Pratica Exiercicios Regularmente ?</td>
+                    <td>Pratica Exercicios Regularmente ?</td>
                     <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.anspraticaExercicio}"/></td>
                 </tr>
                 <tr>
                     <td>Possui Doenca Hereditaria ?</td>
-                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual Doença ? <h:inputText id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
+                    <td><h:selectBooleanCheckbox onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual Doenca ? <h:inputText id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
                 </tr>
                 <tr>
-                    <td>Fez alguma operação Recente ?</td>
-                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
+                    <td>Fez alguma operacao Recente ?</td>
+                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText id="descricaoOperacaoRecente" value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
                 </tr>
                 <tr>
                     <td>Utiliza Medicacao Continua ?</td>
-                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
+                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText id="descricaoMedicacao" value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
                 </tr>
                 <tr>
                     <td>Possui Alergia a algum medicamento ?</td>
-                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
+                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText id="descricaoAlergia" value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
                 </tr>
                 <tr>
                     <td>Possui alguma D.S.T. ?</td>
-                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
+                    <td><h:selectBooleanCheckbox value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText id="descricaoDescricaoDST" value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
                 </tr>
-               
                 <tr>
-                    <td>Custo</td>
-                    <td><h:inputText id="custoProduto" value="#{serviceControl.serviceSelected.srvCost}"><f:convertNumber type="currency"/></h:inputText></td>
+                    <td>Observacoes</td>
+                    <td><h:inputTextarea value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
                 </tr>
             </table>
-            <h:commandButton action="#{anamneseControl.doFinishAddAnamnese()}" value="Cadastrar"/> &nbsp; <h:commandButton action="services.faces" value="Cancelar" immediate="true"/>
+            <h:commandButton action="#{anamneseControl.doFinishAddAnamnese()}" value="Cadastrar nova anamnese"/> &nbsp; <h:commandButton action="services.faces" value="Cancelar" immediate="true"/>
         </h:form>
     </ui:define>
 
