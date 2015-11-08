@@ -4,7 +4,10 @@ import br.com.devmedia.consultorioee.entities.Anaminese;
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Orcamentoitem;
+import br.com.devmedia.consultorioee.entities.PaymentType;
+import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
+import br.com.devmedia.consultorioee.service.UserService;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -21,6 +24,8 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     private OrcamentoService orcamentoService;
     @Inject
     private AnamneseControl anamneseControl;
+    @EJB
+    private UserService userService;
 
     public OrcamentoControl() {
     }
@@ -89,5 +94,13 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         getSelectedOrcamento().setOrcAnaminese(ans);
         ans.setAnsOrcamento(selectedOrcamento);
         return "/restrito/addOrcamento.faces";
+    }
+    
+    public List<Users> getDentistas() {
+        return userService.getDentistUsers();
+    }
+    
+    public PaymentType[] getPaymentTypes() {
+        return PaymentType.values();
     }
 }

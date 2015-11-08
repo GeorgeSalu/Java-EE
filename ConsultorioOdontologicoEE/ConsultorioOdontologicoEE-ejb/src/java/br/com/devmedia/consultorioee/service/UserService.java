@@ -87,5 +87,8 @@ public class UserService extends BasicService{
     public List<Users> getUsers() {
         return usrRepository.getUsers();
     }
+    public List<Users> getDentistUsers() {
+        return usrRepository.getDentistUsers();
+    }
     
 }

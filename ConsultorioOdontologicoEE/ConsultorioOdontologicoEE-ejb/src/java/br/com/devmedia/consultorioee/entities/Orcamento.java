@@ -64,7 +64,7 @@ public class Orcamento implements Serializable {
     private String orcObs;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "orc_total", precision = 16, scale = 2)
-    private BigDecimal orcTotal;
+    private BigDecimal orcTotal = BigDecimal.ZERO;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 9)

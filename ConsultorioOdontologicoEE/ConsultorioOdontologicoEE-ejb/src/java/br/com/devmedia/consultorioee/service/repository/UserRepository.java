@@ -16,7 +16,7 @@ import javax.persistence.EntityManager;
  */
 public class UserRepository extends BasicRepository{
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
     public UserRepository(EntityManager entityManager) {
         super(entityManager);
@@ -73,6 +73,10 @@ public class UserRepository extends BasicRepository{
             ex.printStackTrace();
         }
         return digest;
+    }
+
+    public List<Users> getDentistUsers() {
+        return getPureList(Users.class, "select usr from Users usr where usr.usuDentist = true");
     }
     
 }
