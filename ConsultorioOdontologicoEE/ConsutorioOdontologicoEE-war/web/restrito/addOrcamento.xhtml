@@ -19,40 +19,47 @@
         <h:form id="frmAddOrcamento">
             <h4>Anamnese sendo utilizada :</h4>
             <h:messages errorClass="msg_erro"/>
-            <table>
+            <table border="1" width="90%">
                 <tr>
-                    <td>Fuma ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.ansFuma}"/></td>
-                </tr>
-                <tr>
-                    <td>Pratica Exercicios Regularmente ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.anspraticaExercicio}"/></td>
-                </tr>
-                <tr>
-                    <td>Possui Doenca Hereditaria ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true" onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual Doenca ? <h:inputText disabled="true"  id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
-                </tr>
-                <tr>
-                    <td>Fez alguma operacao Recente ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoOperacaoRecente" value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
-                </tr>
-                <tr>
-                    <td>Utiliza Medicacao Continua ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoMedicacao" value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
-                </tr>
-                <tr>
-                    <td>Possui Alergia a algum medicamento ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoAlergia" value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
-                </tr>
-                <tr>
-                    <td>Possui alguma D.S.T. ?</td>
-                    <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDescricaoDST" value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
-                </tr>
-                <tr>
-                    <td>Observacoes</td>
-                    <td><h:inputTextarea disabled="true"  value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>Fuma ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.ansFuma}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Pratica Exercicios Regularmente ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.anspraticaExercicio}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Possui Doenca Hereditaria ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true" onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Fez alguma operacao Recente ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoOperacaoRecente" value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Utiliza Medicacao Continua ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoMedicacao" value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Possui Alergia a algum medicamento ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoAlergia" value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Possui alguma D.S.T. ?</td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDescricaoDST" value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Observacoes</td>
+                                <td><h:inputTextarea disabled="true"  value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
+                            </tr>
+                        </table>
+                    </td>
                 </tr>
             </table>
+
             <h3>Itens do Orcamento para #{orcamentoControl.selectedCustomer.cusName}</h3>
 
             <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{orcamentoControl.selectedOrcamento.orcamentoitemList}" rendered="#{orcamentoControl.selectedOrcamento.orcamentoitemList.size() ne 0}">
@@ -76,27 +83,35 @@
                 </h:column>
             </h:dataTable>
             <h:commandButton action="#{orcamentoControl.doStartAddItemAoOrcamento()}" value="Cadastrar um novo item ao orcamento"/>
-            <table> 
+            <br/>
+            <br/>
+            <table border="1"  width="90%">
                 <tr>
-                    <td>Total</td>
-                    <td><h:outputText value="#{orcamentoControl.selectedOrcamento.orcTotal}"><f:convertNumber type="currency"/></h:outputText></td>
-                </tr>
-                <tr>
-                    <td>Dentista</td>
-                    <td><h:selectOneMenu value="#{orcamentoControl.selectedOrcamento.orcDentist}">
-                            <f:selectItems var="dentist" value="#{orcamentoControl.dentistas}" itemLabel="#{dentist.usuName}" itemValue="#{dentist}" itemDescription="#{dentist.usuName}"/>
-                        </h:selectOneMenu> 
+                    <td>
+                        <table> 
+                            <tr>
+                                <td>Total</td>
+                                <td><h:outputText value="#{orcamentoControl.selectedOrcamento.orcTotal}"><f:convertNumber type="currency"/></h:outputText></td>
+                            </tr>
+                            <tr>
+                                <td>Dentista</td>
+                                <td><h:selectOneMenu value="#{orcamentoControl.selectedOrcamento.orcDentist}">
+                                        <f:selectItems var="dentist" value="#{orcamentoControl.dentistas}" itemLabel="#{dentist.usuName}" itemValue="#{dentist}" itemDescription="#{dentist.usuName}"/>
+                                    </h:selectOneMenu> 
+                                </td>
+                                <td>Forma de pagamento</td>
+                                <td><h:selectOneMenu value="#{orcamentoControl.selectedOrcamento.orcpaymentType}">
+                                        <f:selectItems var="tipos" value="#{orcamentoControl.paymentTypes}" itemDescription="#{tipos.description}" itemLabel="#{tipos.description}" itemValue="#{tipos}"/>                      
+                                    </h:selectOneMenu></td>
+                                <td>Prestacoes</td>
+                                <td><h:inputText style="width: 40px" value="#{orcamentoControl.selectedOrcamento.orcTimes}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Observacoes</td>
+                                <td colspan="5"><h:inputTextarea  value="#{orcamentoControl.selectedOrcamento.orcObs}"/></td>
+                            </tr>
+                        </table>
                     </td>
-                    <td>Forma de pagamento</td>
-                    <td><h:selectOneMenu value="#{orcamentoControl.selectedOrcamento.orcpaymentType}">
-                            <f:selectItems var="tipos" value="#{orcamentoControl.paymentTypes}" itemDescription="#{tipos.description}" itemLabel="#{tipos.description}" itemValue="#{tipos}"/>                      
-                        </h:selectOneMenu></td>
-                    <td>Prestacoes</td>
-                    <td><h:inputText style="width: 40px" value="#{orcamentoControl.selectedOrcamento.orcTimes}"/></td>
-                </tr>
-                <tr>
-                    <td>Observacoes</td>
-                    <td colspan="5"><h:inputTextarea  value="#{orcamentoControl.selectedOrcamento.orcObs}"/></td>
                 </tr>
             </table>
             <h:commandButton action="#{orcamentoControl.doFinishAddOrcamento()}" value="Cadastrar um novo orcamento"/> &nbsp; <h:commandButton action="orcamentos.faces" value="Cancelar" immediate="true"/>

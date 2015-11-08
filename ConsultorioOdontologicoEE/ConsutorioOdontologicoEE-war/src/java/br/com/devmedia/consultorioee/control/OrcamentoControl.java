@@ -5,8 +5,10 @@ import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Orcamentoitem;
 import br.com.devmedia.consultorioee.entities.PaymentType;
+import br.com.devmedia.consultorioee.entities.Service;
 import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
+import br.com.devmedia.consultorioee.service.ServiceService;
 import br.com.devmedia.consultorioee.service.UserService;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,11 +28,15 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     private AnamneseControl anamneseControl;
     @EJB
     private UserService userService;
+    @EJB
+    private ServiceService serviceService;
 
     public OrcamentoControl() {
     }
     private Customer selectedCustomer;
     private Orcamento selectedOrcamento;
+    private Orcamentoitem selectedOrcamentoItem;
+    
     private List<Orcamento> orcamentos;
 
     public OrcamentoService getOrcamentoService() {
@@ -102,5 +108,17 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     
     public PaymentType[] getPaymentTypes() {
         return PaymentType.values();
+    }
+
+    public Orcamentoitem getSelectedOrcamentoItem() {
+        return selectedOrcamentoItem;
+    }
+
+    public void setSelectedOrcamentoItem(Orcamentoitem selectedOrcamentoItem) {
+        this.selectedOrcamentoItem = selectedOrcamentoItem;
+    }
+    
+    public List<Service> getServices() {
+        return serviceService.getServices();
     }
 }
