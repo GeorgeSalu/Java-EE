@@ -10,6 +10,7 @@ import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
 import br.com.devmedia.consultorioee.service.ServiceService;
 import br.com.devmedia.consultorioee.service.UserService;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -106,8 +107,9 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return userService.getDentistUsers();
     }
     
-    public PaymentType[] getPaymentTypes() {
-        return PaymentType.values();
+    
+    public List<PaymentType> getPaymentTypes() {
+        return Arrays.asList(PaymentType.values());
     }
 
     public Orcamentoitem getSelectedOrcamentoItem() {
@@ -120,5 +122,16 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     
     public List<Service> getServices() {
         return serviceService.getServices();
+    }
+    
+    public String doStartAddItemAoOrcamento() {
+        selectedOrcamentoItem = new Orcamentoitem();
+        selectedOrcamentoItem.setOriOrcamento(selectedOrcamento);
+        return "/restrito/addOrcamentoItem.faces";
+    }
+    
+    public String doFinishAddOrcamentoItem() {
+        selectedOrcamento.getOrcamentoitemList().add(selectedOrcamentoItem);
+        return "/restrito/addOrcamento.faces";
     }
 }

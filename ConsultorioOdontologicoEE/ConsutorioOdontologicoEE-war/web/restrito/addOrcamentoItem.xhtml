@@ -28,18 +28,21 @@
                 </tr>
                 <tr>
                     <td>Quantidade</td>
-                    <td><h:inputText value="#{orcamentoControl.selectedOrcamentoItem.oriQnt}"><f:convertNumber/></h:inputText></td>
-                </tr>
-                <tr>
-                    <td>Valor Total</td>
-                    <td><div id="valorTotalItem"><h:outputText value="#{orcamentoControl.selectedOrcamentoItem.oriCost}"><f:convertNumber type="currency"/></h:outputText> </div></td>
+                    <td><h:inputText value="#{orcamentoControl.selectedOrcamentoItem.oriQnt}">
+                            <f:convertNumber/>
+                            <f:ajax onevent="blur" execute="@form"/>
+                        </h:inputText></td>
                 </tr>
                 <tr>
                     <td>Observacoes</td>
                     <td><h:inputTextarea value="#{orcamentoControl.selectedOrcamentoItem.oriObs}"/></td>
                 </tr>
+                <tr>
+                    <td>Valor Total</td>
+                    <td><div id="valorTotalItem"><h:outputText value="#{orcamentoControl.selectedOrcamentoItem.oriCost}"><f:convertNumber type="currency"/></h:outputText> </div></td>
+                </tr>
             </table>
-            <h:commandButton action="#{anamneseControl.doFinishAddAnamnese()}" value="Cadastrar nova anamnese"/> &nbsp; <h:commandButton action="orcamentos.faces" value="Cancelar" immediate="true"/>
+            <h:commandButton action="#{orcamentoControl.doFinishAddOrcamentoItem()}" value="Cadastrar nova anamnese"/> &nbsp; <h:commandButton action="addOrcamento.faces" value="Cancelar" immediate="true"/>
         </h:form>
     </ui:define>
 
