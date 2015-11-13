@@ -25,35 +25,35 @@
                         <table>
                             <tr>
                                 <td>Fuma ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.ansFuma}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansFuma}"/></td>
                             </tr>
                             <tr>
                                 <td>Pratica Exercicios Regularmente ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true" value="#{anamneseControl.selectedAnaminese.anspraticaExercicio}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.anspraticaExercicio}"/></td>
                             </tr>
                             <tr>
                                 <td>Possui Doenca Hereditaria ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true" onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{anamneseControl.selectedAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDoenca" value="#{anamneseControl.selectedAnaminese.ansdescricaoDoenca}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true" onchange="javascript:enableDisable(this, 'frmAnamnese:descricaoDoenca')" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdoencaHereditaria}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDoenca" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdescricaoDoenca}"/></td>
                             </tr>
                             <tr>
                                 <td>Fez alguma operacao Recente ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoOperacaoRecente" value="#{anamneseControl.selectedAnaminese.ansdescricaoOperacaoRecente}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansoperacaoRecente}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoOperacaoRecente" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdescricaoOperacaoRecente}"/></td>
                             </tr>
                             <tr>
                                 <td>Utiliza Medicacao Continua ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoMedicacao" value="#{anamneseControl.selectedAnaminese.ansdescricaoMedicacaoContinua}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansmedicacaoContinua}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoMedicacao" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdescricaoMedicacaoContinua}"/></td>
                             </tr>
                             <tr>
                                 <td>Possui Alergia a algum medicamento ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoAlergia" value="#{anamneseControl.selectedAnaminese.ansdescricaoAlergia}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansAlergia}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoAlergia" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdescricaoAlergia}"/></td>
                             </tr>
                             <tr>
                                 <td>Possui alguma D.S.T. ?</td>
-                                <td><h:selectBooleanCheckbox disabled="true"  value="#{anamneseControl.selectedAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDescricaoDST" value="#{anamneseControl.selectedAnaminese.ansdescricaoDst}"/></td>
+                                <td><h:selectBooleanCheckbox disabled="true"  value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansDst}"/>&nbsp;Qual ? <h:inputText disabled="true"  id="descricaoDescricaoDST" value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansdescricaoDst}"/></td>
                             </tr>
                             <tr>
                                 <td>Observacoes</td>
-                                <td><h:inputTextarea disabled="true"  value="#{anamneseControl.selectedAnaminese.ansObs}"/></td>
+                                <td><h:inputTextarea disabled="true"  value="#{orcamentoControl.selectedOrcamento.orcAnaminese.ansObs}"/></td>
                             </tr>
                         </table>
                     </td>
@@ -82,7 +82,7 @@
                     <h:outputText value="#{item.oriCost}"><f:convertNumber type="currency"/></h:outputText>
                 </h:column>
             </h:dataTable>
-            <h:commandButton action="#{orcamentoControl.doStartAddItemAoOrcamento()}" value="Cadastrar um novo item ao orcamento"/>
+            <h:commandButton immediate="true" action="#{orcamentoControl.doStartAddItemAoOrcamento()}" value="Cadastrar um novo item ao orcamento"/>
             <br/>
             <br/>
             <table border="1"  width="90%">

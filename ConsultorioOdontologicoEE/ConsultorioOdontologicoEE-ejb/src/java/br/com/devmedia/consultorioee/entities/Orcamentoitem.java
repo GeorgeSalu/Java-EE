@@ -80,7 +80,7 @@ public class Orcamentoitem implements Serializable {
     }
 
     public BigDecimal getTotalItemParcial() {
-        return getOriService().getSrvCost().multiply(BigDecimal.valueOf( (long) getOriQnt()));
+        return getOriService().getSrvCost().multiply(getOriQnt());
     }
     
     public BigDecimal getOriCost() {
@@ -147,6 +147,5 @@ public class Orcamentoitem implements Serializable {
     public void setOriQnt(int oriQnt) {
         this.oriQnt = oriQnt;
     }
-
     
 }
