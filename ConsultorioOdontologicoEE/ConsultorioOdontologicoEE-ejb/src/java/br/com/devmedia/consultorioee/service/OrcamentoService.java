@@ -19,9 +19,12 @@ package br.com.devmedia.consultorioee.service;
 
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Orcamentoitem;
+import br.com.devmedia.consultorioee.entities.Parcela;
 import br.com.devmedia.consultorioee.service.repository.OrcamentoRepository;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.PostActivate;
 import javax.ejb.Stateless;
@@ -47,6 +50,8 @@ public class OrcamentoService extends BasicService {
     @PersistenceContext
     private EntityManager em;
     private OrcamentoRepository orcamentoRepository;
+    @EJB
+    private FinanceService financeService;
     
     
     @PostActivate
@@ -56,7 +61,16 @@ public class OrcamentoService extends BasicService {
     }
     
     public Orcamento addOrcamento(Orcamento orc) {
-        return orcamentoRepository.addOrcamento(orc);
+        Orcamento orcGravado = orcamentoRepository.addOrcamento(orc);
+        for (int i = 0; i < orcGravado.getOrcTimes(); i++) {
+            Parcela par = new Parcela();
+            par.setParNumero(i+1);
+            par.setParOrcamento(orcGravado);
+            par.setParPago(false);
+            par.setParValue(orcGravado.getOrcTotal().divide(BigDecimal.valueOf(orcGravado.getOrcTimes())));
+            financeService.addParcela(par);
+        }
+        return orcGravado;
     }
     
     public Orcamento setOrcamento(Orcamento orc) {

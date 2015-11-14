@@ -25,7 +25,6 @@ import javax.inject.Named;
 @SessionScoped
 public class OrcamentoControl extends BasicControl implements java.io.Serializable {
     
-
     @EJB
     private OrcamentoService orcamentoService;
     @Inject
@@ -159,6 +158,7 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         }
         selectedOrcamento.setOrcCustomer(selectedCustomer);
         orcamentoService.addOrcamento(selectedOrcamento);
+        cleanCache();
         return "/restrito/orcamentos.faces";
     }
     
@@ -183,4 +183,5 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         recalcularSaldoOrcamento();
         return "/restrito/addOrcamento.faces";
     }
+
 }
