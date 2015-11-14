@@ -85,11 +85,11 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Alterar Orcamento" action="#{customerControl.doStartAlterar()}">
+                    <h:commandLink immediate="true" title="Alterar Orcamento" action="#{customerControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
                     </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Item do Orcamento" action="#{orcamentoControl.doFinishExcluirItem()}" onclick="return confirm('Tem certeza que deseja excluir este item do orcamento ?');" >
+                    <h:commandLink immediate="true" title="Excluir Item do Orcamento" action="#{orcamentoControl.doFinishExcluirItem()}" onclick="return confirm('Tem certeza que deseja excluir este item do orcamento ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
                         <f:setPropertyActionListener value="#{item}" target="#{orcamentoControl.selectedOrcamentoItem}"/>
                     </h:commandLink>   
