@@ -67,7 +67,7 @@ public class Orcamento implements Serializable {
     private BigDecimal orcTotal = BigDecimal.ZERO;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 9)
+    //@Size(min = 1, max = 9)
     @Column(name = "orc_paymentType", nullable = false, length = 9)
     @Enumerated(EnumType.STRING)
     private PaymentType orcpaymentType;

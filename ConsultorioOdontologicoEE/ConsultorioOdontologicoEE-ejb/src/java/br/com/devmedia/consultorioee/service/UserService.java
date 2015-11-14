@@ -90,5 +90,9 @@ public class UserService extends BasicService{
     public List<Users> getDentistUsers() {
         return usrRepository.getDentistUsers();
     }
+
+    public Users getUsersByExactName(String value) {
+        return usrRepository.getUsersByExactName(value);
+    }
     
 }
