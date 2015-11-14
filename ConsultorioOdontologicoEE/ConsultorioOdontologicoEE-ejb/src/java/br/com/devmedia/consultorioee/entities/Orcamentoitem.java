@@ -31,7 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Orcamentoitem.findAll", query = "SELECT o FROM Orcamentoitem o")})
 public class Orcamentoitem implements Serializable {
-        private static final long serialVersionUID = 1L;
+    
+    private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +43,7 @@ public class Orcamentoitem implements Serializable {
     @NotNull
     @Column(name = "ori_cost", nullable = false, precision = 16, scale = 2)
     private BigDecimal oriCost = BigDecimal.ZERO;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "ori_qnt", nullable = false)
@@ -80,9 +81,13 @@ public class Orcamentoitem implements Serializable {
     }
 
     public BigDecimal getTotalItemParcial() {
-        return getOriService().getSrvCost().multiply(getOriQnt());
+        if (getOriService() != null) {
+            return getOriService().getSrvCost().multiply(BigDecimal.valueOf((long) getOriQnt()));
+        } else {
+            return BigDecimal.ZERO;
+        }
     }
-    
+
     public BigDecimal getOriCost() {
         return oriCost;
     }
@@ -147,5 +152,5 @@ public class Orcamentoitem implements Serializable {
     public void setOriQnt(int oriQnt) {
         this.oriQnt = oriQnt;
     }
-    
+
 }

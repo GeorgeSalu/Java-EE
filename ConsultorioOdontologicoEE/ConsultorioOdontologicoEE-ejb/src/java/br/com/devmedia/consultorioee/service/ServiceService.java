@@ -37,11 +37,11 @@ public class ServiceService extends BasicService{
     
     @PostConstruct
     @PostActivate
-    private void postConstruct(){
+    private void postConstruct() {
         serviceRepository = new ServiceRepository(em);
     }
     
-       public Service addService(Service service) {
+    public Service addService(Service service) {
         return serviceRepository.addService(service);
     }
     
@@ -63,6 +63,10 @@ public class ServiceService extends BasicService{
     
     public List<Service> getServicesByName(String name) {
         return serviceRepository.getServiceByName(name);
+    }
+
+    public Service getServicesByExactName(String name) {
+        return serviceRepository.getServicesByExactName(name);
     }
 
 }

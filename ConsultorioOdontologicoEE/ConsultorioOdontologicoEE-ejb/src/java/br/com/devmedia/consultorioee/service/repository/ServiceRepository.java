@@ -44,5 +44,9 @@ public class ServiceRepository extends BasicRepository{
     public List<Service> getServiceByName(String name) {
         return getPureList(Service.class,"select srv from Service srv where srv.srvName like ?1",name+"%");
     }
+
+    public Service getServicesByExactName(String name) {
+        return getPurePojo(Service.class,"select srv from Service srv where srv.srvName = ?1",name);
+    }
     
 }
