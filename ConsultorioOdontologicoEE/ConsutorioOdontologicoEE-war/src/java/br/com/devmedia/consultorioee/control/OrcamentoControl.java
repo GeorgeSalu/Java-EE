@@ -10,6 +10,7 @@ import br.com.devmedia.consultorioee.entities.Users;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
 import br.com.devmedia.consultorioee.service.ServiceService;
 import br.com.devmedia.consultorioee.service.UserService;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import javax.ejb.EJB;
@@ -130,8 +131,24 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return "/restrito/addOrcamentoItem.faces";
     }
     
-    public String doFinishAddOrcamentoItem() {
-        selectedOrcamento.getOrcamentoitemList().add(selectedOrcamentoItem);
+    public String doFinishExcluirItem() {
+        selectedOrcamento.getOrcamentoitemList().remove(selectedOrcamentoItem);
+        recalcularSaldoOrcamento();
         return "/restrito/addOrcamento.faces";
+    }
+    
+    public String doFinishAddOrcamentoItem() {
+        selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
+        selectedOrcamento.getOrcamentoitemList().add(selectedOrcamentoItem);
+        recalcularSaldoOrcamento();
+        return "/restrito/addOrcamento.faces";
+    }
+
+    private void recalcularSaldoOrcamento() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Orcamentoitem item : selectedOrcamento.getOrcamentoitemList()) {
+            total = total.add(item.getOriCost());
+        }
+        selectedOrcamento.setOrcTotal(total);
     }
 }
