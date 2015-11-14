@@ -18,7 +18,6 @@
 
         <h:form id="frmAddOrcamento">
             <h4>Anamnese sendo utilizada :</h4>
-            <h:messages errorClass="msg_erro"/>
             <table border="1" width="90%">
                 <tr>
                     <td>
@@ -85,9 +84,9 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink immediate="true" title="Alterar Orcamento" action="#{customerControl.doStartAlterar()}">
+                    <h:commandLink immediate="true" title="Alterar o item do Orcamento" action="#{orcamentoControl.doStartAlterarItemOrcamento()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{orcamentoControl.selectedOrcamentoItem}"/>
                     </h:commandLink>&nbsp;
                     <h:commandLink immediate="true" title="Excluir Item do Orcamento" action="#{orcamentoControl.doFinishExcluirItem()}" onclick="return confirm('Tem certeza que deseja excluir este item do orcamento ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
@@ -98,6 +97,7 @@
             <br/>
             <h:commandButton immediate="true" action="#{orcamentoControl.doStartAddItemAoOrcamento()}" value="Cadastrar um novo item ao orcamento"/>
             <br/>
+            <h:messages errorClass="msg_erro"/>
             <br/>
             <table border="1"  width="90%">
                 <tr>
@@ -115,10 +115,11 @@
                                 </td>
                                 <td>Forma de pagamento</td>
                                 <td><h:selectOneMenu value="#{orcamentoControl.selectedOrcamento.orcpaymentType}">
+                                        <f:converter converterId="payConversor"/>
                                         <f:selectItems var="tipos" value="#{orcamentoControl.paymentTypes}" itemDescription="#{tipos.description}" itemLabel="#{tipos.description}" itemValue="#{tipos}"/>                      
                                     </h:selectOneMenu></td>
                                 <td>Prestacoes</td>
-                                <td><h:inputText style="width: 40px" value="#{orcamentoControl.selectedOrcamento.orcTimes}"/></td>
+                                <td><h:inputText id="prestacoes" style="width: 40px" value="#{orcamentoControl.selectedOrcamento.orcTimes}"/></td>
                             </tr>
                             <tr>
                                 <td>Observacoes</td>
