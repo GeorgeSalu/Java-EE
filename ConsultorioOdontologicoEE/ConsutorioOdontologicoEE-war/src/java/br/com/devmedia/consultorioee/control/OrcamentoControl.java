@@ -131,6 +131,11 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         selectedOrcamentoItem.setOriOrcamento(selectedOrcamento);
         return "/restrito/addOrcamentoItem.faces";
     }
+    
+    public String doCancelar() {
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
 
     public String doStartAddItemAoOrcamentoEdit() {
         selectedOrcamentoItem = new Orcamentoitem();
