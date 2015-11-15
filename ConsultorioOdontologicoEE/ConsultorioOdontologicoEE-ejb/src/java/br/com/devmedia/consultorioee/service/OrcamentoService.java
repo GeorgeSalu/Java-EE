@@ -62,12 +62,22 @@ public class OrcamentoService extends BasicService {
     
     public Orcamento addOrcamento(Orcamento orc) {
         Orcamento orcGravado = orcamentoRepository.addOrcamento(orc);
+        float valorParcela = Math.round(orcGravado.getOrcTotal().floatValue()/orcGravado.getOrcTimes().intValue());
         for (int i = 0; i < orcGravado.getOrcTimes(); i++) {
             Parcela par = new Parcela();
             par.setParNumero(i+1);
             par.setParOrcamento(orcGravado);
             par.setParPago(false);
-            par.setParValue(orcGravado.getOrcTotal().divide(BigDecimal.valueOf(orcGravado.getOrcTimes())));
+            if((i + 1) == orcGravado.getOrcTimes()){
+                
+                float valorUltimaParcela = valorParcela*i;
+                valorUltimaParcela = orcGravado.getOrcTotal().floatValue() - valorUltimaParcela;
+                par.setParValue(BigDecimal.valueOf(valorUltimaParcela));
+                
+            }else{
+                par.setParValue(BigDecimal.valueOf(valorParcela));
+            }
+            //par.setParValue(orcGravado.getOrcTotal().divide(BigDecimal.valueOf(orcGravado.getOrcTimes())));
             financeService.addParcela(par);
         }
         return orcGravado;
