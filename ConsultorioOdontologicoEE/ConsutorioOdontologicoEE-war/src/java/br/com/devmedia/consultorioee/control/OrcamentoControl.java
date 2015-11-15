@@ -135,7 +135,7 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     public String doStartAddItemAoOrcamentoEdit() {
         selectedOrcamentoItem = new Orcamentoitem();
         selectedOrcamentoItem.setOriOrcamento(selectedOrcamento);
-        return "/restrito/editOrcamentoItem.faces";
+        return "/restrito/addOrcamentoItemEdit.faces";
     }
     public String doFinishAddOrcamentoItemEdit() {
         selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
@@ -232,6 +232,7 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         recalcularSaldoOrcamento();
         return "/restrito/addOrcamento.faces";
     }
+    
     public String doFinishEditOrcamentoItemEdit() {
         if (selectedOrcamentoItem.getOriId() != null) {
             orcamentoService.setItem(selectedOrcamentoItem);
