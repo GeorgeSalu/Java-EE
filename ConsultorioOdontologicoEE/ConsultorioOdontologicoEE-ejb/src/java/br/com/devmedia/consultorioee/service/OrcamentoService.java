@@ -52,67 +52,52 @@ public class OrcamentoService extends BasicService {
     private OrcamentoRepository orcamentoRepository;
     @EJB
     private FinanceService financeService;
-    
-    
+
     @PostActivate
     @PostConstruct
     private void postConstruct() {
-        orcamentoRepository =  new OrcamentoRepository(em);
+        orcamentoRepository = new OrcamentoRepository(em);
     }
-    
+
     public Orcamento addOrcamento(Orcamento orc) {
         Orcamento orcGravado = orcamentoRepository.addOrcamento(orc);
-        float valorParcela = Math.round(orcGravado.getOrcTotal().floatValue()/orcGravado.getOrcTimes().intValue());
-        for (int i = 0; i < orcGravado.getOrcTimes(); i++) {
-            Parcela par = new Parcela();
-            par.setParNumero(i+1);
-            par.setParOrcamento(orcGravado);
-            par.setParPago(false);
-            if((i + 1) == orcGravado.getOrcTimes()){
-                
-                float valorUltimaParcela = valorParcela*i;
-                valorUltimaParcela = orcGravado.getOrcTotal().floatValue() - valorUltimaParcela;
-                par.setParValue(BigDecimal.valueOf(valorUltimaParcela));
-                
-            }else{
-                par.setParValue(BigDecimal.valueOf(valorParcela));
-            }
-            //par.setParValue(orcGravado.getOrcTotal().divide(BigDecimal.valueOf(orcGravado.getOrcTimes())));
-            financeService.addParcela(par);
-        }
+        financeService.parcelaOrcamento(orc);
         return orcGravado;
     }
-    
+
     public Orcamento setOrcamento(Orcamento orc) {
+        financeService.eliminarParcelas(orc);
+        financeService.parcelaOrcamento(orc);
         return orcamentoRepository.setOrcamento(orc);
     }
-    
+
     public Orcamento getOrcamento(Integer idOfOrcamento) {
         return orcamentoRepository.getOrcamento(idOfOrcamento);
     }
-    
+
     public void removeOrcamento(Orcamento orc) {
         orcamentoRepository.removeOrcamento(orc);
     }
-    
+
     public Orcamentoitem addItem(Orcamentoitem item) {
         return orcamentoRepository.addItem(item);
     }
-    
+
     public Orcamentoitem setItem(Orcamentoitem item) {
         return orcamentoRepository.setItem(item);
     }
-    
+
     public Orcamentoitem getItem(Integer idOfItem) {
         return orcamentoRepository.getItem(idOfItem);
     }
-    
+
     public List<Orcamento> getOrcamentos(Integer idofCustomer) {
         return orcamentoRepository.getOrcamentos(idofCustomer);
     }
-    
+
     public List<Orcamentoitem> getItens(Integer idOfOrcamento) {
         return orcamentoRepository.getItens(idOfOrcamento);
     }
+
     
 }

@@ -17,8 +17,10 @@
 
 package br.com.devmedia.consultorioee.service;
 
+import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Parcela;
 import br.com.devmedia.consultorioee.service.repository.FinanceRepository;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -46,56 +48,78 @@ public class FinanceService extends BasicService {
     @PersistenceContext
     private EntityManager em;
     private FinanceRepository financeRepository;
-    
-    
+
     @PostActivate
     @PostConstruct
     private void postConstruct() {
         financeRepository = new FinanceRepository(em);
     }
-    
+
     public Parcela addParcela(Parcela par) {
         return financeRepository.addParcela(par);
     }
-    
+
     public Parcela getParcela(Integer idOfParcela) {
         return financeRepository.getParcela(idOfParcela);
     }
-    
+
     public Parcela setParcela(Parcela par) {
         return financeRepository.setParcela(par);
     }
-    
+
     public void removeParcela(Parcela par) {
         financeRepository.removeParcela(par);
     }
-    
+
     public List<Parcela> getParcelasByOrcamento(int orcamentoId) {
         return financeRepository.getParcelasOfOrcamento(orcamentoId);
     }
-    
+
     public List<Parcela> getParcelasOfOrcamentoPagas(int orcamentoId) {
         return financeRepository.getParcelasOfOrcamentoPagas(orcamentoId);
     }
-    
+
     public List<Parcela> getParcelasOfOrcamentoEmAberto(int orcamentoId) {
         return financeRepository.getParcelasOfOrcamentoEmAberto(orcamentoId);
     }
-    
+
     public List<Parcela> getParcelasOfCustomer(int customerId) {
         return financeRepository.getParcelasOfCustomer(customerId);
     }
-    
+
     public List<Parcela> getParcelasOfCustomerPagas(int orcamentoId) {
         return financeRepository.getParcelasOfCustomerPagas(orcamentoId);
     }
-    
+
     public List<Parcela> getParcelasOfCustomerEmAberto(int orcamentoId) {
         return financeRepository.getParcelasOfCustomerEmAberto(orcamentoId);
     }
-    
+
     public Parcela setPagamentoParcela(int idOfParcela) {
         return financeRepository.setPagamentoParcela(idOfParcela);
+    }
+
+    public void parcelaOrcamento(Orcamento orcGravado) {
+        float valorParcela = Math.round(orcGravado.getOrcTotal().floatValue() / orcGravado.getOrcTimes().intValue());
+        for (int i = 0; i < orcGravado.getOrcTimes(); i++) {
+            Parcela par = new Parcela();
+            par.setParNumero(i + 1);
+            par.setParOrcamento(orcGravado);
+            par.setParPago(false);
+            if ((i + 1) == orcGravado.getOrcTimes()) {
+                float valorUltimaParcela = valorParcela * i;
+                valorUltimaParcela = orcGravado.getOrcTotal().floatValue() - valorUltimaParcela;
+                par.setParValue(BigDecimal.valueOf(valorUltimaParcela));
+
+            } else {
+                par.setParValue(BigDecimal.valueOf(valorParcela));
+            }
+            addParcela(par);
+        }
+    }
+
+    public void eliminarParcelas(Orcamento orc) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

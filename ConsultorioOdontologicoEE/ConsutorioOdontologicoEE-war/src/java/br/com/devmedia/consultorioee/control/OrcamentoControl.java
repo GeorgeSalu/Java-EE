@@ -135,13 +135,13 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     public String doStartAddItemAoOrcamentoEdit() {
         selectedOrcamentoItem = new Orcamentoitem();
         selectedOrcamentoItem.setOriOrcamento(selectedOrcamento);
-        return "/restrito/addOrcamentoItem.faces";
+        return "/restrito/editOrcamentoItem.faces";
     }
     public String doFinishAddOrcamentoItemEdit() {
         selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
         selectedOrcamento.getOrcamentoitemList().add(selectedOrcamentoItem);
         recalcularSaldoOrcamento();
-        return "/restrito/addOrcamento.faces";
+        return "/restrito/editOrcamento.faces";
     }
     
     
@@ -186,6 +186,17 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     }
     
     public String doFinishAlterar() {
+        if (!selectedOrcamento.getOrcpaymentType().equals(PaymentType.CREDITO)) {
+            selectedOrcamento.setOrcTimes(1);
+        }
+        if (selectedOrcamento.getOrcpaymentType().equals(PaymentType.CREDITO)) {
+           if (selectedOrcamento.getOrcTimes() == null || selectedOrcamento.getOrcTimes() <= 0) {
+               FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Voce precisa selecionar quantas vezes quer fazer no credito", "Voce precisa selecionar quantas vezes quer fazer no credito");
+               FacesContext.getCurrentInstance().addMessage("prestacoes", fm);
+               return "/restrito/addOrcamento.faces";
+           }
+        }
+        orcamentoService.setOrcamento(selectedOrcamento);
         cleanCache();
         return "/restrito/orcamentos.faces";
     }
@@ -207,6 +218,10 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
 
     public String doStartAlterarItemOrcamento() {
         return "/restrito/editOrcamentoItem.faces";
+    }
+
+    public String doStartAlterarItemOrcamentoEdit() {
+        return "/restrito/editOrcamentoItemEdit.faces";
     }
 
     public String doFinishEditOrcamentoItem() {
