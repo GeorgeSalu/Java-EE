@@ -33,6 +33,8 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     private UserService userService;
     @EJB
     private ServiceService serviceService;
+    @Inject
+    private FinanceControl financeControl;
 
     public OrcamentoControl() {
     }
@@ -78,6 +80,8 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         setSelectedCustomer(customer);
         anamneseControl.setSelectedCustomer(selectedCustomer);
         anamneseControl.cleanCache();
+        financeControl.setSelectedCustomer(selectedCustomer);
+        financeControl.cleanCache();
         cleanCache();
         return "/restrito/orcamentos.faces";
     }

@@ -16,8 +16,12 @@
         <hr/>
         <h:messages errorClass="msg_erro"/>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/money.jpg"/> Valores em Aberto</h3>
-        <br/>
-        <h3>Lista de Orcamentos Cadastrados</h3>
+        <h:form>
+            <c:if test="#{financeControl.parcelas.size() eq 0}">
+                Nenhuma parcela em aberto.
+            </c:if>
+        </h:form>
+        <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/orc.jpg"/> Lista de Orcamentos Cadastrados</h3>
         <h:form>
             <c:if test="#{orcamentoControl.orcamentos.size() eq 0}">
                 Nenhum Orcamento Cadastrado.
@@ -81,7 +85,7 @@
                 </h:column>
             </h:dataTable>
             <br/>
-            <h3>Lista de Anamneses Feitas</h3>
+            <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/an.jpg"/> Lista de Anamneses Feitas</h3>
             <c:if test="#{anamneseControl.anamneses.size() eq 0}">
                 Nenhuma Anamnese Cadastrada.
             </c:if>
