@@ -132,10 +132,29 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return "/restrito/addOrcamentoItem.faces";
     }
 
+    public String doStartAddItemAoOrcamentoEdit() {
+        selectedOrcamentoItem = new Orcamentoitem();
+        selectedOrcamentoItem.setOriOrcamento(selectedOrcamento);
+        return "/restrito/addOrcamentoItem.faces";
+    }
+    public String doFinishAddOrcamentoItemEdit() {
+        selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
+        selectedOrcamento.getOrcamentoitemList().add(selectedOrcamentoItem);
+        recalcularSaldoOrcamento();
+        return "/restrito/addOrcamento.faces";
+    }
+    
+    
     public String doFinishExcluirItem() {
         selectedOrcamento.getOrcamentoitemList().remove(selectedOrcamentoItem);
         recalcularSaldoOrcamento();
         return "/restrito/addOrcamento.faces";
+    }
+
+    public String doFinishExcluirItemEdit() {
+        selectedOrcamento.getOrcamentoitemList().remove(selectedOrcamentoItem);
+        recalcularSaldoOrcamento();
+        return "/restrito/editOrcamento.faces";
     }
 
     public String doFinishAddOrcamentoItem() {
@@ -162,6 +181,21 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return "/restrito/orcamentos.faces";
     }
     
+    public String doStartAlterar() {
+        return "/restrito/editOrcamento.faces";
+    }
+    
+    public String doFinishAlterar() {
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
+    
+    public String doFinishExcluir() {
+        orcamentoService.removeOrcamento(selectedOrcamento);
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
+    
 
     private void recalcularSaldoOrcamento() {
         BigDecimal total = BigDecimal.ZERO;
@@ -182,6 +216,14 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
         recalcularSaldoOrcamento();
         return "/restrito/addOrcamento.faces";
+    }
+    public String doFinishEditOrcamentoItemEdit() {
+        if (selectedOrcamentoItem.getOriId() != null) {
+            orcamentoService.setItem(selectedOrcamentoItem);
+        }
+        selectedOrcamentoItem.setOriCost(selectedOrcamentoItem.getTotalItemParcial());
+        recalcularSaldoOrcamento();
+        return "/restrito/editOrcamento.faces";
     }
 
 }

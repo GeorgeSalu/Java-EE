@@ -12,7 +12,7 @@
 
     <ui:define name="content">
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
             });
         </script>
 
@@ -43,7 +43,9 @@
                     <td><div id="valorTotalItem"><h:outputText value="#{orcamentoControl.selectedOrcamentoItem.totalItemParcial}"><f:convertNumber type="currency"/></h:outputText> </div></td>
                 </tr>
             </table>
-            <h:commandButton action="#{orcamentoControl.doFinishAddOrcamentoItem()}" value="Cadastrar novo item"/> &nbsp; <h:commandButton action="addOrcamento.faces" value="Cancelar" immediate="true"/>
+            <ui:insert name="botoesSalvamento">
+                <h:commandButton action="#{orcamentoControl.doFinishAddOrcamentoItem()}" value="Cadastrar novo item"/> &nbsp; <h:commandButton action="addOrcamento.faces" value="Cancelar" immediate="true"/>
+            </ui:insert>
         </h:form>
     </ui:define>
 
