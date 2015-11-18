@@ -17,18 +17,31 @@
         <hr/>
         <h:messages errorClass="msg_erro"/>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/money.jpg"/> Valores em Aberto</h3>
-        <odonto:tabelaOdontoEE/>
         <h:form>
-            <c:if test="#{financeControl.parcelas.size() eq 0}">
-                Nenhuma parcela em aberto.
-            </c:if>
+            <odonto:tabelaOdontoEE lista="#{financeControl.parcelas}" msgSemRegistros="Nenhuma parcela em aberto.">
+                <h:column>
+                    <f:facet name="header">
+                        Numero
+                    </f:facet>
+                    #{item.parNumero}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Valor
+                    </f:facet>
+                    <h:outputText value="#{item.parValue}"><f:convertNumber type="currency"/></h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Pago?
+                    </f:facet>
+                    #{item.parPago}
+                </h:column>
+            </odonto:tabelaOdontoEE>
         </h:form>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/orc.jpg"/> Lista de Orcamentos Cadastrados</h3>
         <h:form>
-            <c:if test="#{orcamentoControl.orcamentos.size() eq 0}">
-                Nenhum Orcamento Cadastrado.
-            </c:if>
-            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{orcamentoControl.orcamentos}" rendered="#{orcamentoControl.orcamentos.size() ne 0}">
+            <odonto:tabelaOdontoEE lista="#{orcamentoControl.orcamentos}" msgSemRegistros="Nenhum Orcamento Cadastrado.">
                 <h:column>
                     <f:facet name="header">
                         Data
@@ -85,13 +98,10 @@
                         <f:setPropertyActionListener value="#{item}" target="#{orcamentoControl.selectedOrcamento}"/>
                     </h:commandLink>   
                 </h:column>
-            </h:dataTable>
+            </odonto:tabelaOdontoEE>
             <br/>
             <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/an.jpg"/> Lista de Anamneses Feitas</h3>
-            <c:if test="#{anamneseControl.anamneses.size() eq 0}">
-                Nenhuma Anamnese Cadastrada.
-            </c:if>
-            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{anamneseControl.anamneses}" rendered="#{anamneseControl.anamneses.size() ne 0}">
+            <odonto:tabelaOdontoEE lista="#{anamneseControl.anamneses}" msgSemRegistros="Nenhuma Anamnese Cadastrada.">
                 <h:column>
                     <f:facet name="header">
                         Data da Anamnese
@@ -133,7 +143,7 @@
                         <f:setPropertyActionListener value="#{item}" target="#{anamneseControl.selectedAnaminese}"/>
                     </h:commandLink>   
                 </h:column>
-            </h:dataTable>
+            </odonto:tabelaOdontoEE>
             <br/>
             <br/>
             <h:commandButton action="#{anamneseControl.doStartAddAnamnese()}" value="Adicionar uma nova anamnese ao cliente"/>
