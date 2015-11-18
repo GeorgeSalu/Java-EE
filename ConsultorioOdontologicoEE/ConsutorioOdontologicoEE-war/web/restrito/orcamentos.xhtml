@@ -37,6 +37,12 @@
                     </f:facet>
                     #{item.parPago}
                 </h:column>
+                <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
+                    <f:facet name="header">
+                        Acoes
+                    </f:facet>
+                    <odonto:botaoAcaoTabela title="Pagar" action="#{orcamentoControl.doPagar()}" target="#{orcamentoControl.selectedOrcamento}" icon="pagar.jpg"/>&nbsp;
+                </h:column>
             </odonto:tabelaOdontoEE>
         </h:form>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/orc.jpg"/> Lista de Orcamentos Cadastrados</h3>
@@ -89,14 +95,8 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Alterar Orcamento" action="#{orcamentoControl.doStartAlterar()}">
-                        <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{orcamentoControl.selectedOrcamento}"/>
-                    </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Orcamento" action="#{orcamentoControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este orcamento ?');" >
-                        <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{orcamentoControl.selectedOrcamento}"/>
-                    </h:commandLink>   
+                    <odonto:botaoAcaoTabela title="Alterar Orcamento" action="#{orcamentoControl.doStartAlterar()}" target="#{orcamentoControl.selectedOrcamento}" icon="alterar.gif"/>&nbsp;
+                    <odonto:botaoAcaoTabela action="#{orcamentoControl.doFinishExcluir()}" target="#{orcamentoControl.selectedOrcamento}" icon="excluir.gif" title="Excluir Orcamento" onclick="return confirm('Tem certeza que deseja excluir este orcamento ?');"/>
                 </h:column>
             </odonto:tabelaOdontoEE>
             <br/>
@@ -131,17 +131,9 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Utilizar Anamnese" action="#{orcamentoControl.doStartOrcamentoComUmaAnamnese(item)}">
-                        <h:graphicImage value="/resources/images/usar.jpg"/>
-                    </h:commandLink>&nbsp;
-                    <h:commandLink  title="Alterar Anamnese" action="#{anamneseControl.doStartAlterar()}">
-                        <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{anamneseControl.selectedAnaminese}"/>
-                    </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Anamnese" action="#{anamneseControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir esta anamnese ?');" >
-                        <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{anamneseControl.selectedAnaminese}"/>
-                    </h:commandLink>   
+                    <odonto:botaoAcaoTabela icon="usar.jpg" title="Utilizar Anamnese" action="#{orcamentoControl.doStartOrcamentoComUmaAnamnese(item)}" target="#{anamneseControl.selectedAnaminese}"/>&nbsp;
+                    <odonto:botaoAcaoTabela icon="alterar.gif" title="Alterar Anamnese" action="#{anamneseControl.doStartAlterar()}" target="#{anamneseControl.selectedAnaminese}"/>&nbsp;
+                    <odonto:botaoAcaoTabela icon="excluir.gif" title="Excluir Anamnese" action="#{anamneseControl.doFinishExcluir()}" target="#{anamneseControl.selectedAnaminese}" onclick="return confirm('Tem certeza que deseja excluir esta anamnese ?');"/>
                 </h:column>
             </odonto:tabelaOdontoEE>
             <br/>
