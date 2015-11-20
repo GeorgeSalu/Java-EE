@@ -4,6 +4,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./base.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titleOfPage">
@@ -11,6 +12,58 @@
     </ui:define>
 
     <ui:define name="content">
+        <odonto:telaPesquisa actionLocalizacao="#{customerControl.doLocalizar()}" campoLocalizacao="{customerControl.localizar}" descricaoLocalizacao="Cliente a localizar">
+            <odonto:tabelaOdontoEE lista="#{customerControl.customers}" msgSemRegistros="Nenhum cliente localizado.">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.cusId}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{item.cusName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Tel/Cel
+                    </f:facet>
+                    #{item.cusTelephone}/#{item.cuscelNumber}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Idade
+                    </f:facet>
+                    #{item.cusAge}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Ultimo Atendimento
+                    </f:facet>
+                    #{customerControl.getUltimoAtendimento(item.cusId)}
+                </h:column>
+
+                <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
+                    <f:facet name="header">
+                        Acoes
+                    </f:facet>
+                    <h:commandLink  title="Atender o Cliente" action="#{orcamentoControl.doStartAtenderOCliente(item)}">
+                        <h:graphicImage value="/resources/images/atendimento.gif"/>
+                    </h:commandLink>&nbsp; 
+                    <h:commandLink  title="Alterar Cliente" action="#{customerControl.doStartAlterar()}">
+                        <h:graphicImage value="/resources/images/alterar.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
+                    </h:commandLink>&nbsp;
+                    <h:commandLink title="Excluir Cliente" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
+                        <h:graphicImage value="/resources/images/excluir.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
+                    </h:commandLink>   
+                </h:column>
+            </odonto:tabelaOdontoEE>
+        </odonto:telaPesquisa>
+
         <h:messages errorClass="msg_erro"/>
         <h:form>
             <table>
@@ -51,7 +104,7 @@
                     </f:facet>
                     #{customerControl.getUltimoAtendimento(item.cusId)}
                 </h:column>
-                
+
                 <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
                     <f:facet name="header">
                         Acoes
