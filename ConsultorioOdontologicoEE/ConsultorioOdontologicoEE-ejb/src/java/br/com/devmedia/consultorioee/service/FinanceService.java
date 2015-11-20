@@ -22,7 +22,9 @@ import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Parcela;
 import br.com.devmedia.consultorioee.service.repository.FinanceRepository;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -33,6 +35,9 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperReport;
 
 /**
  *
@@ -44,7 +49,7 @@ import javax.persistence.PersistenceContext;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-    private static final long serialVersionUID = 1L;
+private static final long serialVersionUID = 1L;
 
     @PersistenceContext
     private EntityManager em;
@@ -126,5 +131,14 @@ public class FinanceService extends BasicService {
     public List<Customer> getClientesComParcelaEmAberto() {
         return financeRepository.getClientesComParcelaEmAberto();
     }
+
+    public byte[] getPDF(Parcela par) throws JRException {
+        String codigoBarras ="9126731921927319287312973";
+        Map<String, Object> parameters = new HashMap<String, Object>();
+        parameters.put("parcela", par);
+        parameters.put("codigobarras", codigoBarras);
+        JasperReport jr = JasperCompileManager.compileReport(FinanceService.class.getResourceAsStream("boletoParcela.jrxml"));
     
+        return null;
+    }    
 }
