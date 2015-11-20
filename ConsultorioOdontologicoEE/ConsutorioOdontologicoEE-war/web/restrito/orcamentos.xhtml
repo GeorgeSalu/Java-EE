@@ -16,7 +16,7 @@
         <h2><img src="/ConsutorioOdontologicoEE-war/resources/images/atende.png"/> Atendendo Cliente #{orcamentoControl.selectedCustomer.cusName}</h2>
         <hr/>
         <h:messages errorClass="msg_erro"/>
-        <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/money.jpg"/> Valores em Aberto</h3>
+        <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/money.jpg"/> Valores em Aberto do(a) #{orcamentoControl.selectedCustomer.cusName}</h3>
         <h:form>
             <odonto:tabelaOdontoEE lista="#{financeControl.parcelas}" msgSemRegistros="Nenhuma parcela em aberto.">
                 <h:column>
@@ -41,7 +41,7 @@
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <odonto:botaoAcaoTabela title="Pagar" action="#{orcamentoControl.doPagar()}" target="#{orcamentoControl.selectedOrcamento}" icon="pagar.jpg"/>&nbsp;
+                    <odonto:botaoAcaoTabela title="Pagar" onclick="return confirm('Deseja realmente pagar esta parcela ?');" action="#{financeControl.doPagar()}" target="#{financeControl.selectedParcela}" icon="money.png"/>&nbsp;
                 </h:column>
             </odonto:tabelaOdontoEE>
         </h:form>

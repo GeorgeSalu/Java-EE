@@ -30,8 +30,24 @@ public class FinanceControl extends BasicControl implements java.io.Serializable
     @EJB
     private FinanceService financeService;
     private Customer selectedCustomer;
+    private Parcela selectedParcela;
+    
     private List<Parcela> parcelas;
 
+    public Parcela getSelectedParcela() {
+        return selectedParcela;
+    }
+
+    public void setSelectedParcela(Parcela selectedParcela) {
+        this.selectedParcela = selectedParcela;
+    }
+
+    public String doPagar() {
+        financeService.setPagamentoParcela(getSelectedParcela().getParId());
+        cleanCache();
+        return "/restrito/orcamentos.faces";
+    }
+    
     public Customer getSelectedCustomer() {
         return selectedCustomer;
     }
@@ -50,14 +66,7 @@ public class FinanceControl extends BasicControl implements java.io.Serializable
 
 
     public void cleanCache() {
-        setParcelas(financeService.getParcelasOfCustomer(getSelectedCustomer().getCusId()));
+        setParcelas(financeService.getParcelasOfCustomerEmAberto(getSelectedCustomer().getCusId()));
     }
-    
-    
-    
-    
-    
-    
- 
     
 }
