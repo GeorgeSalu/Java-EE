@@ -7,6 +7,7 @@ import br.com.devmedia.consultorioee.entities.Orcamentoitem;
 import br.com.devmedia.consultorioee.entities.PaymentType;
 import br.com.devmedia.consultorioee.entities.Service;
 import br.com.devmedia.consultorioee.entities.Users;
+import br.com.devmedia.consultorioee.service.FinanceService;
 import br.com.devmedia.consultorioee.service.OrcamentoService;
 import br.com.devmedia.consultorioee.service.ServiceService;
 import br.com.devmedia.consultorioee.service.UserService;
@@ -35,6 +36,8 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
     private ServiceService serviceService;
     @Inject
     private FinanceControl financeControl;
+    @EJB
+    private FinanceService financeService;
 
     public OrcamentoControl() {
     }
@@ -46,6 +49,10 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
 
     public OrcamentoService getOrcamentoService() {
         return orcamentoService;
+    }
+    
+    public List<Customer> getCustomersComParcelaEmAberto() {
+        return financeService.getClientesComParcelaEmAberto();
     }
 
     public Customer getSelectedCustomer() {

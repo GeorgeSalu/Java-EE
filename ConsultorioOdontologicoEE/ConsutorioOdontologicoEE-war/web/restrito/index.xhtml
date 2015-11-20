@@ -2,14 +2,18 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                template="./base.xhtml">
+                xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
+                template="./base.xhtml"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="titleOfPage">
         Home
     </ui:define>
 
     <ui:define name="content">
-        content
+        <c:forEach var="customer" items="#{orcamentoControl.customersComParcelaEmAberto}">
+            <odonto:pendenciasCliente customer="#{customer}"/>
+        </c:forEach>
     </ui:define>
 
 </ui:composition>

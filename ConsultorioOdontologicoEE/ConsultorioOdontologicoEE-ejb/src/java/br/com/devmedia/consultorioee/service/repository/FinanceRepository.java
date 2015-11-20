@@ -5,6 +5,7 @@
  */
 package br.com.devmedia.consultorioee.service.repository;
 
+import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Parcela;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class FinanceRepository extends BasicRepository{
 
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     public FinanceRepository(EntityManager entityManager) {
         super(entityManager);
@@ -72,6 +73,9 @@ public class FinanceRepository extends BasicRepository{
     public void eliminarParcelas(Orcamento orc) {
         executeCommand("delete from Parcela par where par.parOrcamento.orcId = ?1", orc.getOrcId());
     }
-    
-    
+
+    public List<Customer> getClientesComParcelaEmAberto() {
+        return getPureList(Customer.class,"select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?2",Boolean.FALSE);
+    }
+
 }

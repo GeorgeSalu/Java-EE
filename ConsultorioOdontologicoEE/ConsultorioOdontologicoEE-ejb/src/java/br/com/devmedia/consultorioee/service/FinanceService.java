@@ -17,6 +17,7 @@
 
 package br.com.devmedia.consultorioee.service;
 
+import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Parcela;
 import br.com.devmedia.consultorioee.service.repository.FinanceRepository;
@@ -119,7 +120,11 @@ public class FinanceService extends BasicService {
     }
 
     public void eliminarParcelas(Orcamento orc) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        financeRepository.eliminarParcelas(orc);
+    }
+
+    public List<Customer> getClientesComParcelaEmAberto() {
+        return financeRepository.getClientesComParcelaEmAberto();
     }
     
 }
