@@ -12,117 +12,51 @@
     </ui:define>
 
     <ui:define name="content">
-        <odonto:telaPesquisa actionLocalizacao="#{customerControl.doLocalizar()}" campoLocalizacao="{customerControl.localizar}" descricaoLocalizacao="Cliente a localizar">
-            <odonto:tabelaOdontoEE lista="#{customerControl.customers}" msgSemRegistros="Nenhum cliente localizado.">
-                <h:column>
-                    <f:facet name="header">
-                        Id
-                    </f:facet>
-                    #{item.cusId}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Nome
-                    </f:facet>
-                    #{item.cusName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Tel/Cel
-                    </f:facet>
-                    #{item.cusTelephone}/#{item.cuscelNumber}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Idade
-                    </f:facet>
-                    #{item.cusAge}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Ultimo Atendimento
-                    </f:facet>
-                    #{customerControl.getUltimoAtendimento(item.cusId)}
-                </h:column>
-
-                <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
-                    <f:facet name="header">
-                        Acoes
-                    </f:facet>
-                    <h:commandLink  title="Atender o Cliente" action="#{orcamentoControl.doStartAtenderOCliente(item)}">
-                        <h:graphicImage value="/resources/images/atendimento.gif"/>
-                    </h:commandLink>&nbsp; 
-                    <h:commandLink  title="Alterar Cliente" action="#{customerControl.doStartAlterar()}">
-                        <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
-                    </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Cliente" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
-                        <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
-                    </h:commandLink>   
-                </h:column>
-            </odonto:tabelaOdontoEE>
-        </odonto:telaPesquisa>
-
-        <h:messages errorClass="msg_erro"/>
         <h:form>
-            <table>
-                <tr>
-                    <td width="22%">Cliente a localizar :</td>
-                    <td width="73%"><h:inputText style="width: 100%;" value="#{customerControl.localizar}"/></td>
-                    <td width="5%"><h:commandButton action="#{customerControl.doLocalizar()}" value="Localizar"/></td>
-                </tr>
-            </table>
-            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{customerControl.customers}">
-                <h:column>
-                    <f:facet name="header">
-                        Id
-                    </f:facet>
-                    #{item.cusId}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Nome
-                    </f:facet>
-                    #{item.cusName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Tel/Cel
-                    </f:facet>
-                    #{item.cusTelephone}/#{item.cuscelNumber}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Idade
-                    </f:facet>
-                    #{item.cusAge}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Ultimo Atendimento
-                    </f:facet>
-                    #{customerControl.getUltimoAtendimento(item.cusId)}
-                </h:column>
+            <odonto:telaPesquisa control="#{customerControl.customers}" actionLocalizacao="#{customerControl.doLocalizar()}" campoLocalizacao="#{customerControl.localizar}" descricaoLocalizacao="Cliente a localizar">
+                <f:facet name="barraTarefas">
+                    <h:commandButton action="#{customerControl.doStartAddCustomer()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo cliente"/>
+                </f:facet>
+                    <h:column>
+                        <f:facet name="header">
+                            Id
+                        </f:facet>
+                        #{item.cusId}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Nome
+                        </f:facet>
+                        #{item.cusName}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Tel/Cel
+                        </f:facet>
+                        #{item.cusTelephone}/#{item.cuscelNumber}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Idade
+                        </f:facet>
+                        #{item.cusAge}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            Ultimo Atendimento
+                        </f:facet>
+                        #{customerControl.getUltimoAtendimento(item.cusId)}
+                    </h:column>
 
-                <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
-                    <f:facet name="header">
-                        Acoes
-                    </f:facet>
-                    <h:commandLink  title="Atender o Cliente" action="#{orcamentoControl.doStartAtenderOCliente(item)}">
-                        <h:graphicImage value="/resources/images/atendimento.gif"/>
-                    </h:commandLink>&nbsp; 
-                    <h:commandLink  title="Alterar Cliente" action="#{customerControl.doStartAlterar()}">
-                        <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
-                    </h:commandLink>&nbsp;
-                    <h:commandLink title="Excluir Cliente" action="#{customerControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');" >
-                        <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{customerControl.selectedCustomer}"/>
-                    </h:commandLink>   
-                </h:column>
-            </h:dataTable>
-            <h:commandButton action="#{customerControl.doStartAddCustomer()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo cliente"/>
+                    <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
+                        <f:facet name="header">
+                            Acoes
+                        </f:facet>
+                        <odonto:botaoAcaoTabela title="Atender o Cliente" target="#{customerControl.selectedCustomer}" action="#{orcamentoControl.doStartAtenderOCliente(item)}" icon="atendimento.gif"/>&nbsp;
+                        <odonto:botaoAcaoTabela title="Alterar Cliente" target="#{customerControl.selectedCustomer}" action="#{customerControl.doStartAlterar()}" icon="alterar.gif"/>&nbsp;
+                        <odonto:botaoAcaoTabela title="Excluir Cliente" target="#{customerControl.selectedCustomer}" action="#{customerControl.doFinishExcluir()}" icon="excluir.gif" onclick="return confirm('Tem certeza que deseja excluir este cliente ?');"/>
+                    </h:column>
+            </odonto:telaPesquisa>
         </h:form>
     </ui:define>
 

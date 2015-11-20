@@ -4,6 +4,7 @@
       xmlns:cc="http://xmlns.jcp.org/jsf/composite"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <!-- INTERFACE -->
@@ -11,22 +12,23 @@
         <cc:attribute name="descricaoLocalizacao" required="true"/>
         <cc:attribute name="campoLocalizacao" required="true"/>
         <cc:attribute name="actionLocalizacao" method-signature="java.lang.String action()" required="true"/>
+        <cc:attribute name="control" required="true"/>
         <cc:facet name="barraTarefas" required="false"/>
     </cc:interface>
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
         <h:messages errorClass="msg_erro"/>
-        <h:form>
-            <table>
-                <tr>
-                    <td width="22%">#{cc.attrs.descricaoLocalizacao} :</td>
-                    <td width="73%"><h:inputText style="width: 100%;" value="#{cc.attrs.campoLocalizacao}"/></td>
-                    <td width="5%"><h:commandButton action="#{cc.attrs.actionLocalizacao}" value="Localizar"/></td>
-                </tr>
-            </table>
+        <table>
+            <tr>
+                <td width="22%">#{cc.attrs.descricaoLocalizacao} :</td>
+                <td width="73%"><h:inputText style="width: 100%;" value="#{cc.attrs.campoLocalizacao}"/></td>
+                <td width="5%"><h:commandButton action="#{cc.attrs.actionLocalizacao}" value="Localizar"/></td>
+            </tr>
+        </table>
+        <odonto:tabelaOdontoEE lista="#{cc.attrs.control}" msgSemRegistros="Nenhum cliente localizado.">
             <cc:insertChildren/>
-            <cc:insertFacet name="barraTarefas"/>
-        </h:form>
+        </odonto:tabelaOdontoEE>
+        <cc:renderFacet name="barraTarefas"/>
     </cc:implementation>
 </html>
