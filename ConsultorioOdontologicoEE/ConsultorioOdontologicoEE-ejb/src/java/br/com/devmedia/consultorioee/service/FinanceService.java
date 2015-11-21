@@ -37,6 +37,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
 /**
@@ -49,7 +52,7 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @PersistenceContext
     private EntityManager em;
@@ -138,7 +141,9 @@ private static final long serialVersionUID = 1L;
         parameters.put("parcela", par);
         parameters.put("codigobarras", codigoBarras);
         JasperReport jr = JasperCompileManager.compileReport(FinanceService.class.getResourceAsStream("boletoParcela.jrxml"));
-    
-        return null;
-    }    
+        JasperPrint jp = JasperFillManager.fillReport(jr, parameters);
+        byte[] toReturn = JasperExportManager.exportReportToPdf(jp);
+        return toReturn;
+    }
+
 }

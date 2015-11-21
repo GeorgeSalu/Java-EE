@@ -40,6 +40,7 @@
                         Acoes
                     </f:facet>
                     <odonto:botaoAcaoTabela title="Pagar" onclick="return confirm('Deseja realmente pagar esta parcela ?');" action="#{financeControl.doPagar()}" target="#{financeControl.selectedParcela}" icon="money.png"/>&nbsp;
+                    <odonto:botaoAcaoTabela title="Boleto" action="#{financeControl.doImprimirBoleto()}" target="#{financeControl.selectedParcela}" icon="printButton.png"/>
                 </h:column>
             </odonto:tabelaOdontoEE>
         </h:form>
