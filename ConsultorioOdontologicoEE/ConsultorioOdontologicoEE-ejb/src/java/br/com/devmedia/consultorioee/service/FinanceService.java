@@ -26,9 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.PostActivate;
+import javax.ejb.Schedule;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
@@ -52,10 +54,12 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     @PersistenceContext
     private EntityManager em;
+    @EJB
+    private CustomerService customerService;
     private FinanceRepository financeRepository;
 
     @PostActivate
@@ -144,6 +148,26 @@ public class FinanceService extends BasicService {
         JasperPrint jp = JasperFillManager.fillReport(jr, parameters);
         byte[] toReturn = JasperExportManager.exportReportToPdf(jp);
         return toReturn;
+    }
+    
+    
+    @Schedule(hour = "*",minute = "18,19,20" ,persistent = false)
+    public void enviaBoletosPorEmail() {
+        System.out.println("Starting enviaBoletosPorEmail()");
+        List<Customer> customers = customerService.getCustomerByName("%");
+        for (Customer customer : customers) {
+            List<Parcela> parcelas = getParcelasOfCustomer(customer.getCusId());
+            for (Parcela parcela : parcelas) {
+                if (!parcela.getParPago()) {
+                   sendEmailTo(customer,parcela);
+                   break;
+                }
+            }
+        }
+    }
+
+    private void sendEmailTo(Customer customer, Parcela parcela) {
+        System.out.println("Chegou a solicitacao para "+customer.getCusName()+" da parcela "+parcela.getParNumero());
     }
 
 }

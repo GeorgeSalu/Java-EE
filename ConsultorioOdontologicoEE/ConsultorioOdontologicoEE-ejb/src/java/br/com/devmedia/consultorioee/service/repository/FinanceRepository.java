@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class FinanceRepository extends BasicRepository{
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public FinanceRepository(EntityManager entityManager) {
         super(entityManager);
@@ -52,7 +52,7 @@ public class FinanceRepository extends BasicRepository{
     }
     
     public List<Parcela> getParcelasOfCustomer(int idOfCustomer) {
-        return getPureList(Parcela.class, "select par from Parcela par where par.parOrcamento.orcCustomer.cusId = ?1 order by par.parPago ASC", idOfCustomer);
+        return getPureList(Parcela.class, "select par from Parcela par where par.parOrcamento.orcCustomer.cusId = ?1 order by par.parPago ASC,par.parNumero ASC", idOfCustomer);
     }
     
     public List<Parcela> getParcelasOfCustomerEmAberto(int idOfCustomer) {
@@ -75,7 +75,7 @@ public class FinanceRepository extends BasicRepository{
     }
 
     public List<Customer> getClientesComParcelaEmAberto() {
-        return getPureList(Customer.class,"select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?2",Boolean.FALSE);
+        return getPureList(Customer.class,"select DISTINCT(par.parOrcamento.orcCustomer) from Parcela par where par.parPago = ?1",Boolean.FALSE);
     }
 
 }
