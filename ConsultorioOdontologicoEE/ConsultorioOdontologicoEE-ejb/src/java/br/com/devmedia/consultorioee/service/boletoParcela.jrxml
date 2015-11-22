@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="boletoParcela" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="399b820b-a213-419e-84df-d16e0497b0e3">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="boletoParcela" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="399b820b-a213-419e-84df-d16e0497b0e3">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="69"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="parcela" class="br.com.devmedia.consultorioee.entities.Parcela"/>
 	<parameter name="codigobarras" class="java.lang.String"/>
@@ -74,15 +74,15 @@
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{parcela}.getParValue()]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="dd/MM/yyyy">
 				<reportElement uuid="1e6326e1-b0f4-4381-a72e-986c19d1550f" x="455" y="11" width="79" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$P{parcela}.getParOrcamento().getOrcDate()]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="R$ ###,###.00">
 				<reportElement uuid="2915fe2a-f014-4fbd-86a0-f290cc0f280c" x="455" y="40" width="79" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$P{parcela}.getParOrcamento().getOrcTotal())]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{parcela}.getParOrcamento().getOrcTotal()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
