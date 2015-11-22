@@ -21,7 +21,12 @@ import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Parcela;
 import br.com.devmedia.consultorioee.service.repository.FinanceRepository;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +59,7 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @PersistenceContext
     private EntityManager em;
@@ -151,23 +156,41 @@ public class FinanceService extends BasicService {
     }
     
     
-    @Schedule(hour = "*",minute = "18,19,20" ,persistent = false)
-    public void enviaBoletosPorEmail() {
+    @Schedule(hour = "*",minute = "32,33" ,persistent = false)
+    public void enviaBoletosPorEmail() throws JRException, IOException {
         System.out.println("Starting enviaBoletosPorEmail()");
         List<Customer> customers = customerService.getCustomerByName("%");
         for (Customer customer : customers) {
             List<Parcela> parcelas = getParcelasOfCustomer(customer.getCusId());
             for (Parcela parcela : parcelas) {
                 if (!parcela.getParPago()) {
-                   sendEmailTo(customer,parcela);
+                   try {
+                    sendEmailTo(customer,parcela);
+                   } catch (Exception e) {
+                       e.printStackTrace();
+                       System.out.println("Error sending Email to Customer");
+                   }
                    break;
                 }
             }
         }
     }
 
-    private void sendEmailTo(Customer customer, Parcela parcela) {
+    private void sendEmailTo(Customer customer, Parcela parcela) throws JRException, IOException {
         System.out.println("Chegou a solicitacao para "+customer.getCusName()+" da parcela "+parcela.getParNumero());
+        byte[] pdfBoleto = getPDF(parcela);
+        InputStream stream = FinanceService.class.getResourceAsStream("invoice.html");
+        byte[] invoiceBytes = new byte[stream.available()];
+        stream.read(invoiceBytes);
+        stream.close();
+        String body = new String(invoiceBytes);
+        body = body.replaceAll("@@@NOME_CLIENTE@@@", customer.getCusName());
+        body = body.replaceAll("@@@PARCELA_NUMERO@@@", String.valueOf(parcela.getParNumero()));
+        body = body.replaceAll("@@@PARCELA_DATA@@@", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+        body = body.replaceAll("@@@PARCELA_VALOR@@@",new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
+        body = body.replaceAll("@@@NOME_USUARIO@@@", parcela.getParOrcamento().getOrcDentist().getUsuName());
+        System.out.println("body = "+body);
+        
     }
 
 }
