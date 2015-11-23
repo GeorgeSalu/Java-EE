@@ -31,8 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Parcela implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "par_id", nullable = false)
     private Integer parId;
     @Basic(optional = false)

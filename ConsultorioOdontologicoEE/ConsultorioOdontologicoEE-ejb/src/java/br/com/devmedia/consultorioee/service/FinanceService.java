@@ -61,9 +61,7 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-    @Resource
-    private Session gmailSMTP;
-    @Resource(mappedName = "mail/gmailSMTP")
+        @Resource(mappedName = "mail/gmailSMTP")
     private Session mailSTMP;
     
     private static final long serialVersionUID = 1L;
@@ -196,9 +194,20 @@ public class FinanceService extends BasicService {
         body = body.replaceAll("@@@PARCELA_DATA@@@", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         body = body.replaceAll("@@@PARCELA_VALOR@@@",new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
         body = body.replaceAll("@@@NOME_USUARIO@@@", parcela.getParOrcamento().getOrcDentist().getUsuName());
-        System.out.println("See the object "+gmailSMTP+" / "+mailSTMP);
-//        System.out.println("body = "+body);
-        
+        callGlassfishJavaMail(body,pdfBoleto,customer);
+    }
+
+    private void callGlassfishJavaMail(String body, byte[] pdfBoleto, Customer customer) {
+        try {
+            Message msg = new MimeMessage(mailSTMP);
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(customer.getCusEmail()));
+            msg.setFrom(new InternetAddress("consultorioEEDevmedia@gmail.com"));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            msg.setSubject("[ConsultorioEE] Invoice para pagamento referente a consulta Odontologica enviado em "+sdf.format(new Date())+" [/ConsultorioEE]");
+        } catch (Exception ex) {
+            Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("[FinanceService] Impossivel enviar email para "+customer.getCusName()+" pelo email "+customer.getCusEmail()+" - "+ex.getMessage());
+        }
     }
 
 }

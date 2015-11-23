@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
 public class Customer implements Serializable {
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -88,6 +88,8 @@ public class Customer implements Serializable {
     @Size(max = 65535)
     @Column(name = "cus_obs", length = 65535)
     private String cusObs;
+    @Column(name = "cus_email", length = 255)
+    private String cusEmail;
     @Size(max = 45)
     @Column(name = "cus_ocupation", length = 45)
     private String cusOcupation;
@@ -120,7 +122,16 @@ public class Customer implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansCustomer")
     private List<Anaminese> anamineseList = new LinkedList<>();
 
+    public String getCusEmail() {
+        return cusEmail;
+    }
 
+    public void setCusEmail(String cusEmail) {
+        this.cusEmail = cusEmail;
+    }
+
+
+    
     @PrePersist
     @PreUpdate
     public void updateAge() {
@@ -355,5 +366,6 @@ public class Customer implements Serializable {
     public String toString() {
         return "br.com.devmedia.consultorioee.entities.Customer[ cusId=" + cusId + " ]";
     }
+
     
 }
