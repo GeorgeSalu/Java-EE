@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.activation.DataHandler;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
@@ -42,6 +43,15 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.jms.Session;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import net.sf.jasperreports.engine.JRException;
@@ -61,7 +71,7 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-        @Resource(mappedName = "mail/gmailSMTP")
+   @Resource(mappedName = "mail/gmailSMTP")
     private Session mailSTMP;
     
     private static final long serialVersionUID = 1L;
@@ -161,7 +171,7 @@ public class FinanceService extends BasicService {
     }
     
     
-    @Schedule(hour = "*",minute = "24,25,26" ,persistent = false)
+    @Schedule(hour = "*",minute = "53,54" ,persistent = false)
     public void enviaBoletosPorEmail() throws JRException, IOException {
         System.out.println("Starting enviaBoletosPorEmail()");
         List<Customer> customers = customerService.getCustomerByName("%");
@@ -199,15 +209,27 @@ public class FinanceService extends BasicService {
 
     private void callGlassfishJavaMail(String body, byte[] pdfBoleto, Customer customer) {
         try {
-            Message msg = new MimeMessage(mailSTMP);
+            Multipart multipart = new MimeMultipart();;
+            Message msg = new MimeMessage((MimeMessage) mailSTMP);
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(customer.getCusEmail()));
             msg.setFrom(new InternetAddress("consultorioEEDevmedia@gmail.com"));
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             msg.setSubject("[ConsultorioEE] Invoice para pagamento referente a consulta Odontologica enviado em "+sdf.format(new Date())+" [/ConsultorioEE]");
+            // The Message
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(body, "text/html; charset=ISO-8859-1");
+            multipart.addBodyPart(messageBodyPart);
+            // The PDF File
+            BodyPart boletoBodyPart = new MimeBodyPart();
+            boletoBodyPart.setFileName("boleto.pdf");
+            boletoBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(pdfBoleto, "application/pdf")));
+            multipart.addBodyPart(boletoBodyPart);
+            // Attach the Multipart Data
+            msg.setContent(multipart);
+            Transport.send(msg);
         } catch (Exception ex) {
-            Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("[FinanceService] Impossivel enviar email para "+customer.getCusName()+" pelo email "+customer.getCusEmail()+" - "+ex.getMessage());
         }
     }
-
 }
