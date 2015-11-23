@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -40,6 +41,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.jms.Session;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import net.sf.jasperreports.engine.JRException;
@@ -59,6 +61,11 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
+    @Resource
+    private Session gmailSMTP;
+    @Resource(mappedName = "mail/gmailSMTP")
+    private Session mailSTMP;
+    
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext
@@ -156,7 +163,7 @@ public class FinanceService extends BasicService {
     }
     
     
-    @Schedule(hour = "*",minute = "32,33" ,persistent = false)
+    @Schedule(hour = "*",minute = "24,25,26" ,persistent = false)
     public void enviaBoletosPorEmail() throws JRException, IOException {
         System.out.println("Starting enviaBoletosPorEmail()");
         List<Customer> customers = customerService.getCustomerByName("%");
@@ -189,7 +196,8 @@ public class FinanceService extends BasicService {
         body = body.replaceAll("@@@PARCELA_DATA@@@", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         body = body.replaceAll("@@@PARCELA_VALOR@@@",new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
         body = body.replaceAll("@@@NOME_USUARIO@@@", parcela.getParOrcamento().getOrcDentist().getUsuName());
-        System.out.println("body = "+body);
+        System.out.println("See the object "+gmailSMTP+" / "+mailSTMP);
+//        System.out.println("body = "+body);
         
     }
 
