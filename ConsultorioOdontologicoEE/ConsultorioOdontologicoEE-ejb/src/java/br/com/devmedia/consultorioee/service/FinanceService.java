@@ -30,22 +30,26 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.activation.DataHandler;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.ejb.PostActivate;
 import javax.ejb.Schedule;
+import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.jms.Session;
 import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -60,7 +64,6 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-
 /**
  *
  * @author dyego.carmo
@@ -71,9 +74,11 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-   @Resource(mappedName = "mail/gmailSMTP")
+       private final static String JAVAMAILAPI_EMAIL_PASSWORD = "123123";
+
+    @Resource(mappedName = "mail/gmailSMTP")
     private Session mailSTMP;
-    
+
     private static final long serialVersionUID = 1L;
 
     @PersistenceContext
@@ -160,7 +165,7 @@ public class FinanceService extends BasicService {
     }
 
     public byte[] getPDF(Parcela par) throws JRException {
-        String codigoBarras ="9126731921927319287312973";
+        String codigoBarras = "9126731921927319287312973";
         Map<String, Object> parameters = new HashMap<String, Object>();
         parameters.put("parcela", par);
         parameters.put("codigobarras", codigoBarras);
@@ -169,9 +174,8 @@ public class FinanceService extends BasicService {
         byte[] toReturn = JasperExportManager.exportReportToPdf(jp);
         return toReturn;
     }
-    
-    
-    @Schedule(hour = "*",minute = "53,54" ,persistent = false)
+
+    @Schedule(hour = "*", minute = "16,17", persistent = false)
     public void enviaBoletosPorEmail() throws JRException, IOException {
         System.out.println("Starting enviaBoletosPorEmail()");
         List<Customer> customers = customerService.getCustomerByName("%");
@@ -179,20 +183,20 @@ public class FinanceService extends BasicService {
             List<Parcela> parcelas = getParcelasOfCustomer(customer.getCusId());
             for (Parcela parcela : parcelas) {
                 if (!parcela.getParPago()) {
-                   try {
-                    sendEmailTo(customer,parcela);
-                   } catch (Exception e) {
-                       e.printStackTrace();
-                       System.out.println("Error sending Email to Customer");
-                   }
-                   break;
+                    try {
+                        sendEmailTo(customer, parcela);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.out.println("Error sending Email to Customer");
+                    }
+                    break;
                 }
             }
         }
     }
 
     private void sendEmailTo(Customer customer, Parcela parcela) throws JRException, IOException {
-        System.out.println("Chegou a solicitacao para "+customer.getCusName()+" da parcela "+parcela.getParNumero());
+        System.out.println("Chegou a solicitacao para " + customer.getCusName() + " da parcela " + parcela.getParNumero());
         byte[] pdfBoleto = getPDF(parcela);
         InputStream stream = FinanceService.class.getResourceAsStream("invoice.html");
         byte[] invoiceBytes = new byte[stream.available()];
@@ -202,19 +206,20 @@ public class FinanceService extends BasicService {
         body = body.replaceAll("@@@NOME_CLIENTE@@@", customer.getCusName());
         body = body.replaceAll("@@@PARCELA_NUMERO@@@", String.valueOf(parcela.getParNumero()));
         body = body.replaceAll("@@@PARCELA_DATA@@@", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-        body = body.replaceAll("@@@PARCELA_VALOR@@@",new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
+        body = body.replaceAll("@@@PARCELA_VALOR@@@", new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
         body = body.replaceAll("@@@NOME_USUARIO@@@", parcela.getParOrcamento().getOrcDentist().getUsuName());
-        callGlassfishJavaMail(body,pdfBoleto,customer);
+        //callGlassfishJavaMail(body,pdfBoleto,customer);
+        callDirectJavaMailAPI(body, pdfBoleto, customer);
     }
 
     private void callGlassfishJavaMail(String body, byte[] pdfBoleto, Customer customer) {
         try {
             Multipart multipart = new MimeMultipart();;
-            Message msg = new MimeMessage((MimeMessage) mailSTMP);
+            Message msg = new MimeMessage( mailSTMP);
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(customer.getCusEmail()));
             msg.setFrom(new InternetAddress("consultorioEEDevmedia@gmail.com"));
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            msg.setSubject("[ConsultorioEE] Invoice para pagamento referente a consulta Odontologica enviado em "+sdf.format(new Date())+" [/ConsultorioEE]");
+            msg.setSubject("[ConsultorioEE] Invoice para pagamento referente a consulta Odontologica enviado em " + sdf.format(new Date()) + " [/ConsultorioEE]");
             // The Message
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setContent(body, "text/html; charset=ISO-8859-1");
@@ -229,7 +234,51 @@ public class FinanceService extends BasicService {
             Transport.send(msg);
         } catch (Exception ex) {
             //Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
-            System.out.println("[FinanceService] Impossivel enviar email para "+customer.getCusName()+" pelo email "+customer.getCusEmail()+" - "+ex.getMessage());
+            System.out.println("[FinanceService-JavaMail GlassFish API] Impossivel enviar email para " + customer.getCusName() + " pelo email " + customer.getCusEmail() + " - " + ex.getMessage());
         }
     }
+
+    private void callDirectJavaMailAPI(String body, byte[] pdfBoleto, Customer customer) {
+        try {
+            // Session Configuration
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.starttls.enable", "true");
+            props.put("mail.smtp.host", "smtp.gmail.com");
+            props.put("mail.smtp.port", "587");
+            
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication("dyego.leal@gmail.com", JAVAMAILAPI_EMAIL_PASSWORD);
+                        }
+                    });
+            //session.setDebug(false);
+            //Create the Message
+            Multipart multipart = new MimeMultipart();
+            Message msg = new MimeMessage(session);
+            msg.setRecipient(Message.RecipientType.TO, new InternetAddress(customer.getCusEmail()));
+            msg.setFrom(new InternetAddress("consultorioEEDevmedia@gmail.com"));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            msg.setSubject("[ConsultorioEE-DirectJavaMailAPI] Invoice para pagamento referente a consulta Odontologica enviado em " + sdf.format(new Date()) + " [/ConsultorioEE-DirectJavaMailAPI]");
+            // The Message
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setContent(body, "text/html; charset=ISO-8859-1");
+            multipart.addBodyPart(messageBodyPart);
+            // The PDF File
+            BodyPart boletoBodyPart = new MimeBodyPart();
+            boletoBodyPart.setFileName("boletoDirectJavaMailAPI.pdf");
+            boletoBodyPart.setDataHandler(new DataHandler(new ByteArrayDataSource(pdfBoleto, "application/pdf")));
+            multipart.addBodyPart(boletoBodyPart);
+            // Attach the Multipart Data
+            msg.setContent(multipart);
+            Transport.send(msg);
+
+        } catch (Exception ex) {
+            //Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("[FinanceService-JavaMail Direct API] Impossivel enviar email para " + customer.getCusName() + " pelo email " + customer.getCusEmail() + " - " + ex.getMessage());
+        }
+
+    }
+
 }
