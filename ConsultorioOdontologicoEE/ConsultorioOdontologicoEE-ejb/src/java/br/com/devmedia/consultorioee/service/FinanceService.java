@@ -74,7 +74,7 @@ import net.sf.jasperreports.engine.JasperReport;
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class FinanceService extends BasicService {
 
-       private final static String JAVAMAILAPI_EMAIL_PASSWORD = "123123";
+    private final static String JAVAMAILAPI_EMAIL_PASSWORD = "123123";
 
     @Resource(mappedName = "mail/gmailSMTP")
     private Session mailSTMP;
@@ -195,7 +195,7 @@ public class FinanceService extends BasicService {
         }
     }
 
-    private void sendEmailTo(Customer customer, Parcela parcela) throws JRException, IOException {
+    public void sendEmailTo(Customer customer, Parcela parcela) throws JRException, IOException {
         System.out.println("Chegou a solicitacao para " + customer.getCusName() + " da parcela " + parcela.getParNumero());
         byte[] pdfBoleto = getPDF(parcela);
         InputStream stream = FinanceService.class.getResourceAsStream("invoice.html");
@@ -208,14 +208,14 @@ public class FinanceService extends BasicService {
         body = body.replaceAll("@@@PARCELA_DATA@@@", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
         body = body.replaceAll("@@@PARCELA_VALOR@@@", new DecimalFormat("#0.00").format(parcela.getParValue().floatValue()));
         body = body.replaceAll("@@@NOME_USUARIO@@@", parcela.getParOrcamento().getOrcDentist().getUsuName());
-        //callGlassfishJavaMail(body,pdfBoleto,customer);
-        callDirectJavaMailAPI(body, pdfBoleto, customer);
+        callGlassfishJavaMail(body,pdfBoleto,customer);
+        //callDirectJavaMailAPI(body, pdfBoleto, customer);
     }
 
     private void callGlassfishJavaMail(String body, byte[] pdfBoleto, Customer customer) {
         try {
             Multipart multipart = new MimeMultipart();;
-            Message msg = new MimeMessage( mailSTMP);
+            Message msg = new MimeMessage(mailSTMP);
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(customer.getCusEmail()));
             msg.setFrom(new InternetAddress("consultorioEEDevmedia@gmail.com"));
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -233,7 +233,7 @@ public class FinanceService extends BasicService {
             msg.setContent(multipart);
             Transport.send(msg);
         } catch (Exception ex) {
-            //Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("[FinanceService-JavaMail GlassFish API] Impossivel enviar email para " + customer.getCusName() + " pelo email " + customer.getCusEmail() + " - " + ex.getMessage());
         }
     }
@@ -253,7 +253,7 @@ public class FinanceService extends BasicService {
                             return new PasswordAuthentication("dyego.leal@gmail.com", JAVAMAILAPI_EMAIL_PASSWORD);
                         }
                     });
-            //session.setDebug(false);
+            session.setDebug(true);
             //Create the Message
             Multipart multipart = new MimeMultipart();
             Message msg = new MimeMessage(session);
@@ -275,10 +275,11 @@ public class FinanceService extends BasicService {
             Transport.send(msg);
 
         } catch (Exception ex) {
-            //Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FinanceService.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("[FinanceService-JavaMail Direct API] Impossivel enviar email para " + customer.getCusName() + " pelo email " + customer.getCusEmail() + " - " + ex.getMessage());
         }
 
     }
+
 
 }

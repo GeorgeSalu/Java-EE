@@ -16,6 +16,7 @@
     <cc:implementation>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/money.jpg"/> Valores em Aberto do(a) #{cc.attrs.customer.cusName}</h3>
         <h:form>
+            <h:messages/>
             <odonto:tabelaOdontoEE lista="#{financeControl.getParcelas(cc.attrs.customer)}" msgSemRegistros="Nenhuma parcela em aberto.">
                 <h:column>
                     <f:facet name="header">
@@ -40,7 +41,10 @@
                         Acoes
                     </f:facet>
                     <odonto:botaoAcaoTabela title="Pagar" onclick="return confirm('Deseja realmente pagar esta parcela ?');" action="#{financeControl.doPagar()}" target="#{financeControl.selectedParcela}" icon="money.png"/>&nbsp;
-                    <odonto:botaoAcaoTabela title="Boleto" action="#{financeControl.doImprimirBoleto()}" target="#{financeControl.selectedParcela}" icon="printButton.png"/>
+                    <odonto:botaoAcaoTabela title="Boleto" action="#{financeControl.doImprimirBoleto()}" target="#{financeControl.selectedParcela}" icon="printButton.png"/>&nbsp;
+                    <h:commandLink  onclick="return confirm('Deseja realmente enviar o invoice pelo email ?');" title="Invoice via Email" action="#{financeControl.doSendEmailWithInvoice(cc.attrs.customer, item)}">
+                        <h:graphicImage value="/resources/images/email.gif"/>
+                    </h:commandLink>
                 </h:column>
             </odonto:tabelaOdontoEE>
         </h:form>

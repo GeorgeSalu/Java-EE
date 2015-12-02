@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -28,7 +29,7 @@ import net.sf.jasperreports.engine.JRException;
 @SessionScoped
 public class FinanceControl extends BasicControl implements java.io.Serializable {
  
-    @EJB
+     @EJB
     private OrcamentoService orcamentoService;
     @Inject
     private OrcamentoControl orcamentoControl;
@@ -55,6 +56,12 @@ public class FinanceControl extends BasicControl implements java.io.Serializable
 
     public Customer getSelectedCustomer() {
         return selectedCustomer;
+    }
+    
+    public String doSendEmailWithInvoice(Customer customer,Parcela par) throws JRException, IOException {
+        financeService.sendEmailTo(customer, par);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Email enviado com sucesso !","Email enviado com sucesso !"));
+        return null;
     }
 
     public void setSelectedCustomer(Customer selectedCustomer) {
@@ -92,5 +99,6 @@ public class FinanceControl extends BasicControl implements java.io.Serializable
         fc.responseComplete();
         return null;
     }
+
     
 }
