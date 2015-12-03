@@ -7,7 +7,7 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titleOfPage">
-        Servicos Disponiveis
+        Categorias das Imagens Disponiveis
     </ui:define>
 
     <ui:define name="content">
@@ -15,45 +15,40 @@
         <h:form>
             <table>
                 <tr>
-                    <td width="22%">Servico a localizar :</td>
-                    <td width="73%"><h:inputText style="width: 100%;" value="#{serviceControl.localizar}"/></td>
-                    <td width="5%"><h:commandButton action="#{serviceControl.doLocalizar()}" value="Localizar"/></td>
+                    <td width="22%">Categoria :</td>
+                    <td width="73%"><h:inputText style="width: 100%;" value="#{categoriaImagemControl.localizar}"/></td>
+                    <td width="5%"><h:commandButton action="#{categoriaImagemControl.doLocalizar()}" value="Localizar"/></td>
                 </tr>
             </table>
-            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{serviceControl.srvFiltrado}">
+            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" var="item" value="#{categoriaImagemControl.categoriaimagems}">
                 <h:column>
                     <f:facet name="header">
                         Id
                     </f:facet>
-                    #{item.srvId}
+                    #{item.cigId}
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         Nome
                     </f:facet>
-                    #{item.srvName}
-                </h:column>
-                <h:column>
-                    <f:facet name="header">
-                        Custo
-                    </f:facet>
-                    <h:outputText value="#{item.srvCost}"><f:convertNumber type="currency"/></h:outputText>
+                    #{item.cigNome}
                 </h:column>
                 <h:column rendered="#{userControl.loggedUser.usuAdministrator}">
                     <f:facet name="header">
                         Acoes
                     </f:facet>
-                    <h:commandLink  title="Alterar Servico" action="#{serviceControl.doStartAlterar()}">
+                    <h:commandLink  title="Alterar Servico" action="#{categoriaImagemControl.doStartAlterar()}">
                         <h:graphicImage value="/resources/images/alterar.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{serviceControl.serviceSelected}"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{categoriaImagemControl.selectedCategoriaimagem}"/>
                     </h:commandLink>   
-                    <h:commandLink title="Excluir Servico" action="#{serviceControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este servico ?');" >
+                    <h:commandLink title="Excluir Servico" action="#{categoriaImagemControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir esta categoria ?');" >
                         <h:graphicImage value="/resources/images/excluir.gif"/>
-                        <f:setPropertyActionListener value="#{item}" target="#{serviceControl.serviceSelected}"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{categoriaImagemControl.selectedCategoriaimagem}"/>
                     </h:commandLink>   
                 </h:column>
             </h:dataTable>
-            <h:commandButton action="#{serviceControl.doStartAddService()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar um novo servico"/>
+            <br/>
+            <h:commandButton action="#{categoriaImagemControl.doStartAddCategoria()}" rendered="#{userControl.loggedUser.usuAdministrator}" value="Adicionar uma nova categoria"/>
         </h:form>
     </ui:define>
 

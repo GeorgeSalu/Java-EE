@@ -16,7 +16,7 @@ public class CategoriaImagemControl extends BasicControl implements java.io.Seri
 
     @EJB
     private CategoriaImagemService categoriaImagemService;
-    
+
     private List<Categoriaimagem> catimagens;
     private Categoriaimagem selectedCategoriaimagem;
     private String localizar;
@@ -38,6 +38,11 @@ public class CategoriaImagemControl extends BasicControl implements java.io.Seri
     }
 
     public List<Categoriaimagem> getCategoriaimagems() {
+        if (catimagens == null) {
+            localizar = "%";
+            doLocalizar();
+            localizar = "";
+        }
         return catimagens;
     }
 
@@ -46,10 +51,36 @@ public class CategoriaImagemControl extends BasicControl implements java.io.Seri
         catimagens = categoriaImagemService.getCategoriaimagemByName(localizar);
         return "/restrito/catimagens.faces";
     }
-    
+
     private void cleanCache() {
         catimagens = new LinkedList<>();
         setSelectedCategoriaimagem(new Categoriaimagem());
     }
+
+    public String doStartAddCategoria() {
+        cleanCache();
+        return "/restrito/addCatimagem.faces";
+    }
+
+    public String doFinishAddCategoria() {
+        selectedCategoriaimagem = categoriaImagemService.addCategoriaimagem(selectedCategoriaimagem);
+        localizar = "%";
+        doLocalizar();
+        localizar = "";
+        return "/restrito/catimagens.faces";
+    }
+
+    public String doStartAlterar() {
+        return "/restrito/editCatimagem.faces";
+    }
+    
+    public String doFinishAlterar() {
+        selectedCategoriaimagem = categoriaImagemService.setCategoriaimagem(selectedCategoriaimagem);
+        localizar = "%";
+        doLocalizar();
+        localizar = "";
+        return "/restrito/catimagens.faces";
+    }
+
     
 }
