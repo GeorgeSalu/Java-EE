@@ -68,7 +68,9 @@
                         Acoes
                     </f:facet>
                     <odonto:botaoAcaoTabela title="Alterar Orcamento" action="#{orcamentoControl.doStartAlterar()}" target="#{orcamentoControl.selectedOrcamento}" icon="alterar.gif"/>&nbsp;
-                    <odonto:botaoAcaoTabela action="#{orcamentoControl.doFinishExcluir()}" target="#{orcamentoControl.selectedOrcamento}" icon="excluir.gif" title="Excluir Orcamento" onclick="return confirm('Tem certeza que deseja excluir este orcamento ?');"/>
+                    <odonto:botaoAcaoTabela action="#{orcamentoControl.doFinishExcluir()}" target="#{orcamentoControl.selectedOrcamento}" icon="excluir.gif" title="Excluir Orcamento" onclick="return confirm('Tem certeza que deseja excluir este orcamento ?');"/>&nbsp;
+                    <odonto:botaoAcaoTabela action="#{orcamentoControl.doViewImages()}" target="#{orcamentoControl.selectedOrcamento}" icon="image.png" title="Ver Imagens"/>
+                    
                 </h:column>
             </odonto:tabelaOdontoEE>
             <br/>

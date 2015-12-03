@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -50,7 +51,21 @@ public class Imagem implements Serializable {
     @JoinColumn(name = "img_orcamento", referencedColumnName = "orc_id", nullable = false)
     @ManyToOne(optional = false)
     private Orcamento imgOrcamento;
+    @Basic(optional = false)
+    @Column(name = "img_imagem", nullable = false)
+    @Lob
+    private byte[] imgImagem;
 
+    public byte[] getImgImagem() {
+        return imgImagem;
+    }
+
+    public void setImgImagem(byte[] imgImagem) {
+        this.imgImagem = imgImagem;
+    }
+
+    
+    
     public Imagem() {
     }
 

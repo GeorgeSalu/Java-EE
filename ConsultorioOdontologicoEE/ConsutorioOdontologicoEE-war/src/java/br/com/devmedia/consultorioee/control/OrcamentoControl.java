@@ -257,5 +257,10 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         recalcularSaldoOrcamento();
         return "/restrito/editOrcamento.faces";
     }
+    
+    public String doViewImages() {
+        
+        return "/restrito/images.faces";
+    }
 
 }
