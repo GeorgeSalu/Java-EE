@@ -24,10 +24,28 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
     private Categoriaimagem selectedCategoria;
     
     private Orcamento selectedOrcamento;
+    private Part arquivoImagem;
 
-    
+    public Part getArquivoImagem() {
+        return arquivoImagem;
+    }
+
+    public void setArquivoImagem(Part arquivoImagem) {
+        this.arquivoImagem = arquivoImagem;
+    }
+
     public String doCadastrarImagem() {
+        selectedImagem = new Imagem();
+        selectedImagem.setImgOrcamento(selectedOrcamento);
         return "/restrito/addImages.faces";
+    }
+    
+    public String doFinishCadastrarImagem() throws IOException {
+        byte[] arqBytes = new byte[(int)arquivoImagem.getSize()];
+        arquivoImagem.getInputStream().read(arqBytes);
+        selectedImagem.setImgImagem(arqBytes);
+        
+        return "/restrito/viewImages.faces";
     }
     
     public Categoriaimagem getSelectedCategoria() {

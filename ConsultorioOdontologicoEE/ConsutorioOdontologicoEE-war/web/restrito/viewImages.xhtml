@@ -30,7 +30,7 @@
                 <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
             </h:selectOneMenu>
             &nbsp;
-            <h:commandButton id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
+            <h:commandButton immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
             <input type="hidden" id="effect-switcher" value="fade"/>
             <input type="hidden" id="theme-switcher" value="flick"/>
             &nbsp;&nbsp;
