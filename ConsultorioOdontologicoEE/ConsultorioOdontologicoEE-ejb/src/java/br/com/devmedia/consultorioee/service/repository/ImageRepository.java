@@ -30,7 +30,7 @@ public class ImageRepository extends BasicRepository {
     }
     
     public List<Imagem> getImagensOfOrcamento(int idOrcamento) {
-        return null;
+        return getPureList(Imagem.class,"select new br.com.devmedia.consultorioee.entities.Imagem(img.imgId,img.imgDescricao,img.imgdataInclusao,img.imghoraInclusao,img.imgCategoria,img.imgOrcamento) from Imagem img where img.imgOrcamento.orcId = ?1",idOrcamento);
     }
 
 }

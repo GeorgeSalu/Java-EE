@@ -73,6 +73,17 @@ public class Imagem implements Serializable {
         this.imgId = imgId;
     }
 
+    public Imagem(Integer imgId, String imgDescricao, Date imgdataInclusao, Date imghoraInclusao, Categoriaimagem imgCategoria, Orcamento imgOrcamento) {
+        this.imgId = imgId;
+        this.imgDescricao = imgDescricao;
+        this.imgdataInclusao = imgdataInclusao;
+        this.imghoraInclusao = imghoraInclusao;
+        this.imgCategoria = imgCategoria;
+        this.imgOrcamento = imgOrcamento;
+    }
+    
+    
+
     public Imagem(Integer imgId, String imgDescricao, Date imgdataInclusao, Date imghoraInclusao) {
         this.imgId = imgId;
         this.imgDescricao = imgDescricao;
