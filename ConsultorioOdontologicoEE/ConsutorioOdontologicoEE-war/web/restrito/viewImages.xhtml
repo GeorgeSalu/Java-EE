@@ -23,7 +23,24 @@
     </ui:define>
 
     <ui:define name="content">
-
+        <h:form>
+            <button type="button" id="slideshow-button">Slideshow</button>
+            <input type="hidden" id="effect-switcher" value="fade"/>
+            <input type="hidden" id="theme-switcher" value="flick"/>
+        </h:form>
+        <br/>
+            <!-- The container for the list of example images -->
+            <div id="links"></div>
+            <!-- The dialog widget -->
+            <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade">
+                <!-- The Gallery widget  -->
+                <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+                    <div class="slides"></div>
+                    <a class="prev">&lsaquo;</a>
+                    <a class="next">&rsaquo;</a>
+                    <a class="play-pause"></a>
+                </div>
+            </div>
     </ui:define>
 
 </ui:composition>

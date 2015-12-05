@@ -12,12 +12,19 @@ import javax.inject.Named;
 @SessionScoped
 public class ImageControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+@EJB
     private ImageService imageService;
     
     private List<Imagem> images;
     private Imagem selectedImagem;
     private Orcamento selectedOrcamento;
+    
+    
+    public String doViewImages() {
+        
+        return "/restrito/viewImages.faces";
+        
+    }
 
     public List<Imagem> getImages() {
         return images;
@@ -43,5 +50,4 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         this.selectedOrcamento = selectedOrcamento;
     }
     
-
 }
