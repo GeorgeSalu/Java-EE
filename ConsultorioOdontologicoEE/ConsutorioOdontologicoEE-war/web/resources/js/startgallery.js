@@ -72,5 +72,5 @@ $(function () {
                 .data('startSlideshow', true);
             $('#links').children().first().click();
         });
-
+    $('#frmImg:btnAddImage').button({icons: {primary: 'ui-icon-image'}});
 });

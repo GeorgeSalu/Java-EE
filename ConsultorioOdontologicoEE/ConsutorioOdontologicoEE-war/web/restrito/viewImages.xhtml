@@ -5,7 +5,8 @@
                 xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
                 template="./base.xhtml"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-                xmlns:h="http://xmlns.jcp.org/jsf/html">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:define name="titleOfPage">
         Imagens de #{imageControl.selectedOrcamento.orcCustomer.cusName} em #{imageControl.selectedOrcamento.orcDate}
@@ -23,12 +24,18 @@
     </ui:define>
 
     <ui:define name="content">
-        <h:form>
-            <button type="button" id="slideshow-button">Slideshow</button>
+        <h:form id="frmImg">
+            <h:outputLabel value="Categoria : " style="color:black;"/>
+            <h:selectOneMenu value="#{imageControl.selectedCategoria}">
+                <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
+            </h:selectOneMenu>
+            &nbsp;
+            <h:commandButton id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
             <input type="hidden" id="effect-switcher" value="fade"/>
             <input type="hidden" id="theme-switcher" value="flick"/>
+            &nbsp;&nbsp;
+            <button type="button" id="slideshow-button">Slideshow</button>
         </h:form>
-        <br/>
             <!-- The container for the list of example images -->
             <div id="links"></div>
             <!-- The dialog widget -->
