@@ -2,6 +2,7 @@ package br.com.devmedia.consultorioee.service;
 
 import br.com.devmedia.consultorioee.entities.Imagem;
 import br.com.devmedia.consultorioee.service.repository.ImageRepository;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
@@ -33,6 +34,8 @@ public class ImageService extends BasicService {
     }
     
     public Imagem addImagem(Imagem imagem) {
+        imagem.setImgdataInclusao(new Date());
+        imagem.setImghoraInclusao(new Date());
         return imageRepository.addImagem(imagem);
     }
     

@@ -28,6 +28,7 @@
             <h:outputLabel value="Categoria : " style="color:black;"/>
             <h:selectOneMenu value="#{imageControl.selectedCategoria}">
                 <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
+                <f:converter converterId="categoriaImagemConverter"/>
             </h:selectOneMenu>
             &nbsp;
             <h:commandButton immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
@@ -36,18 +37,18 @@
             &nbsp;&nbsp;
             <button type="button" id="slideshow-button">Slideshow</button>
         </h:form>
-            <!-- The container for the list of example images -->
-            <div id="links"></div>
-            <!-- The dialog widget -->
-            <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade">
-                <!-- The Gallery widget  -->
-                <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
-                    <div class="slides"></div>
-                    <a class="prev">&lsaquo;</a>
-                    <a class="next">&rsaquo;</a>
-                    <a class="play-pause"></a>
-                </div>
+        <!-- The container for the list of example images -->
+        <div id="links"></div>
+        <!-- The dialog widget -->
+        <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade">
+            <!-- The Gallery widget  -->
+            <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+                <div class="slides"></div>
+                <a class="prev">&lsaquo;</a>
+                <a class="next">&rsaquo;</a>
+                <a class="play-pause"></a>
             </div>
+        </div>
     </ui:define>
 
 </ui:composition>

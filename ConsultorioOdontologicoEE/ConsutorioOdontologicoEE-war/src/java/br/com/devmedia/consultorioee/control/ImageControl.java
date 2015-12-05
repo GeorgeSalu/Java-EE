@@ -5,10 +5,12 @@ import br.com.devmedia.consultorioee.entities.Imagem;
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.service.CategoriaImagemService;
 import br.com.devmedia.consultorioee.service.ImageService;
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 @Named
 @SessionScoped
@@ -44,7 +46,7 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         byte[] arqBytes = new byte[(int)arquivoImagem.getSize()];
         arquivoImagem.getInputStream().read(arqBytes);
         selectedImagem.setImgImagem(arqBytes);
-        
+        imageService.addImagem(selectedImagem);
         return "/restrito/viewImages.faces";
     }
     
