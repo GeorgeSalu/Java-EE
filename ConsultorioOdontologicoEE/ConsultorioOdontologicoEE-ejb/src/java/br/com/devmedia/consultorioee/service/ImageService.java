@@ -54,5 +54,9 @@ public class ImageService extends BasicService {
     public List<Imagem> getImagensOfOrcamento(int idOrcamento) {
         return imageRepository.getImagensOfOrcamento(idOrcamento);
     }
+
+    public List<Imagem> getImagensOfOrcamento(int idOrcamento, int idCategoria) {
+        return imageRepository.getImagensOfOrcamento(idOrcamento,idCategoria);
+    }
     
 }

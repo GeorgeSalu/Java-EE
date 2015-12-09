@@ -1,11 +1,10 @@
-/*
- *  LinkedByUS - Todos Direitos Reservados - 2014/2015
- * 
- */
 package br.com.devmedia.consultorioee.ws;
 
 import br.com.devmedia.consultorioee.entities.Imagem;
+import br.com.devmedia.consultorioee.service.ImageService;
+import java.util.LinkedList;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,7 +17,7 @@ import javax.ws.rs.core.UriInfo;
 /**
  * REST Web Service
  *
- * @author Dyego Souza do Carmo
+ * @author George Salu
  */
 @Path("image")
 @RequestScoped
@@ -26,6 +25,8 @@ public class ImageResource {
 
     @Context
     private UriInfo context;
+    @EJB
+    private ImageService imageService;
 
     public ImageResource() {
     }
@@ -36,7 +37,15 @@ public class ImageResource {
     public List<Imagem> getImagensData(@PathParam("idOrcamento") int idOrcamento,@PathParam("idCategoria") int idCategoria) {
         System.out.println("Id do orcamento eh : "+idOrcamento);
         System.out.println("Id da Categoria eh : "+idCategoria);
-        return null;
+        List<Imagem> imgList = new LinkedList<Imagem>();
+        List<Imagem> fromJPA= imageService.getImagensOfOrcamento(idOrcamento,idCategoria);
+        for (Imagem img  : fromJPA) {
+            Imagem toJson = new Imagem();
+            toJson.setImgId(img.getImgId());
+            toJson.setImgDescricao(img.getImgDescricao());
+            imgList.add(toJson);
+        }
+        return imgList;
     }
 
 }
