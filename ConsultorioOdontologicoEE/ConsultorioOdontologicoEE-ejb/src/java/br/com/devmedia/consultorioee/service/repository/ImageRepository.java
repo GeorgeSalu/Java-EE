@@ -22,7 +22,7 @@ public class ImageRepository extends BasicRepository {
     }
     
     public void removeImagem(Imagem imagem) {
-        removeEntity(imagem);
+        executeCommand("DELETE FROM Imagem img where img.imgId = ?1", imagem.getImgId());
     }
     
     public Imagem getImagem(int idOfImagem) {
