@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="orcamento" required="true"/>
+        <cc:attribute name="categoriaPreferencial" type="java.lang.String"/>
+        <cc:attribute name="mostrarBotaoRemover" type="java.lang.Boolean" default="true"/>
+        <cc:attribute name="mostrarBotaoCadastrar" type="java.lang.Boolean" default="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form id="frmImg">
+            <h:inputHidden value="#{imagemControl.doSetSelectedOrcamento(cc.attrs.orcamento)}"/>
+            <h:outputLabel value="Categoria : " style="color:black;"/>
+            <h:selectOneMenu onchange="submit();" value="#{imageControl.selectedCategoria}">
+                <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
+                <f:converter converterId="categoriaImagemConverter"/>
+            </h:selectOneMenu>
+            &nbsp;
+            <h:commandButton immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
+            &nbsp;
+            <h:commandButton immediate="true" id="btnRemoveImage" value="Remover Imagens" action="#{imageControl.doRemoverImagem()}"/>
+            <input type="hidden" id="effect-switcher" value="fade"/>
+            <input type="hidden" id="theme-switcher" value="flick"/>
+            &nbsp;&nbsp;
+            <button type="button" id="slideshow-button">Slideshow</button>
+        </h:form>
+        <br/>
+        <!-- The container for the list of example images -->
+        <div id="links"></div>
+        <!-- The dialog widget -->
+        <div id="blueimp-gallery-dialog" data-show="fade" data-hide="fade">
+            <!-- The Gallery widget  -->
+            <div class="blueimp-gallery blueimp-gallery-carousel blueimp-gallery-controls">
+                <div class="slides"></div>
+                <a class="prev">&lsaquo;</a>
+                <a class="next">&rsaquo;</a>
+                <a class="play-pause"></a>
+            </div>
+        </div>
+
+
+        <script>
+            $(function () {
+            'use strict';
+            // Load demo images from flickr:
+            $.ajax({
+            // Flickr API is SSL only:
+            // https://code.flickr.net/2014/04/30/flickr-api-going-ssl-only-on-june-27th-2014/
+            url: 'http://localhost/ConsutorioOdontologicoEE-war/webresources/image/#{imageControl.selectedOrcamento.orcId}/#{imageControl.selectedCategoria.cigId}/',
+            dataType: 'json'
+            }).done(function (result) {
+            var linksContainer = $('#links'),
+            baseUrl;
+            // Add the demo images as links with thumbnails to the page:
+            $.each(result, function (index, photo) {
+            baseUrl = 'http://localhost/ConsutorioOdontologicoEE-war/ImageServlet?id=';
+            $('<a/>')
+            .append($('<img/>').prop('src', baseUrl +  photo.imgId).prop('height', '75'))
+                .prop('href', baseUrl +  photo.imgId)
+                .prop('title', photo.imgDescricao)
+                .attr('data-dialog', '')
+                .appendTo(linksContainer);
+                });
+                });
+
+                // Initialize the theme switcher:
+                $('#theme-switcher').change(function () {
+                var theme = $('#theme');
+                theme.prop(
+                'href',
+                theme.prop('href').replace(
+                /[\w\-]+\/jquery-ui.css/,
+                $(this).val() + '/jquery-ui.css'
+                )
+                );
+                });
+
+                // Initialize the effect switcher:
+                $('#effect-switcher').change(function () {
+                var value = $(this).val();
+                $('#blueimp-gallery-dialog').data({
+                show: value,
+                hide: value
+                });
+                });
+
+                // Initialize the slideshow button:
+                $('#slideshow-button')
+                .button({icons: {primary: 'ui-icon-image'}})
+                .on('click', function () {
+                $('#blueimp-gallery-dialog .blueimp-gallery')
+                .data('startSlideshow', true);
+                $('#links').children().first().click();
+                });
+                });
+
+
+        </script>
+    </cc:implementation>
+</html>

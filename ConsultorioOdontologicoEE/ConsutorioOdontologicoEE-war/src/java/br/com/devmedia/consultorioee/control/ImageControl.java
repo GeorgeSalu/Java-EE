@@ -32,6 +32,11 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         return arquivoImagem;
     }
 
+    public String doSetSelectedOrcamento(Orcamento selectedOrcamento) {
+        this.selectedOrcamento = selectedOrcamento;
+        return "";
+    }
+    
     public void setArquivoImagem(Part arquivoImagem) {
         this.arquivoImagem = arquivoImagem;
     }
