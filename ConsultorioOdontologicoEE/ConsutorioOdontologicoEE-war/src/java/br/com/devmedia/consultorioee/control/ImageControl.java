@@ -61,7 +61,11 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
 
     
     public List<Categoriaimagem> getCategorias() {
-        return categoriaService.getCategoriasDeImagem();
+        List<Categoriaimagem> cats = categoriaService.getCategoriasDeImagem();
+        if (selectedCategoria == null && cats.size() > 0) {
+            selectedCategoria = cats.get(0);
+        }
+        return cats;
     }
     
     public String doViewImages() {

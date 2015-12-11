@@ -58,27 +58,22 @@
             $.ajax({
             // Flickr API is SSL only:
             // https://code.flickr.net/2014/04/30/flickr-api-going-ssl-only-on-june-27th-2014/
-            url: 'http://http://localhost/ConsutorioOdontologicoEE-war/webresources/image/#{imageControl.selectedOrcamento.orcId}/#{imageControl.selectedCategoria.cigId}/',
-            data: {
-            format: 'json',
-            method: 'flickr.interestingness.getList',
-            api_key: '7617adae70159d09ba78cfec73c13be3' // jshint ignore:line
-            },
-            dataType: 'jsonp',
-            jsonp: 'jsoncallback'
+            url: 'http://localhost/ConsutorioOdontologicoEE-war/webresources/image/#{imageControl.selectedOrcamento.orcId}/#{imageControl.selectedCategoria.cigId}/',
+            dataType: 'json'
             }).done(function (result) {
             var linksContainer = $('#links'),
             baseUrl;
             // Add the demo images as links with thumbnails to the page:
-            $.each(result.photos.photo, function (index, photo) {
-            baseUrl = 'https://farm' + photo.farm + '.static.flickr.com/' +
-            photo.server + '/' + photo.id + '_' + photo.secret;
+            alert(result);
+            $.each(result, function (index, photo) {
+            baseUrl = 'http://localhost/ConsutorioOdontologicoEE-war/ImageServlet?id=';
+            alert(photo);
             $('<a/>')
-            .append($('<img>').prop('src', baseUrl + '_s.jpg'))
-                .prop('href', baseUrl + '_b.jpg')
-                .prop('title', photo.title)
+            .append($('<img>').prop('src', baseUrl +  photo.imgId))
+                .prop('href', baseUrl +  photo.imgId)
+                .prop('title', photo.imgDescricao)
                 .attr('data-dialog', '')
-                .appendTo(linksContainer);
+                .appendTo(linksContainer).append('</img>');
                 });
                 });
 
@@ -111,7 +106,6 @@
                 .data('startSlideshow', true);
                 $('#links').children().first().click();
                 });
-                $('#frmImg:btnAddImage').button({icons: {primary: 'ui-icon-image'}});
                 });
 
 
