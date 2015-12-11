@@ -64,16 +64,14 @@
             var linksContainer = $('#links'),
             baseUrl;
             // Add the demo images as links with thumbnails to the page:
-            alert(result);
             $.each(result, function (index, photo) {
             baseUrl = 'http://localhost/ConsutorioOdontologicoEE-war/ImageServlet?id=';
-            alert(photo);
             $('<a/>')
-            .append($('<img>').prop('src', baseUrl +  photo.imgId))
+            .append($('<img/>').prop('src', baseUrl +  photo.imgId).prop('height', '75'))
                 .prop('href', baseUrl +  photo.imgId)
                 .prop('title', photo.imgDescricao)
                 .attr('data-dialog', '')
-                .appendTo(linksContainer).append('</img>');
+                .appendTo(linksContainer);
                 });
                 });
 
