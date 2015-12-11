@@ -20,11 +20,11 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
     private ImageService imageService;
     @EJB
     private CategoriaImagemService categoriaService;
-    
+
     private List<Imagem> images;
     private Imagem selectedImagem;
     private Categoriaimagem selectedCategoria;
-    
+
     private Orcamento selectedOrcamento;
     private Part arquivoImagem;
 
@@ -41,15 +41,29 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         selectedImagem.setImgOrcamento(selectedOrcamento);
         return "/restrito/addImages.faces";
     }
-    
+
+    public String doFinishRemoveImage() {
+        for (Imagem image : images) {
+            if (image.isSelecionado()) {
+                imageService.removeImagem(image);
+            }
+        }
+        return "/restrito/viewImages.faces";
+    }
+
+    public String doRemoverImagem() {
+        images = imageService.getImagensOfOrcamento(selectedOrcamento.getOrcId());
+        return "/restrito/removeImages.faces";
+    }
+
     public String doFinishCadastrarImagem() throws IOException {
-        byte[] arqBytes = new byte[(int)arquivoImagem.getSize()];
+        byte[] arqBytes = new byte[(int) arquivoImagem.getSize()];
         arquivoImagem.getInputStream().read(arqBytes);
         selectedImagem.setImgImagem(arqBytes);
         imageService.addImagem(selectedImagem);
         return "/restrito/viewImages.faces";
     }
-    
+
     public Categoriaimagem getSelectedCategoria() {
         return selectedCategoria;
     }
@@ -58,8 +72,6 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         this.selectedCategoria = selectedCategoria;
     }
 
-
-    
     public List<Categoriaimagem> getCategorias() {
         List<Categoriaimagem> cats = categoriaService.getCategoriasDeImagem();
         if (selectedCategoria == null && cats.size() > 0) {
@@ -67,11 +79,11 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
         }
         return cats;
     }
-    
+
     public String doViewImages() {
-        
+
         return "/restrito/viewImages.faces";
-        
+
     }
 
     public List<Imagem> getImages() {

@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:odonto="http://xmlns.jcp.org/jsf/composite/components"
@@ -26,17 +26,20 @@
     <ui:define name="content">
         <h:form id="frmImg">
             <h:outputLabel value="Categoria : " style="color:black;"/>
-            <h:selectOneMenu value="#{imageControl.selectedCategoria}">
+            <h:selectOneMenu onchange="submit();" value="#{imageControl.selectedCategoria}">
                 <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
                 <f:converter converterId="categoriaImagemConverter"/>
             </h:selectOneMenu>
             &nbsp;
             <h:commandButton immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
+            &nbsp;
+            <h:commandButton immediate="true" id="btnRemoveImage" value="Remover Imagens" action="#{imageControl.doRemoverImagem()}"/>
             <input type="hidden" id="effect-switcher" value="fade"/>
             <input type="hidden" id="theme-switcher" value="flick"/>
             &nbsp;&nbsp;
             <button type="button" id="slideshow-button">Slideshow</button>
         </h:form>
+        <br/>
         <!-- The container for the list of example images -->
         <div id="links"></div>
         <!-- The dialog widget -->

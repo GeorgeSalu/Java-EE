@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Imagem.findByImgDescricao", query = "SELECT i FROM Imagem i WHERE i.imgDescricao = :imgDescricao"),
     @NamedQuery(name = "Imagem.findByImgdataInclusao", query = "SELECT i FROM Imagem i WHERE i.imgdataInclusao = :imgdataInclusao"),
     @NamedQuery(name = "Imagem.findByImghoraInclusao", query = "SELECT i FROM Imagem i WHERE i.imghoraInclusao = :imghoraInclusao")})
-public class Imagem implements Serializable {
+public class Imagem extends BaseEnitty {
     private static final long serialVersionUID = 3L;
     @Id
     @Basic(optional = false)
