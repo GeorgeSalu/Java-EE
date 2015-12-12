@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class CustomerRepository extends BasicRepository{
 
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public CustomerRepository(EntityManager entityManager) {
         super(entityManager);
@@ -58,7 +58,7 @@ public class CustomerRepository extends BasicRepository{
     }
 
     public List<Customer> getCustomersComPagamentoEmAberto(int idOfCustomer) {
-        return getPureList(Customer.class, "select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?1", idOfCustomer, Boolean.FALSE);
+        return getPureList(Customer.class, "select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?1",  Boolean.FALSE);
     }
 
     public Date getUltimoAtendimento(int idOfCustomer) {

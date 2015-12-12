@@ -222,7 +222,28 @@ public class CustomerServiceTest {
         Customer result = instance.getCustomer(idOfCustomer);
         assertEquals(expResult, result);
     }
+    
+    @Test
+    public void testRefreshCustomer() throws Exception {
+        String nomeCorreto = customerOne.getCusName();
+        customerOne.setCusName("blablabla "+new Random().nextInt());
+        Customer response = instance.refreshCustomer(customerOne);
+        assertEquals(nomeCorreto, response.getCusName());
+    }
+    
+    /*@Test
+    public void testGetIdade() throws Exception {
+    }
+    
+    @Test
+    public void testGetUltimoAtendimento() throws Exception {
+    }
 
+    @Test
+    public void testGetCustomersCount() throws Exception {
+    }*/
+
+    
     /**
      * Test of getCustomerByName method, of class CustomerService.
      */
