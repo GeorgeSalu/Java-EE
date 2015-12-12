@@ -56,6 +56,13 @@ public class FinanceServiceTest {
     private Orcamentoitem orcamentoItemOfOne;
     
     public FinanceServiceTest() {
+    /*    try {
+        } catch (javax.ejb.EJBException e) {
+            javax.validation.ConstraintViolationException cv =  (javax.validation.ConstraintViolationException) e.getCausedByException();
+            for (ConstraintViolation<?> vio  : cv.getConstraintViolations()) {
+                System.out.println("Veja "+vio.getMessage());
+            }
+        }*/
     }
     
     @BeforeClass
@@ -95,8 +102,8 @@ public class FinanceServiceTest {
         userOne = new Users();
         userOne.setUsuAdministrator(new Random().nextBoolean());
         userOne.setUsuDentist(new Random().nextBoolean());
-        userOne.setUsuLogin("testLoginOne"+new Random().nextInt());
-        userOne.setUsuName("testNameOne "+new Random().nextInt());
+        userOne.setUsuLogin("test.LoginOne"+new Random().nextInt());
+        userOne.setUsuName("test.NameOne "+new Random().nextInt());
         userOne.setUsuPassword(userOne.getUsuLogin());
         // Mock Orcamento Object
         orcamentoOne = new Orcamento();
@@ -120,17 +127,21 @@ public class FinanceServiceTest {
         orcamentoOne.addItem(orcamentoItemOfOne);
         // Mock of Parcela
         
-        BigDecimal vlrParcela = orcamentoOne.getOrcTotal().divide(BigDecimal.valueOf(3));
+        BigDecimal vlrParcela = orcamentoOne.getOrcTotal();
         parcelaOne = new Parcela();
         parcelaOne.setParNumero(1);
         parcelaOne.setParOrcamento(orcamentoOne);
         parcelaOne.setParPago(true);
         parcelaOne.setParValue(vlrParcela);
+        
+        parcelaOne = instance.addParcela(parcelaOne);
+
         parcelaTwo = new Parcela();
         parcelaTwo.setParNumero(2);
         parcelaTwo.setParOrcamento(orcamentoOne);
         parcelaTwo.setParPago(false);
         parcelaTwo.setParValue(vlrParcela);
+
         parcelaThree = new Parcela();
         parcelaThree.setParNumero(3);
         parcelaThree.setParOrcamento(orcamentoOne);
@@ -138,9 +149,16 @@ public class FinanceServiceTest {
         parcelaThree.setParValue(vlrParcela);
         
         // Persist
-        parcelaOne = instance.addParcela(parcelaOne);
+        serviceOne.setSrvName("Test Finance Service Two "+new Random().nextInt());
         parcelaTwo = instance.addParcela(parcelaTwo);
+        serviceOne.setSrvName("Test Finance Service Three "+new Random().nextInt());
         parcelaThree = instance.addParcela(parcelaThree);
+        
+        parcelaOne = instance.getParcela(parcelaOne.getParId());
+        parcelaTwo = instance.getParcela(parcelaTwo.getParId());
+        parcelaThree = instance.getParcela(parcelaThree.getParId());
+        
+        
     }
     
     @After

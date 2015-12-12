@@ -67,17 +67,16 @@ public class Orcamento implements Serializable {
     private BigDecimal orcTotal = BigDecimal.ZERO;
     @Basic(optional = false)
     @NotNull
-    //@Size(min = 1, max = 9)
     @Column(name = "orc_paymentType", nullable = false, length = 9)
     @Enumerated(EnumType.STRING)
     private PaymentType orcpaymentType;
     @Column(name = "orc_times")
     private Integer orcTimes;
     @JoinColumn(name = "orc_dentist", referencedColumnName = "usu_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Users orcDentist;
     @JoinColumn(name = "orc_customer", referencedColumnName = "cus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     private Customer orcCustomer;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "ansOrcamento")
     private Anaminese orcAnaminese;
