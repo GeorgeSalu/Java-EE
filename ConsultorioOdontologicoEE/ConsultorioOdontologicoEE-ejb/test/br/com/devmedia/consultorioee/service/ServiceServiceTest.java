@@ -24,26 +24,29 @@ import static org.junit.Assert.*;
  */
 public class ServiceServiceTest {
 
-private EJBContainer container;
+        private static EJBContainer container;
     private ServiceService instance;
     private Service srvOne;
     private Service srvTwo;
     private Service srvThree;
+    private int quantidadeAntesServices;
     
     public ServiceServiceTest() {
     }
     
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
     
     @Before
     public void setUp() throws NamingException {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         instance = (ServiceService)container.getContext().lookup("java:global/classes/ServiceService");
         
         // Mock Service Object- One
@@ -58,6 +61,7 @@ private EJBContainer container;
         srvThree = new Service();
         srvThree.setSrvName("Service Name of Three "+new Random().nextInt());
         srvThree.setSrvCost(new BigDecimal(new Random().nextFloat()));
+        quantidadeAntesServices = instance.getServices().size();
         // Persist
         srvOne   = instance.addService(srvOne);
         srvTwo   = instance.addService(srvTwo);
@@ -70,8 +74,6 @@ private EJBContainer container;
         instance.removeService(srvTwo);
         instance.removeService(srvThree);
         instance = null;
-        container.close();
-        container = null;
     }
 
     /**
@@ -138,7 +140,7 @@ private EJBContainer container;
     public void testGetServices() throws Exception {
         System.out.println("getServices");
         List<Service> result = instance.getServices();
-        assertEquals(3,result.size());
+        assertEquals(quantidadeAntesServices+3,result.size());
     }
 
     /**
@@ -153,4 +155,13 @@ private EJBContainer container;
         assertEquals(1, instance.getServicesByName("Service Name Of Three").size());
         assertEquals(0, instance.getServicesByName("akjsgdkajsdh"+new Random()).size());
     }
+    
+    @Test
+    public void testGetServicesByExactName() throws Exception {
+        System.out.println("getServicesByExactName");
+        assertEquals(srvOne.getSrvName(), instance.getServicesByExactName(srvOne.getSrvName()).getSrvName());
+        assertEquals(srvTwo.getSrvName(), instance.getServicesByExactName(srvTwo.getSrvName()).getSrvName());
+        assertEquals(srvThree.getSrvName(), instance.getServicesByExactName(srvThree.getSrvName()).getSrvName());
+    }
+
 }
