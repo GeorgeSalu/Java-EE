@@ -62,7 +62,7 @@ public class CustomerService extends BasicService {
         return customerRepository.setCustomer(cus);
     }
 
-    int getIdade(Date nascimento) {
+    public int getIdade(Date nascimento) {
         Calendar dateOfBirth = new GregorianCalendar();
         dateOfBirth.setTime(nascimento);
         Calendar today = Calendar.getInstance();
@@ -91,7 +91,8 @@ public class CustomerService extends BasicService {
     }
     
     public Customer refreshCustomer(Customer customer) {
-        customerRepository.refreshEntity(Customer.class, customer);
+        Customer cus = getCustomer(customer.getCusId());
+        customerRepository.refreshEntity(Customer.class, cus);
         return customer;
     }
     

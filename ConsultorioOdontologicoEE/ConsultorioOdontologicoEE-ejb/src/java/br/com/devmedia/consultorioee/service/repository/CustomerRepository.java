@@ -55,11 +55,11 @@ public class CustomerRepository extends BasicRepository{
         cal.add(Calendar.DAY_OF_YEAR, -1);
         Date dataFinal = cal.getTime();
 
-        return getPureList(Customer.class, "select orc.orcCustomer from Oracamento orc where orc.orcDate >= ?1 and orc.orcDate <= ?2", dataInicial, dataFinal);
+        return getPureList(Customer.class, "select orc.orcCustomer from Orcamento orc where orc.orcDate >= ?1 and orc.orcDate <= ?2", dataInicial, dataFinal);
     }
 
     public List<Customer> getCustomersComPagamentoEmAberto(int idOfCustomer) {
-        return getPureList(Customer.class, "select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?1", Boolean.FALSE);
+        return getPureList(Customer.class, "select par.parOrcamento.orcCustomer from Parcela par where par.parPago = ?1 and par.parOrcamento.orcCustomer.cusId = ?2", Boolean.FALSE,idOfCustomer);
     }
 
     public Date getUltimoAtendimento(int idOfCustomer) {
@@ -77,4 +77,5 @@ public class CustomerRepository extends BasicRepository{
         if (toReturn != null) return toReturn.intValue();
         return 0;
     }
+
 }

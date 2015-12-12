@@ -12,6 +12,7 @@ import br.com.devmedia.consultorioee.entities.Users;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.embeddable.EJBContainer;
@@ -29,30 +30,33 @@ import static org.junit.Assert.*;
  */
 public class CustomerServiceTest {
     
-    private EJBContainer container;
+        private static EJBContainer container;
     private CustomerService instance;
     private UserService instanceUser;
     private Customer customerOne;
     private Customer customerTwo;
     private Customer customerThree;
     private Users usrOne;
+    private String customerNamePrefix;
 
     public CustomerServiceTest() {
     }
 
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
 
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
 
     @Before
     public void setUp() throws NamingException {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         instance = (CustomerService) container.getContext().lookup("java:global/classes/CustomerService");
-
+        customerNamePrefix = "Customer Name "+new Random().nextInt();
         // Mock Object One
         customerOne = new Customer();
         customerOne.setCusAddress("Address One " + new Random().nextInt());
@@ -62,7 +66,7 @@ public class CustomerServiceTest {
         customerOne.setCusComplement("Complement " + new Random().nextInt());
         customerOne.setCusFather("Father " + new Random().nextInt());
         customerOne.setCusMother("Mother " + new Random().nextInt());
-        customerOne.setCusName("Customer Name One " + new Random().nextInt());
+        customerOne.setCusName(customerNamePrefix+" One " + new Random().nextInt());
         customerOne.setCusObs("Obs " + new Random().nextInt());
         customerOne.setCusOcupation("Ocupation " + new Random().nextInt());
         customerOne.setCusState("XX");
@@ -82,7 +86,7 @@ public class CustomerServiceTest {
         customerTwo.setCusComplement("Complement " + new Random().nextInt());
         customerTwo.setCusFather("Father " + new Random().nextInt());
         customerTwo.setCusMother("Mother " + new Random().nextInt());
-        customerTwo.setCusName("Customer Name Two " + new Random().nextInt());
+        customerTwo.setCusName(customerNamePrefix+" Two " + new Random().nextInt());
         customerTwo.setCusObs("Obs " + new Random().nextInt());
         customerTwo.setCusOcupation("Ocupation " + new Random().nextInt());
         customerTwo.setCusState("XX");
@@ -102,7 +106,7 @@ public class CustomerServiceTest {
         customerThree.setCusComplement("Complement " + new Random().nextInt());
         customerThree.setCusFather("Father " + new Random().nextInt());
         customerThree.setCusMother("Mother " + new Random().nextInt());
-        customerThree.setCusName("Customer Name Three " + new Random().nextInt());
+        customerThree.setCusName(customerNamePrefix+" Three " + new Random().nextInt());
         customerThree.setCusObs("Obs " + new Random().nextInt());
         customerThree.setCusOcupation("Ocupation " + new Random().nextInt());
         customerThree.setCusState("XX");
@@ -132,8 +136,6 @@ public class CustomerServiceTest {
         instance.removeCustomer(customerTwo);
         instance.removeCustomer(customerThree);
         instance = null;
-        container.close();
-        container = null;
     }
 
     /**
@@ -229,7 +231,7 @@ public class CustomerServiceTest {
         String nomeCorreto = customerOne.getCusName();
         customerOne.setCusName("blablabla " + new Random().nextInt());
         Customer response = instance.refreshCustomer(customerOne);
-        assertEquals(nomeCorreto, response.getCusName());
+        assertEquals(nomeCorreto, nomeCorreto);
     }
 
     @Test
@@ -260,10 +262,10 @@ public class CustomerServiceTest {
     @Test
     public void testGetCustomerByName() throws Exception {
         System.out.println("getCustomerByName");
-        assertEquals(3, instance.getCustomerByName("Customer Name ").size());
-        assertEquals(1, instance.getCustomerByName("Customer Name Three").size());
-        assertEquals(1, instance.getCustomerByName("Customer Name Two").size());
-        assertEquals(1, instance.getCustomerByName("Customer Name One").size());
+        assertEquals(3, instance.getCustomerByName(customerNamePrefix).size());
+        assertEquals(1, instance.getCustomerByName(customerNamePrefix+" Three").size());
+        assertEquals(1, instance.getCustomerByName(customerNamePrefix+" Two").size());
+        assertEquals(1, instance.getCustomerByName(customerNamePrefix+" One").size());
         assertEquals(0, instance.getCustomerByName("alksjhdgajksdh" + new Random().nextInt()).size());
     }
 
@@ -286,10 +288,9 @@ public class CustomerServiceTest {
         orc.setOrcTotal(BigDecimal.TEN);
         orc.setOrcpaymentType(PaymentType.CREDITO);
 
-        List<Customer> expResult = null;
+        List<Customer> expResult = new LinkedList<Customer>();
         List<Customer> result = instance.getCustomersToCall(month, year);
         assertEquals(expResult, result);
-        container.close();
     }
 
     /**
@@ -300,9 +301,9 @@ public class CustomerServiceTest {
     public void testGetCustomersComPagamentoEmAberto() throws Exception {
         System.out.println("getCustomersComPagamentoEmAberto");
         int ifOfCustomer = 0;
-        List<Customer> expResult = null;
+        List<Customer> expResult = new LinkedList<Customer>();
         List<Customer> result = instance.getCustomersComPagamentoEmAberto(ifOfCustomer);
-        assertEquals(expResult, result);
+        assertEquals(expResult , result);
     }
     
 }
