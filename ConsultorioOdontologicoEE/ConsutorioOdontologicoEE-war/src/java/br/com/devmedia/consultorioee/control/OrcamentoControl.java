@@ -105,6 +105,10 @@ public class OrcamentoControl extends BasicControl implements java.io.Serializab
         return sb.toString();
     }
 
+    public Orcamento getUltimoOrcamentoDoClienteSelecionado() {
+        return orcamentoService.getUltimoOrcamentoByCliente(selectedCustomer.getCusId());
+    }
+    
     private void cleanCache() {
         setSelectedOrcamento(new Orcamento());
         getSelectedOrcamento().setOrcCustomer(getSelectedCustomer());

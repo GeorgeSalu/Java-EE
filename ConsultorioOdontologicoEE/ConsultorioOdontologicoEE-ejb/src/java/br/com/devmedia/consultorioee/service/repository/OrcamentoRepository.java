@@ -61,5 +61,11 @@ public class OrcamentoRepository extends BasicRepository{
     public List<Orcamentoitem> getItens(int idOrcamento) {
         return getPureList(Orcamentoitem.class,"select ori from Orcamentoitem ori where ori.oriOrcamento.orcId = ?1",idOrcamento);
     }
+
+    public Orcamento getUltimoOrcamentoByCliente(Integer idOfCustomer) {
+        List<Orcamento> resultado = getPureList(Orcamento.class,1,"select orc from Orcamento orc where orc.orcCustomer.cusId = ?1 order by orc.orcId DESC",idOfCustomer);
+        if (resultado.isEmpty()) return null;
+        return resultado.get(0);
+    }
     
 }

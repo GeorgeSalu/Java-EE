@@ -17,17 +17,27 @@
 
     <!-- IMPLEMENTATION -->
     <cc:implementation>
+        <h:outputScript library="js" name="jquery.min.js" target="head"/>
+        <h:outputScript library="js" name="jquery-ui.min.js" target="head"/>
+        <h:outputScript library="js" name="jquery.blueimp-gallery.min.js" target="head"/>
+        <h:outputScript library="js" name="jquery.image-gallery.js" target="head"/>
+        <h:outputScript library="js" name="startgallery.js" target="head"/>
+        <h:outputStylesheet name="./css/jquery-ui.css"/>
+        <h:outputStylesheet name="./css/blueimp-gallery.min.css"/>
+        
+        
+        
+        #{imageControl.doSetSelectedOrcamento(cc.attrs.orcamento)}
         <h:form id="frmImg">
-            <h:inputHidden value="#{imagemControl.doSetSelectedOrcamento(cc.attrs.orcamento)}"/>
             <h:outputLabel value="Categoria : " style="color:black;"/>
             <h:selectOneMenu onchange="submit();" value="#{imageControl.selectedCategoria}">
                 <f:selectItems value="#{imageControl.categorias}" var="item" itemDescription="#{item.cigNome}" itemLabel="#{item.cigNome}" itemValue="#{item}"/>
                 <f:converter converterId="categoriaImagemConverter"/>
             </h:selectOneMenu>
             &nbsp;
-            <h:commandButton immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
+            <h:commandButton rendered="#{cc.attrs.mostrarBotaoCadastrar}" immediate="true" id="btnAddImage" value="Cadastrar Imagem" action="#{imageControl.doCadastrarImagem()}"/>
             &nbsp;
-            <h:commandButton immediate="true" id="btnRemoveImage" value="Remover Imagens" action="#{imageControl.doRemoverImagem()}"/>
+            <h:commandButton rendered="#{cc.attrs.mostrarBotaoRemover}" immediate="true" id="btnRemoveImage" value="Remover Imagens" action="#{imageControl.doRemoverImagem()}"/>
             <input type="hidden" id="effect-switcher" value="fade"/>
             <input type="hidden" id="theme-switcher" value="flick"/>
             &nbsp;&nbsp;

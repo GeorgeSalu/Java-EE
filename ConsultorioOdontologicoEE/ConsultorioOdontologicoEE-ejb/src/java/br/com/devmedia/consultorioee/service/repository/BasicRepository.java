@@ -27,8 +27,8 @@ public abstract class BasicRepository {
     protected EntityManager getEntityManager() {
         return entityManager;
     }
-
-     public <T> T refreshEntity(Class<T> classToCast,Object entity) {
+    
+    public <T> T refreshEntity(Class<T> classToCast,Object entity) {
         entity = getEntityManager().merge(entity);
         getEntityManager().refresh(entity);
         return (T) entity;
@@ -55,6 +55,12 @@ public abstract class BasicRepository {
     
     protected <T> List<T> getPureList(Class<T> classToCast,String query,Object... values) {
         Query qr = createQuery(query, values);
+        return qr.getResultList();
+    }
+
+    protected <T> List<T> getPureList(Class<T> classToCast,int limit,String query,Object... values) {
+        Query qr = createQuery(query, values);
+        qr.setMaxResults(1);
         return qr.getResultList();
     }
     

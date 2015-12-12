@@ -17,6 +17,10 @@
         <hr/>
         <h:messages errorClass="msg_erro"/>
         <odonto:pendenciasCliente customer="#{orcamentoControl.selectedCustomer}"/>
+        <c:if test="#{orcamentoControl.getUltimoOrcamentoDoClienteSelecionado() != null}">
+            <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/orc.jpg"/> Imagens do ultimo orcamento</h3>
+            <odonto:galeriaDeImagem orcamento="#{orcamentoControl.getUltimoOrcamentoDoClienteSelecionado()}" mostrarBotaoCadastrar="false" mostrarBotaoRemover="false"/>
+        </c:if>
         <h3><img width="5%" height="5%" src="/ConsutorioOdontologicoEE-war/resources/images/orc.jpg"/> Lista de Orcamentos Cadastrados</h3>
         <h:form>
             <odonto:tabelaOdontoEE lista="#{orcamentoControl.orcamentos}" msgSemRegistros="Nenhum Orcamento Cadastrado.">

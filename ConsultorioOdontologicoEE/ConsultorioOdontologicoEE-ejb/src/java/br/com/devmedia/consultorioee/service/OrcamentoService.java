@@ -99,5 +99,9 @@ public class OrcamentoService extends BasicService {
         return orcamentoRepository.getItens(idOfOrcamento);
     }
 
+    public Orcamento getUltimoOrcamentoByCliente(Integer cusId) {
+        return orcamentoRepository.getUltimoOrcamentoByCliente(cusId);
+    }
+
     
 }

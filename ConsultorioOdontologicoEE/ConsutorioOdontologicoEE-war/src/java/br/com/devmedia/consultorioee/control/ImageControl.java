@@ -34,6 +34,7 @@ public class ImageControl extends BasicControl implements java.io.Serializable {
 
     public String doSetSelectedOrcamento(Orcamento selectedOrcamento) {
         this.selectedOrcamento = selectedOrcamento;
+        images = imageService.getImagensOfOrcamento(selectedOrcamento.getOrcId());
         return "";
     }
     
