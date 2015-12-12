@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.embeddable.EJBContainer;
+import javax.validation.ConstraintViolation;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -27,52 +28,60 @@ public class UserServiceTest {
     private Users usrOne;
     private Users usrTwo;
     private Users usrThree;
-    private EJBContainer container;
+    private static EJBContainer container;
     private UserService instance;
-    
-    
+
     public UserServiceTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
-    
+
     @Before
     public void setUp() throws Exception {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
-        instance = (UserService)container.getContext().lookup("java:global/classes/UserService");
+        instance = (UserService) container.getContext().lookup("java:global/classes/UserService");
         // Mock User Object
         usrOne = new Users();
-        usrOne.setUsuAdministrator(new Random().nextBoolean());
+        usrOne.setUsuAdministrator(true);
         usrOne.setUsuDentist(new Random().nextBoolean());
-        usrOne.setUsuLogin("testLoginOne"+new Random().nextInt());
-        usrOne.setUsuName("testNameOne "+new Random().nextInt());
+        usrOne.setUsuLogin("test.LoginOne" + new Random().nextInt());
+        usrOne.setUsuName("testNameOne " + new Random().nextInt());
         usrOne.setUsuPassword(usrOne.getUsuLogin());
         // Mock User Object
         usrTwo = new Users();
-        usrTwo.setUsuAdministrator(new Random().nextBoolean());
+        usrTwo.setUsuAdministrator(true);
         usrTwo.setUsuDentist(new Random().nextBoolean());
-        usrTwo.setUsuLogin("testLoginTwo"+new Random().nextInt());
-        usrTwo.setUsuName("testNameTwo "+new Random().nextInt());
+        usrTwo.setUsuLogin("test.LoginTwo" + new Random().nextInt());
+        usrTwo.setUsuName("testNameTwo " + new Random().nextInt());
         usrTwo.setUsuPassword(usrTwo.getUsuLogin());
         // Mock User Object
         usrThree = new Users();
-        usrThree.setUsuAdministrator(new Random().nextBoolean());
+        usrThree.setUsuAdministrator(true);
         usrThree.setUsuDentist(new Random().nextBoolean());
-        usrThree.setUsuLogin("testLoginThree"+new Random().nextInt());
-        usrThree.setUsuName("testNameThree "+new Random().nextInt());
+        usrThree.setUsuLogin("test.LoginThree" + new Random().nextInt());
+        usrThree.setUsuName("testNameThree " + new Random().nextInt());
         usrThree.setUsuPassword(usrThree.getUsuLogin());
-    
-        usrOne   = instance.addUser(usrOne);
-        usrTwo   = instance.addUser(usrTwo);
+
+        try {
+            usrOne = instance.addUser(usrOne);
+        } catch (javax.ejb.EJBException ejbe) {
+            javax.validation.ConstraintViolationException cv = (javax.validation.ConstraintViolationException) ejbe.getCausedByException();
+            for (ConstraintViolation<?> violacao : cv.getConstraintViolations()) {
+                System.out.println("Violation " + violacao.getMessage());
+            }
+        }
+        usrTwo = instance.addUser(usrTwo);
         usrThree = instance.addUser(usrThree);
     }
-    
+
     @After
     public void tearDown() {
         instance.removeUser(usrOne);
@@ -82,8 +91,6 @@ public class UserServiceTest {
         usrOne = null;
         usrTwo = null;
         usrThree = null;
-        container.close();
-        container = null;
     }
 
     /**
@@ -105,7 +112,7 @@ public class UserServiceTest {
         System.out.println("setUser");
         Users user = usrThree;
         Users expResult = usrThree;
-        user.setUsuName("ChangedUserName "+new Random().nextInt());
+        user.setUsuName("ChangedUserName " + new Random().nextInt());
         Users result = instance.setUser(user);
         Users resultFromGet = instance.getUser(user.getUsuId());
         assertEquals(expResult.getUsuName(), result.getUsuName());
@@ -123,8 +130,8 @@ public class UserServiceTest {
         Users user = new Users();
         user.setUsuAdministrator(new Random().nextBoolean());
         user.setUsuDentist(new Random().nextBoolean());
-        user.setUsuLogin("My Test Login User "+new Random().nextInt());
-        user.setUsuName("My Test Name User "+new Random().nextInt());
+        user.setUsuLogin("My Test Login User " + new Random().nextInt());
+        user.setUsuName("My Test Name User " + new Random().nextInt());
         user.setUsuPassword(user.getUsuLogin());
         user = instance.addUser(user);
         instance.removeUser(user);
@@ -138,7 +145,7 @@ public class UserServiceTest {
     @Test
     public void testSetPassword() throws Exception {
         System.out.println("setPassword");
-        String tmpPassword = new Random().nextInt()+"MyChangePassword";
+        String tmpPassword = new Random().nextInt() + "MyChangePassword";
         String md5TmpPassword = getMd5(tmpPassword);
         instance.setPassword(usrTwo.getUsuId(), tmpPassword);
         Users user = instance.getUser(usrTwo.getUsuId());
@@ -160,7 +167,7 @@ public class UserServiceTest {
         }
         return digest;
     }
-    
+
     /**
      * Test of addUser method, of class UserService.
      */
@@ -171,8 +178,8 @@ public class UserServiceTest {
         Users user = new Users();
         user.setUsuAdministrator(new Random().nextBoolean());
         user.setUsuDentist(new Random().nextBoolean());
-        user.setUsuLogin("My Test Login User(Add) "+new Random().nextInt());
-        user.setUsuName("My Test Name User(Add) "+new Random().nextInt());
+        user.setUsuLogin("My Test Login User(Add) " + new Random().nextInt());
+        user.setUsuName("My Test Name User(Add) " + new Random().nextInt());
         user.setUsuPassword(user.getUsuLogin());
         Users result = instance.addUser(user);
         Users resultFromGet = instance.getUser(user.getUsuId());
@@ -204,7 +211,40 @@ public class UserServiceTest {
         expResult.add(usrTwo);
         expResult.add(usrThree);
         List<Users> result = instance.getUsers();
-        assertEquals(expResult.size(),result.size());
+        assertEquals(expResult.size(), result.size());
+    }
+
+    @Test
+    public void testGetUsersByName() throws Exception {
+        System.out.println("getUsersByName");
+        List<Users> usrs = instance.getUsersByName("testName");
+        assertTrue(usrs.size() >= 3);
+    }
+
+    @Test
+    public void testGetDentistUsers() throws Exception {
+        System.out.println("getDentistUsers");
+        List<Users> dentistas = instance.getDentistUsers();
+        int quantidade = 0;
+        if (usrOne.getUsuDentist()) {
+            quantidade++;
+        }
+        if (usrTwo.getUsuDentist()) {
+            quantidade++;
+        }
+        if (usrThree.getUsuDentist()) {
+            quantidade++;
+        }
+        assertTrue(dentistas.size() >= quantidade);
+
+    }
+
+    @Test
+    public void testGetUsersByExactName() throws Exception {
+        System.out.println("getUsersByExactName");
+        assertEquals(usrOne.getUsuName(), instance.getUsersByExactName(usrOne.getUsuName()).getUsuName());
+        assertEquals(usrTwo.getUsuName(), instance.getUsersByExactName(usrTwo.getUsuName()).getUsuName());
+        assertEquals(usrThree.getUsuName(), instance.getUsersByExactName(usrThree.getUsuName()).getUsuName());
     }
     
 
