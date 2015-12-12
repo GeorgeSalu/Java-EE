@@ -7,6 +7,7 @@ package br.com.devmedia.consultorioee.service.repository;
 
 import br.com.devmedia.consultorioee.entities.Orcamento;
 import br.com.devmedia.consultorioee.entities.Orcamentoitem;
+import br.com.devmedia.consultorioee.entities.Parcela;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -16,7 +17,7 @@ import javax.persistence.EntityManager;
  */
 public class OrcamentoRepository extends BasicRepository{
 
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
     public OrcamentoRepository(EntityManager entityManager) {
         super(entityManager);
@@ -35,7 +36,14 @@ public class OrcamentoRepository extends BasicRepository{
     }
     
     public void removeOrcamento(Orcamento orc) {
-        removeEntity(orc);
+        Orcamento orcReal = getOrcamento(orc.getOrcId());
+        for (Parcela par : orcReal.getParcelaList()) {
+            getEntityManager().remove(par);
+        }
+        for (Orcamentoitem item : orcReal.getOrcamentoitemList()) {
+            getEntityManager().remove(item);
+        }
+        getEntityManager().remove(orcReal);
     }
 
     public void removeItem(Orcamentoitem ori) {
@@ -67,5 +75,6 @@ public class OrcamentoRepository extends BasicRepository{
         if (resultado.isEmpty()) return null;
         return resultado.get(0);
     }
+
     
 }

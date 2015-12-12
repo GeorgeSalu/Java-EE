@@ -25,7 +25,7 @@ import static org.junit.Assert.*;
  */
 public class UserServiceTest {
    
-    private Users usrOne;
+       private Users usrOne;
     private Users usrTwo;
     private Users usrThree;
     private static EJBContainer container;
@@ -130,8 +130,8 @@ public class UserServiceTest {
         Users user = new Users();
         user.setUsuAdministrator(new Random().nextBoolean());
         user.setUsuDentist(new Random().nextBoolean());
-        user.setUsuLogin("My Test Login User " + new Random().nextInt());
-        user.setUsuName("My Test Name User " + new Random().nextInt());
+        user.setUsuLogin("My.TestLoginUser " + new Random().nextInt());
+        user.setUsuName("My.TestNameUser " + new Random().nextInt());
         user.setUsuPassword(user.getUsuLogin());
         user = instance.addUser(user);
         instance.removeUser(user);
@@ -178,8 +178,24 @@ public class UserServiceTest {
         Users user = new Users();
         user.setUsuAdministrator(new Random().nextBoolean());
         user.setUsuDentist(new Random().nextBoolean());
-        user.setUsuLogin("My Test Login User(Add) " + new Random().nextInt());
-        user.setUsuName("My Test Name User(Add) " + new Random().nextInt());
+        user.setUsuLogin("My.TestLoginUser(Add) " + new Random().nextInt());
+        user.setUsuName("My.TestNameUser(Add) " + new Random().nextInt());
+        user.setUsuPassword(user.getUsuLogin());
+        Users result = instance.addUser(user);
+        Users resultFromGet = instance.getUser(user.getUsuId());
+        assertEquals(result, resultFromGet);
+        instance.removeUser(resultFromGet);
+    }
+
+    @Test(expected = Exception.class)
+    public void testAddUserFail() throws Exception {
+        System.out.println("addUserFail");
+        // Mock User Object
+        Users user = new Users();
+        user.setUsuAdministrator(new Random().nextBoolean());
+        user.setUsuDentist(new Random().nextBoolean());
+        user.setUsuLogin("My Test Login User(AddFail) " + new Random().nextInt());
+        user.setUsuName("My Test Name User(AddFail) " + new Random().nextInt());
         user.setUsuPassword(user.getUsuLogin());
         Users result = instance.addUser(user);
         Users resultFromGet = instance.getUser(user.getUsuId());
@@ -211,7 +227,7 @@ public class UserServiceTest {
         expResult.add(usrTwo);
         expResult.add(usrThree);
         List<Users> result = instance.getUsers();
-        assertEquals(expResult.size(), result.size());
+        assertTrue(result.size() >= expResult.size());
     }
 
     @Test
@@ -246,6 +262,6 @@ public class UserServiceTest {
         assertEquals(usrTwo.getUsuName(), instance.getUsersByExactName(usrTwo.getUsuName()).getUsuName());
         assertEquals(usrThree.getUsuName(), instance.getUsersByExactName(usrThree.getUsuName()).getUsuName());
     }
-    
+ 
 
 }

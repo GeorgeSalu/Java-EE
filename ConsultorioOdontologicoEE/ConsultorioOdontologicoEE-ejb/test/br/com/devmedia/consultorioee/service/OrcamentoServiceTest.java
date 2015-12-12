@@ -42,7 +42,7 @@ import org.junit.Test;
  */
 public class OrcamentoServiceTest {
     
-    private EJBContainer container;
+     private static EJBContainer container;
     private OrcamentoService instance;
     private CustomerService instaceCustomer;
     private UserService instanceUser;
@@ -61,17 +61,18 @@ public class OrcamentoServiceTest {
     
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
     
     @Before
     public void setUp() throws NamingException {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         instance = (OrcamentoService)container.getContext().lookup("java:global/classes/OrcamentoService");
-    
         // Mock Object One
         customerOne = new Customer();
         customerOne.setCusAddress("Address One "+new Random().nextInt());
@@ -95,8 +96,8 @@ public class OrcamentoServiceTest {
         userOne = new Users();
         userOne.setUsuAdministrator(new Random().nextBoolean());
         userOne.setUsuDentist(new Random().nextBoolean());
-        userOne.setUsuLogin("testLoginOne"+new Random().nextInt());
-        userOne.setUsuName("testNameOne "+new Random().nextInt());
+        userOne.setUsuLogin("test.LoginOne"+new Random().nextInt());
+        userOne.setUsuName("test.NameOne "+new Random().nextInt());
         userOne.setUsuPassword(userOne.getUsuLogin());
     
         // Mock Orcamento Object
@@ -152,8 +153,6 @@ public class OrcamentoServiceTest {
         instance.removeOrcamento(orcamentoOne);
         instance.removeOrcamento(orcamentoTwo);
         instance = null;
-        container.close();
-        container = null;
     }
 
     /**
@@ -162,10 +161,22 @@ public class OrcamentoServiceTest {
     @Test
     public void testAddOrcamento() throws Exception {
         System.out.println("addOrcamento");
+        // Mock Orcamento Object
         Orcamento orc = null;
-        Orcamento expResult = null;
+        orc = new Orcamento();
+        orc.setOrcCustomer(customerOne);
+        orc.setOrcDate(new Date());
+        orc.setOrcDentist(userOne);
+        orc.setOrcHour(new Date());
+        orc.setOrcObs("Obs "+new Random().nextInt());
+        orc.setOrcTimes(new Random().nextInt(10));
+        orc.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orc.setOrcpaymentType(PaymentType.CREDITO);
+        orc = instance.addOrcamento(orc);
         Orcamento result = instance.addOrcamento(orc);
+        Orcamento expResult = instance.getOrcamento(result.getOrcId());
         assertEquals(expResult, result);
+        instance.removeOrcamento(orc);
     }
 
     /**
@@ -174,10 +185,11 @@ public class OrcamentoServiceTest {
     @Test
     public void testSetOrcamento() throws Exception {
         System.out.println("setOrcamento");
-        Orcamento orc = null;
-        Orcamento expResult = null;
+        Orcamento orc = orcamentoTwo;
+        String newObs = "the new obs "+new Random().nextFloat();
+        orc.setOrcObs(newObs);
         Orcamento result = instance.setOrcamento(orc);
-        assertEquals(expResult, result);
+        assertEquals(newObs, result.getOrcObs());
     }
 
     /**
@@ -186,8 +198,8 @@ public class OrcamentoServiceTest {
     @Test
     public void testGetOrcamento() throws Exception {
         System.out.println("getOrcamento");
-        Integer idOfOrcamento = null;
-        Orcamento expResult = null;
+        Integer idOfOrcamento = orcamentoOne.getOrcId();
+        Orcamento expResult = orcamentoOne;
         Orcamento result = instance.getOrcamento(idOfOrcamento);
         assertEquals(expResult, result);
     }
@@ -199,6 +211,17 @@ public class OrcamentoServiceTest {
     public void testRemoveOrcamento() throws Exception {
         System.out.println("removeOrcamento");
         Orcamento orc = null;
+        // Mock Orcamento Object
+        orc = new Orcamento();
+        orc.setOrcCustomer(customerOne);
+        orc.setOrcDate(new Date());
+        orc.setOrcDentist(userOne);
+        orc.setOrcHour(new Date());
+        orc.setOrcObs("Obs "+new Random().nextInt());
+        orc.setOrcTimes(new Random().nextInt(10));
+        orc.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orc.setOrcpaymentType(PaymentType.CREDITO);
+        orc = instance.addOrcamento(orc);
         instance.removeOrcamento(orc);
     }
 
@@ -209,8 +232,17 @@ public class OrcamentoServiceTest {
     public void testAddItem() throws Exception {
         System.out.println("addItem");
         Orcamentoitem item = null;
-        Orcamentoitem expResult = null;
+        // Mock Service Object- One
+        serviceOne = new Service();
+        serviceOne.setSrvName("Test Orcamento Service testAddItem "+new Random().nextInt());
+        serviceOne.setSrvCost(orcamentoOne.getOrcTotal());
+        // Mock Of Item
+        item = new Orcamentoitem();
+        item.setOriCost(orcamentoOne.getOrcTotal());
+        item.setOriObs("Obs Item  testAddItem "+new Random().nextInt());
+        item.setOriService(serviceOne);
         Orcamentoitem result = instance.addItem(item);
+        Orcamentoitem expResult = instance.getItem(item.getOriId());
         assertEquals(expResult, result);
     }
 
@@ -220,10 +252,12 @@ public class OrcamentoServiceTest {
     @Test
     public void testSetItem() throws Exception {
         System.out.println("setItem");
-        Orcamentoitem item = null;
-        Orcamentoitem expResult = null;
+        Orcamentoitem item = orcamentoItemOfTwo;
+        String newObs = "the new obs "+new Random().nextFloat();
+        item.setOriObs(newObs);
         Orcamentoitem result = instance.setItem(item);
-        assertEquals(expResult, result);
+        Orcamentoitem expResult = instance.getItem(result.getOriId());
+        assertEquals(expResult.getOriObs(), newObs);
     }
 
     /**
@@ -232,8 +266,8 @@ public class OrcamentoServiceTest {
     @Test
     public void testGetItem() throws Exception {
         System.out.println("getItem");
-        Integer idOfItem = null;
-        Orcamentoitem expResult = null;
+        Integer idOfItem = orcamentoItemOfOne.getOriId();
+        Orcamentoitem expResult = orcamentoItemOfOne;
         Orcamentoitem result = instance.getItem(idOfItem);
         assertEquals(expResult, result);
     }
@@ -244,10 +278,9 @@ public class OrcamentoServiceTest {
     @Test
     public void testGetOrcamentos() throws Exception {
         System.out.println("getOrcamentos");
-        Integer idofCustomer = null;
-        List<Orcamento> expResult = null;
+        Integer idofCustomer = customerOne.getCusId();
         List<Orcamento> result = instance.getOrcamentos(idofCustomer);
-        assertEquals(expResult, result);
+        assertTrue(result.size() >=2);
     }
 
     /**
@@ -256,9 +289,17 @@ public class OrcamentoServiceTest {
     @Test
     public void testGetItens() throws Exception {
         System.out.println("getItens");
-        Integer idOfOrcamento = null;
-        List<Orcamentoitem> expResult = null;
+        Integer idOfOrcamento = orcamentoOne.getOrcId();
         List<Orcamentoitem> result = instance.getItens(idOfOrcamento);
+        assertTrue(result.size() >=2);
+    }
+
+    @Test
+    public void testGetUltimoOrcamentoByCliente() throws Exception {
+        System.out.println("getUltimoOrcamentoByCliente");
+        Integer idOfCustomer = customerOne.getCusId();
+        Orcamento expResult = orcamentoTwo;
+        Orcamento result = instance.getUltimoOrcamentoByCliente(idOfCustomer);
         assertEquals(expResult, result);
     }
     
