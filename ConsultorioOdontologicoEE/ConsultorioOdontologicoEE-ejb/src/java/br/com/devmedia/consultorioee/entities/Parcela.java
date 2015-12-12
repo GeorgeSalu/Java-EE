@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Parcela.findAll", query = "SELECT p FROM Parcela p")})
 public class Parcela implements Serializable {
-    private static final long serialVersionUID = 1L;
+     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +49,7 @@ public class Parcela implements Serializable {
     @Column(name = "par_pago", nullable = false)
     private boolean parPago;
     @JoinColumn(name = "par_orcamento", referencedColumnName = "orc_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     private Orcamento parOrcamento;
 
     public Parcela() {
@@ -130,5 +130,5 @@ public class Parcela implements Serializable {
     public String toString() {
         return "br.com.devmedia.consultorioee.entities.Parcela[ parId=" + parId + " ]";
     }
-    
+   
 }

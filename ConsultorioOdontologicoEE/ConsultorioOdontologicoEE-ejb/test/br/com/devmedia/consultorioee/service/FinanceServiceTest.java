@@ -43,7 +43,7 @@ import static org.junit.Assert.*;
  */
 public class FinanceServiceTest {
     
-    private EJBContainer container;
+    private static EJBContainer container;
     private FinanceService instance;
     private Parcela parcelaOne;
     private Parcela parcelaTwo;
@@ -60,15 +60,17 @@ public class FinanceServiceTest {
     
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
     
     @Before
     public void setUp() throws NamingException {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         instance = (FinanceService)container.getContext().lookup("java:global/classes/FinanceService");
         
         customerOne = new Customer();
@@ -104,7 +106,7 @@ public class FinanceServiceTest {
         orcamentoOne.setOrcHour(new Date());
         orcamentoOne.setOrcObs("Obs "+new Random().nextInt());
         orcamentoOne.setOrcTimes(3);
-        orcamentoOne.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orcamentoOne.setOrcTotal(BigDecimal.valueOf(new Random().nextInt(9999)));
         orcamentoOne.setOrcpaymentType(PaymentType.CREDITO);
         // Mock Service Object- One
         serviceOne = new Service();
@@ -129,6 +131,7 @@ public class FinanceServiceTest {
         parcelaTwo.setParOrcamento(orcamentoOne);
         parcelaTwo.setParPago(false);
         parcelaTwo.setParValue(vlrParcela);
+        parcelaThree = new Parcela();
         parcelaThree.setParNumero(3);
         parcelaThree.setParOrcamento(orcamentoOne);
         parcelaThree.setParPago(false);
@@ -146,8 +149,6 @@ public class FinanceServiceTest {
         instance.removeParcela(parcelaTwo);
         instance.removeParcela(parcelaThree);
         instance = null;
-        container.close();
-        container = null;
     }
 
     /**

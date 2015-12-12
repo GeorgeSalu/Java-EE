@@ -23,15 +23,17 @@
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/CustomerRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/CategoriaImagemRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/FinanceRepository.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/OrcamentoRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/ServiceRepository.java</file>
-            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Imagem.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/UserRepository.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Imagem.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/DescricaoServicoUnicoValidator.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Categoriaimagem.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/AcessoInvalidoException.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/ImageRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Anaminese.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/BasicService.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/CustomerServiceTest.java</file>
         </group>
     </open-files>
 </project-private>
