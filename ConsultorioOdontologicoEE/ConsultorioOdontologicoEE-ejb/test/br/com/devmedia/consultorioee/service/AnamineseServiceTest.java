@@ -43,7 +43,7 @@ import static org.junit.Assert.*;
  */
 public class AnamineseServiceTest {
      
-        private EJBContainer container;
+    private static EJBContainer container;
     private AnamineseService instance;
     private Customer customerOne;
     private Users userOne;
@@ -58,17 +58,18 @@ public class AnamineseServiceTest {
     
     @BeforeClass
     public static void setUpClass() {
+        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
     }
     
     @AfterClass
     public static void tearDownClass() {
+        container.close();
+        container = null;
     }
     
     @Before
     public void setUp() throws NamingException {
-        container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
         instance = (AnamineseService)container.getContext().lookup("java:global/classes/AnamineseService");
-        
         // Mock Object One
         customerOne = new Customer();
         customerOne.setCusAddress("Address One "+new Random().nextInt());
@@ -92,8 +93,8 @@ public class AnamineseServiceTest {
         userOne = new Users();
         userOne.setUsuAdministrator(new Random().nextBoolean());
         userOne.setUsuDentist(new Random().nextBoolean());
-        userOne.setUsuLogin("testLoginOne"+new Random().nextInt());
-        userOne.setUsuName("testNameOne "+new Random().nextInt());
+        userOne.setUsuLogin("test.LoginOne"+new Random().nextInt());
+        userOne.setUsuName("test.NameOne "+new Random().nextInt());
         userOne.setUsuPassword(userOne.getUsuLogin());
     
         // Mock Orcamento Object
@@ -165,8 +166,6 @@ public class AnamineseServiceTest {
         instance.removeAnaminese(anamineseOne);
         instance.removeAnaminese(anamineseTwo);
         instance = null;
-        container.close();
-        container = null;
     }
 
     /**
@@ -188,10 +187,25 @@ public class AnamineseServiceTest {
     @Test
     public void testAddAnaminese() throws Exception {
         System.out.println("addAnaminese");
-        Anaminese an = null;
-        Anaminese expResult = null;
+        Anaminese an = new Anaminese();
+        an.setAnsAlergia(new Random().nextBoolean());
+        an.setAnsCustomer(customerOne);
+        an.setAnsDst(new Random().nextBoolean());
+        an.setAnsFuma(new Random().nextBoolean());
+        an.setAnsObs("Two Add Obs "+new Random().nextInt());
+        an.setAnsOrcamento(orcamentoOne);
+        an.setAnsdescricaoAlergia("Two  Add Desc "+new Random().nextInt());
+        an.setAnsdescricaoDoenca("Two Add Desc Doenca "+new Random().nextInt());
+        an.setAnsdescricaoDst("Two Add Desc Dst "+new Random().nextInt());
+        an.setAnsdescricaoMedicacaoContinua("Two Add Medicacao Continua "+new Random().nextInt());
+        an.setAnsdescricaoOperacaoRecente("Two Add Operacao Re "+new Random().nextInt());
+        an.setAnsdoencaHereditaria(new Random().nextBoolean());
+        an.setAnsmedicacaoContinua(new Random().nextBoolean());
+        an.setAnsoperacaoRecente(new Random().nextBoolean());
+        an.setAnspraticaExercicio(new Random().nextBoolean());        
         Anaminese result = instance.addAnaminese(an);
-        assertEquals(expResult, result);
+        assertNotNull(result.getAnsId());
+        instance.removeAnaminese(result);
     }
 
     /**
@@ -200,10 +214,11 @@ public class AnamineseServiceTest {
     @Test
     public void testSetAnaminese() throws Exception {
         System.out.println("setAnaminese");
-        Anaminese an = null;
-        Anaminese expResult = null;
+        Anaminese an = anamineseOne;
+        String obs = "Obs Set "+new Random().nextLong();
+        an.setAnsObs(obs);
         Anaminese result = instance.setAnaminese(an);
-        assertEquals(expResult, result);
+        assertEquals(result.getAnsObs(), obs);
     }
 
     /**
@@ -212,8 +227,26 @@ public class AnamineseServiceTest {
     @Test
     public void testRemoveAnaminese() throws Exception {
         System.out.println("removeAnaminese");
-        Anaminese an = null;
-        instance.removeAnaminese(an);
+        Anaminese an = new Anaminese();
+        an.setAnsAlergia(new Random().nextBoolean());
+        an.setAnsCustomer(customerOne);
+        an.setAnsDst(new Random().nextBoolean());
+        an.setAnsFuma(new Random().nextBoolean());
+        an.setAnsObs("Two Add Obs "+new Random().nextInt());
+        an.setAnsOrcamento(orcamentoOne);
+        an.setAnsdescricaoAlergia("Two  Add Desc "+new Random().nextInt());
+        an.setAnsdescricaoDoenca("Two Add Desc Doenca "+new Random().nextInt());
+        an.setAnsdescricaoDst("Two Add Desc Dst "+new Random().nextInt());
+        an.setAnsdescricaoMedicacaoContinua("Two Add Medicacao Continua "+new Random().nextInt());
+        an.setAnsdescricaoOperacaoRecente("Two Add Operacao Re "+new Random().nextInt());
+        an.setAnsdoencaHereditaria(new Random().nextBoolean());
+        an.setAnsmedicacaoContinua(new Random().nextBoolean());
+        an.setAnsoperacaoRecente(new Random().nextBoolean());
+        an.setAnspraticaExercicio(new Random().nextBoolean());        
+        Anaminese result = instance.addAnaminese(an);
+        assertNotNull(result.getAnsId());
+        instance.removeAnaminese(result);
+        assertNull(instance.getAnaminese(result.getAnsId()));
     }
 
     /**
@@ -224,12 +257,7 @@ public class AnamineseServiceTest {
         System.out.println("getAnaminesesByCustomer");
         Customer customer = customerOne;
         List<Anaminese> result = instance.getAnaminesesByCustomer(customer);
-        List<Anaminese> result2 = instance.getAnaminesesByCustomer(null);
-        assertEquals(1, result.size());
-        assertNotNull(result);
-        assertNotSame(0,result.size());
-        assertNotNull(result2);
-        assertEquals(0,result2.size());
+        assertEquals(2, result.size());
     }
 
     /**

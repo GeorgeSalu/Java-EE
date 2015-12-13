@@ -8,6 +8,7 @@ package br.com.devmedia.consultorioee.entities;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -87,10 +88,10 @@ public class Anaminese implements Serializable {
     @Column(name = "ans_obs", length = 65535)
     private String ansObs;
     @JoinColumn(name = "ans_orcamento", referencedColumnName = "orc_id", nullable = false)
-    @ManyToOne(optional = true)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = true)
     private Orcamento ansOrcamento;
     @JoinColumn(name = "ans_customer", referencedColumnName = "cus_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(cascade = CascadeType.PERSIST,optional = false)
     private Customer ansCustomer;
     @Basic(optional = false)
     @NotNull
