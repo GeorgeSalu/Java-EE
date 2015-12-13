@@ -8,6 +8,8 @@ import br.com.devmedia.consultorioee.entities.Orcamentoitem;
 import br.com.devmedia.consultorioee.entities.PaymentType;
 import br.com.devmedia.consultorioee.entities.Service;
 import br.com.devmedia.consultorioee.entities.Users;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +19,8 @@ import javax.naming.NamingException;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,7 +60,7 @@ public class ImageServiceTest {
     }
     
     @Before
-    public void setUp() throws NamingException {
+    public void setUp() throws Exception {
         instance = (ImageService) container.getContext().lookup("java:global/classes/ImageService");
         // Mock Object One
         customerOne = new Customer();
@@ -137,7 +141,7 @@ public class ImageServiceTest {
         imgOne = new Imagem();
         imgOne.setImgCategoria(catImagemOne);
         imgOne.setImgDescricao("Descricao Imagem One "+new Random().nextLong());
-        imgOne.setImgImagem(new byte[]{0x0});
+        imgOne.setImgImagem(readImage("teste_software_bug.jpg"));
         imgOne.setImgOrcamento(orcamentoOne);
         imgOne.setImgdataInclusao(new Date());
         imgOne.setImghoraInclusao(new Date());
@@ -145,7 +149,7 @@ public class ImageServiceTest {
         imgTwo = new Imagem();
         imgTwo.setImgCategoria(catImagemTwo);
         imgTwo.setImgDescricao("Descricao Imagem Two "+new Random().nextLong());
-        imgTwo.setImgImagem(new byte[]{0x1});
+        imgTwo.setImgImagem(readImage("teste_software_bug.jpg"));
         imgTwo.setImgOrcamento(orcamentoTwo);
         imgTwo.setImgdataInclusao(new Date());
         imgTwo.setImghoraInclusao(new Date());
@@ -166,22 +170,105 @@ public class ImageServiceTest {
      */
     @Test
     public void testAddImagem() throws Exception {
+        
+        // Mock Orcamento Object
+        Orcamento orcOne = new Orcamento();
+        orcOne.setOrcCustomer(customerOne);
+        orcOne.setOrcDate(new Date());
+        orcOne.setOrcDentist(userOne);
+        orcOne.setOrcHour(new Date());
+        orcOne.setOrcObs("Obs "+new Random().nextInt());
+        orcOne.setOrcTimes(new Random().nextInt(10));
+        orcOne.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orcOne.setOrcpaymentType(PaymentType.CREDITO);
+        // Mock Service Object- One
+        Service servOne = new Service();
+        servOne.setSrvName("Test Orcamento Service One Add "+new Random().nextInt());
+        servOne.setSrvCost(orcOne.getOrcTotal());
+        // Mock Of Item
+        Orcamentoitem oritemOne = new Orcamentoitem();
+        oritemOne.setOriCost(orcOne.getOrcTotal());
+        oritemOne.setOriObs("Obs Item add  "+new Random().nextInt());
+        oritemOne.setOriService(servOne);
+        orcOne.addItem(oritemOne);
+        Categoriaimagem catOne = new Categoriaimagem();
+        catOne.setCigNome("Categoria Imagem Cat Add ne "+new Random().nextLong());
+
+        
         System.out.println("addImagem");
-        Imagem imagem = null;
-        Imagem expResult = null;
+        Imagem imagem = new Imagem();
+        imagem.setImgCategoria(catOne);
+        imagem.setImgDescricao("Diferenciada no add "+new Random().nextDouble());
+        imagem.setImgOrcamento(orcOne);
+        imagem.setImgImagem(readImage("teste_software_bug.jpg"));
+        imagem.setImgdataInclusao(new Date());
+        imagem.setImghoraInclusao(new Date());
         Imagem result = instance.addImagem(imagem);
-        assertEquals(expResult, result);
+        assertEquals(instance.getImagem(result.getImgId()), result);
+        instance.removeImagem(imagem);
     }
+    
+    public static byte[] readImage(String filename) throws IOException {
+        InputStream imagemStream = ImageServiceTest.class.getResourceAsStream(filename);
+        byte[] conteudo = new byte[imagemStream.available()];
+        imagemStream.read(conteudo);
+        imagemStream.close();
+        return conteudo;
+    }
+    
+    /**
+     * Test of addImagem method, of class ImageService.
+     */
+    @Test(expected = Exception.class)
+    public void testAntiAddImagem() throws Exception {
+        // Mock Orcamento Object
+        Orcamento orcOne = new Orcamento();
+        orcOne.setOrcCustomer(customerOne);
+        orcOne.setOrcDate(new Date());
+        orcOne.setOrcDentist(userOne);
+        orcOne.setOrcHour(new Date());
+        orcOne.setOrcObs("Obs "+new Random().nextInt());
+        orcOne.setOrcTimes(new Random().nextInt(10));
+        orcOne.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orcOne.setOrcpaymentType(PaymentType.CREDITO);
+        // Mock Service Object- One
+        Service servOne = new Service();
+        servOne.setSrvName("Test Orcamento Service One Add "+new Random().nextInt());
+        servOne.setSrvCost(orcOne.getOrcTotal());
+        // Mock Of Item
+        Orcamentoitem oritemOne = new Orcamentoitem();
+        oritemOne.setOriCost(orcOne.getOrcTotal());
+        oritemOne.setOriObs("Obs Item add  "+new Random().nextInt());
+        oritemOne.setOriService(servOne);
+        orcOne.addItem(oritemOne);
+        Categoriaimagem catOne = new Categoriaimagem();
+        catOne.setCigNome("Categoria Imagem Cat Add ne "+new Random().nextLong());
+        
+        System.out.println("AntiAddImagem");
+        Imagem imagem = new Imagem();
+        imagem.setImgCategoria(catOne);
+        imagem.setImgDescricao("Diferenciada no add "+new Random().nextDouble());
+        imagem.setImgOrcamento(orcOne);
+        imagem.setImgImagem(readImage("erroimagem.jpg"));
+        imagem.setImgdataInclusao(new Date());
+        imagem.setImghoraInclusao(new Date());
+        Imagem result = instance.addImagem(imagem);
+        assertEquals(instance.getImagem(result.getImgId()), result);
+        instance.removeImagem(imagem);
+    }
+
     /**
      * Test of setImagem method, of class ImageService.
      */
     @Test
     public void testSetImagem() throws Exception {
         System.out.println("setImagem");
-        Imagem imagem = null;
-        Imagem expResult = null;
+        Imagem imagem = imgOne;
+        String newObs = "new obs of imagemOne "+new Random().nextLong();
+        imagem.setImgDescricao(newObs);
         Imagem result = instance.setImagem(imagem);
-        assertEquals(expResult, result);
+        Imagem newResult = instance.getImagem(result.getImgId());
+        assertEquals(newResult.getImgDescricao(),newObs);
     }
 
     /**
@@ -190,8 +277,42 @@ public class ImageServiceTest {
     @Test
     public void testRemoveImagem() throws Exception {
         System.out.println("removeImagem");
-        Imagem imagem = null;
+        // Mock Orcamento Object
+        Orcamento orcOne = new Orcamento();
+        orcOne.setOrcCustomer(customerOne);
+        orcOne.setOrcDate(new Date());
+        orcOne.setOrcDentist(userOne);
+        orcOne.setOrcHour(new Date());
+        orcOne.setOrcObs("Obs "+new Random().nextInt());
+        orcOne.setOrcTimes(new Random().nextInt(10));
+        orcOne.setOrcTotal(new BigDecimal(Math.abs(new Random().nextDouble())));
+        orcOne.setOrcpaymentType(PaymentType.CREDITO);
+        // Mock Service Object- One
+        Service servOne = new Service();
+        servOne.setSrvName("Test Orcamento Service One Add "+new Random().nextInt());
+        servOne.setSrvCost(orcOne.getOrcTotal());
+        // Mock Of Item
+        Orcamentoitem oritemOne = new Orcamentoitem();
+        oritemOne.setOriCost(orcOne.getOrcTotal());
+        oritemOne.setOriObs("Obs Item add  "+new Random().nextInt());
+        oritemOne.setOriService(servOne);
+        orcOne.addItem(oritemOne);
+        Categoriaimagem catOne = new Categoriaimagem();
+        catOne.setCigNome("Categoria Imagem Cat Add ne "+new Random().nextLong());
+
+        
+        System.out.println("addImagem");
+        Imagem imagem = new Imagem();
+        imagem.setImgCategoria(catOne);
+        imagem.setImgDescricao("Diferenciada no add "+new Random().nextDouble());
+        imagem.setImgOrcamento(orcOne);
+        imagem.setImgImagem(readImage("teste_software_bug.jpg"));
+        imagem.setImgdataInclusao(new Date());
+        imagem.setImghoraInclusao(new Date());
+        Imagem result = instance.addImagem(imagem);
+        assertEquals(instance.getImagem(result.getImgId()), result);
         instance.removeImagem(imagem);
+        assertNull(instance.getImagem(imagem.getImgId()));
     }
 
     /**
@@ -200,8 +321,8 @@ public class ImageServiceTest {
     @Test
     public void testGetImagem() throws Exception {
         System.out.println("getImagem");
-        int idOfImagem = 0;
-        Imagem expResult = null;
+        int idOfImagem = imgTwo.getImgId();
+        Imagem expResult = imgTwo;
         Imagem result = instance.getImagem(idOfImagem);
         assertEquals(expResult, result);
     }
@@ -212,10 +333,9 @@ public class ImageServiceTest {
     @Test
     public void testGetImagensOfOrcamento_int() throws Exception {
         System.out.println("getImagensOfOrcamento");
-        int idOrcamento = 0;
-        List<Imagem> expResult = null;
+        int idOrcamento = orcamentoTwo.getOrcId();
         List<Imagem> result = instance.getImagensOfOrcamento(idOrcamento);
-        assertEquals(expResult, result);
+        assertTrue(result.size() == 1);
     }
 
     /**
@@ -224,11 +344,11 @@ public class ImageServiceTest {
     @Test
     public void testGetImagensOfOrcamento_int_int() throws Exception {
         System.out.println("getImagensOfOrcamento");
-        int idOrcamento = 0;
-        int idCategoria = 0;
-        List<Imagem> expResult = null;
+        int idOrcamento = orcamentoOne.getOrcId();
+        int idCategoria = catImagemOne.getCigId();
         List<Imagem> result = instance.getImagensOfOrcamento(idOrcamento, idCategoria);
-        assertEquals(expResult, result);
+        assertTrue(result.size() == 1);
     }
+
     
 }

@@ -1,8 +1,10 @@
 package br.com.devmedia.consultorioee.entities;
 
+import br.com.devmedia.consultorioee.entities.validator.SomenteImagemValida;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -55,17 +57,18 @@ public class Imagem extends BaseEnitty {
     @XmlTransient
     private Date imghoraInclusao;
     @JoinColumn(name = "img_categoria", referencedColumnName = "cig_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     @XmlTransient
     private Categoriaimagem imgCategoria;
     @JoinColumn(name = "img_orcamento", referencedColumnName = "orc_id", nullable = false)
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false,cascade = CascadeType.PERSIST)
     @XmlTransient
     private Orcamento imgOrcamento;
     @Basic(optional = false)
     @Column(name = "img_imagem", nullable = false)
     @Lob
     @XmlTransient
+    @SomenteImagemValida
     private byte[] imgImagem;
 
     public byte[] getImgImagem() {
