@@ -26,6 +26,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -40,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c")})
 public class Customer implements Serializable {
-        private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -121,7 +122,10 @@ public class Customer implements Serializable {
     private List<Orcamento> orcamentoList = new LinkedList<>();
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ansCustomer")
     private List<Anaminese> anamineseList = new LinkedList<>();
-
+    @Transient
+    private boolean selecionado = false;
+    
+    
     public String getCusEmail() {
         return cusEmail;
     }
@@ -365,6 +369,14 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         return "br.com.devmedia.consultorioee.entities.Customer[ cusId=" + cusId + " ]";
+    }
+
+    public boolean isSelecionado() {
+        return selecionado;
+    }
+
+    public void setSelecionado(boolean selecionado) {
+        this.selecionado = selecionado;
     }
 
     

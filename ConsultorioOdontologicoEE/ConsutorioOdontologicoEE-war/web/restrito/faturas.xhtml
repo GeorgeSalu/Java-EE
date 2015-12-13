@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./base.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="titleOfPage">
+        Manutenção das faturas dos clientes
+    </ui:define>
+
+    <ui:define name="content">
+        <h:messages errorClass="msg_erro"/>
+        <h:form>
+            <table>
+                <tr>
+                    <td width="20%">Nome a localizar :</td>
+                    <td width="75%"><h:inputText style="width: 100%;" value="#{manutencaoFaturaControl.localizar}"/></td>
+                    <td width="5%"><h:commandButton action="#{manutencaoFaturaControl.doLocalizar()}" value="Localizar"/></td>
+                </tr>
+            </table>
+            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" value="#{manutencaoFaturaControl.usrFiltrado}" var="item">
+                <h:column>
+                    <f:facet name="header">
+                        Id
+                    </f:facet>
+                    #{item.usuId}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{item.usuName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Login
+                    </f:facet>
+                    #{item.usuLogin}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Administrador?
+                    </f:facet>
+                    <h:graphicImage rendered="#{item.usuAdministrator eq true}" value="/resources/images/check.gif"/>
+                    <h:graphicImage rendered="#{item.usuAdministrator eq false}"  value="/resources/images/uncheck.png"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Dentista?
+                    </f:facet>
+                    <h:graphicImage rendered="#{item.usuDentist eq true}" value="/resources/images/check.gif"/>
+                    <h:graphicImage rendered="#{item.usuDentist eq false}"  value="/resources/images/uncheck.png"/>
+                </h:column>
+                <h:column rendered="#{manutencaoFaturaControl.loggedUser.usuAdministrator eq true}">
+                    <f:facet name="header">
+                        Acoes
+                    </f:facet>
+                    <h:commandLink  title="Alterar Usuario" action="#{manutencaoFaturaControl.doStartAlterar()}">
+                        <h:graphicImage value="/resources/images/alterar.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{manutencaoFaturaControl.usuarioSelected}"/>
+                    </h:commandLink>   
+                    <h:commandLink  title="Alterar Senha do Usuario" action="#{manutencaoFaturaControl.doStartAlterarSenha()}">
+                        <h:graphicImage value="/resources/images/senha.png"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{manutencaoFaturaControl.usuarioSelected}"/>
+                    </h:commandLink>   
+                    <h:commandLink title="Excluir Usuario" action="#{manutencaoFaturaControl.doFinishExcluir()}" onclick="return confirm('Tem certeza que deseja excluir este usuario ?');" >
+                        <h:graphicImage value="/resources/images/excluir.gif"/>
+                        <f:setPropertyActionListener value="#{item}" target="#{manutencaoFaturaControl.usuarioSelected}"/>
+                    </h:commandLink>   
+                </h:column>
+            </h:dataTable>
+            <h:commandButton rendered="#{manutencaoFaturaControl.loggedUser.usuAdministrator eq true}" action="#{manutencaoFaturaControl.doStartAddUsuario()}" value="Adicionar Usuario"/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
