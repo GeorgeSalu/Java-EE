@@ -16,20 +16,55 @@ import javax.inject.Named;
 @SessionScoped
 public class ManutencaoFaturaControl extends BasicControl implements java.io.Serializable {
 
-    @EJB
+     @EJB
     private CustomerService customerService;
     private String localizar;
     private List<Customer> customers = new LinkedList<Customer>();
     private List<Customer> selectedCustomers = new LinkedList<Customer>();
     private Customer selectedCustomer;
 
-    
     public String doLocalizar() {
         setCustomers(customerService.getCustomerByName(localizar));
         return "/restrito/faturas.faces";
     }
-    
-    
+
+    public String doDown() {
+        if (customers == null || customers.isEmpty()) {
+            createFacesErrorMessage("Nenhum cliente localizado.");
+        } else {
+             List<Customer> paraRemover = new LinkedList<Customer>();
+            for (Customer customer : customers) {
+                if (customer.isSelecionado()) {
+                    selectedCustomers.add(customer);
+                    paraRemover.add(customer);
+                }
+            }
+            for (Customer obj : paraRemover) {
+                customers.remove(obj);
+            }
+            createFacesInfoMessage("Clientes adicionados com sucesso !");
+        }
+        return "/restrito/faturas.faces";
+    }
+
+    public String doRemove() {
+        if (selectedCustomers == null || selectedCustomers.isEmpty()) {
+            createFacesErrorMessage("Nenhum cliente adicionado.");
+        } else {
+            List<Customer> paraRemover = new LinkedList<Customer>();
+            for (Customer customer : selectedCustomers) {
+                if (customer.isSelecionado()) {
+                    paraRemover.add(customer);
+                }
+            }
+            for (Customer obj : paraRemover) {
+                selectedCustomers.remove(obj);
+            }
+            createFacesInfoMessage("Clientes removidos da seleção com sucesso !");
+        }
+        return "/restrito/faturas.faces";
+    }
+
     public String getLocalizar() {
         return localizar;
     }
@@ -61,5 +96,6 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
     public void setSelectedCustomers(List<Customer> selectedCustomers) {
         this.selectedCustomers = selectedCustomers;
     }
+
     
 }
