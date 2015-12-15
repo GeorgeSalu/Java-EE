@@ -2,6 +2,7 @@ package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.CustomerService;
+import br.com.devmedia.consultorioee.service.ManutencaoFaturaService;
 import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
