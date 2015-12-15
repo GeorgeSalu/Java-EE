@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 /**
@@ -16,17 +17,29 @@ import javax.inject.Named;
 @SessionScoped
 public class ManutencaoFaturaControl extends BasicControl implements java.io.Serializable {
 
-     @EJB
+        @EJB
     private CustomerService customerService;
+    @EJB
+    private ManutencaoFaturaService manutencaoFaturaService;
     private String localizar;
     private List<Customer> customers = new LinkedList<Customer>();
     private List<Customer> selectedCustomers = new LinkedList<Customer>();
     private Customer selectedCustomer;
+    private int selectedTipoEnvio = 1;
 
     public String doLocalizar() {
         setCustomers(customerService.getCustomerByName(localizar));
         return "/restrito/faturas.faces";
     }
+    
+    public List<SelectItem> getTiposEnvio() {
+        List<SelectItem> toReturn = new LinkedList<SelectItem>();
+        toReturn.add(new SelectItem(1,"Imprimir PDF"));
+        toReturn.add(new SelectItem(2,"Enviar por Email"));
+        toReturn.add(new SelectItem(3,"Imprimir PDF e Enviar por Email"));
+        return toReturn;
+    }
+    
 
     public String doDown() {
         if (customers == null || customers.isEmpty()) {
@@ -65,6 +78,16 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
         return "/restrito/faturas.faces";
     }
 
+    public String doEnviarFatuasManualmente() {
+        if (selectedCustomers == null || selectedCustomers.isEmpty()) {
+            createFacesErrorMessage("Nenhum cliente selecionado para processamento.");
+            return "/restrito/faturas.faces";
+        }
+        createFacesInfoMessage("Requisição enviada para a fila.");
+        manutencaoFaturaService.processarEnvioDeFaturas(selectedCustomers);
+        return "/restrito/andamentoFatura.faces";
+    }
+    
     public String getLocalizar() {
         return localizar;
     }
@@ -95,6 +118,14 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
 
     public void setSelectedCustomers(List<Customer> selectedCustomers) {
         this.selectedCustomers = selectedCustomers;
+    }
+
+    public int getSelectedTipoEnvio() {
+        return selectedTipoEnvio;
+    }
+
+    public void setSelectedTipoEnvio(int selectedTipoEnvio) {
+        this.selectedTipoEnvio = selectedTipoEnvio;
     }
 
     

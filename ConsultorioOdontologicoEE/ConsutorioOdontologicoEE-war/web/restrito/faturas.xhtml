@@ -81,7 +81,14 @@
             <h:commandLink action="#{manutencaoFaturaControl.doRemove()}">
                 <h:graphicImage value="/resources/images/uncheck.png"/>
             </h:commandLink> Remover Selecionados
+            <br/>
+            <br/>
+            <h:selectOneMenu value="#{manutencaoFaturaControl.selectedTipoEnvio}">
+                <f:selectItems var="item" value="#{manutencaoFaturaControl.tiposEnvio}"/>
+            </h:selectOneMenu>
+            <h:commandButton action="#{manutencaoFaturaControl.doEnviarFatuasManualmente()}" value="Processar requisicao"/>
         </h:form>
+        
     </ui:define>
 
 </ui:composition>

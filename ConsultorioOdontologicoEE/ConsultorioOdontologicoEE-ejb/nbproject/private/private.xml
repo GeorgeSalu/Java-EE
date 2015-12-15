@@ -10,7 +10,11 @@
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/repository/BasicRepository.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/DescricaoServicoUnico.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Users.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/SomenteImagemValidaValidator.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/SomenteImagemValida.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/ImageServiceTest.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/validator/LoginPadrao.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/AnamineseServiceTest.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/FinanceService.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/UserServiceTest.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/CategoriaImagemService.java</file>
@@ -19,6 +23,7 @@
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/ImageService.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Service.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Customer.java</file>
+            <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/test/br/com/devmedia/consultorioee/service/CategoriaImagemServiceTest.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/ServiceService.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/service/CustomerService.java</file>
             <file>file:/C:/Users/George/Documents/NetBeansProjects/ConsultorioOdontologicoEE/ConsultorioOdontologicoEE-ejb/src/java/br/com/devmedia/consultorioee/entities/Orcamento.java</file>
