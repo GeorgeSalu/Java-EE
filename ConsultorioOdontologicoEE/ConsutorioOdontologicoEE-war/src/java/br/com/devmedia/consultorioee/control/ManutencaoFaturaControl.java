@@ -33,6 +33,10 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
         return "/restrito/faturas.faces";
     }
     
+    public boolean isProcessando() {
+        return (manutencaoFaturaService.getInfoMDB() != null && !manutencaoFaturaService.getInfoMDB().isConcluido());
+    }
+    
     public List<SelectItem> getTiposEnvio() {
         List<SelectItem> toReturn = new LinkedList<SelectItem>();
         toReturn.add(new SelectItem(1,"Imprimir PDF"));

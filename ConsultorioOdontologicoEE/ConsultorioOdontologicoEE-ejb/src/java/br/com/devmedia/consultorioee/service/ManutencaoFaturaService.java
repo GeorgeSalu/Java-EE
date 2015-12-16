@@ -2,7 +2,9 @@ package br.com.devmedia.consultorioee.service;
 
 import br.com.devmedia.consultorioee.entities.Customer;
 import java.util.List;
+import java.util.Queue;
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Lock;
 import javax.ejb.LockType;
@@ -12,6 +14,10 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.inject.Inject;
+import javax.jms.Destination;
+import javax.jms.JMSConnectionFactory;
+import javax.jms.JMSContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -25,6 +31,12 @@ import javax.persistence.PersistenceContext;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public class ManutencaoFaturaService extends BasicService {
+    
+    @Resource(mappedName = "jms/FaturaQueue")
+    private Queue faturaQueue;
+    @Inject
+    @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
+    private JMSContext context;
     
     private static final long serialVersionUID = 1L;
     private InfoMDB infoMDB = null;
@@ -47,8 +59,10 @@ public class ManutencaoFaturaService extends BasicService {
         infoMDB.setMensagem("Iniciando processamento");
         setInfoMDB(infoMDB);
         // Aqui eu vou enviar para a fila e o processamento em segundo plano
-        
+        context.createProducer().send((Destination) faturaQueue, infoMDB);
     }
+    
+    
 
     public InfoMDB getInfoMDB() {
         return infoMDB;
