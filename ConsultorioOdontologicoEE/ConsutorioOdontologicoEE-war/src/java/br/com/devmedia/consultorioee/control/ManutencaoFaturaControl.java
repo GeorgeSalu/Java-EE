@@ -2,6 +2,7 @@ package br.com.devmedia.consultorioee.control;
 
 import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.CustomerService;
+import br.com.devmedia.consultorioee.service.InfoMDB;
 import br.com.devmedia.consultorioee.service.ManutencaoFaturaService;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ import javax.inject.Named;
 @SessionScoped
 public class ManutencaoFaturaControl extends BasicControl implements java.io.Serializable {
 
-        @EJB
+    @EJB
     private CustomerService customerService;
     @EJB
     private ManutencaoFaturaService manutencaoFaturaService;
@@ -35,6 +36,10 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
     
     public boolean isProcessando() {
         return (manutencaoFaturaService.getInfoMDB() != null && !manutencaoFaturaService.getInfoMDB().isConcluido());
+    }
+    
+    public InfoMDB getInfoMDB() {
+        return manutencaoFaturaService.getInfoMDB();
     }
     
     public List<SelectItem> getTiposEnvio() {
@@ -90,7 +95,7 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
         }
         createFacesInfoMessage("Requisição enviada para a fila.");
         manutencaoFaturaService.processarEnvioDeFaturas(selectedCustomers);
-        return "/restrito/andamentoFatura.faces";
+        return "/restrito/faturas.faces?faces-redirect=true";
     }
     
     public String getLocalizar() {

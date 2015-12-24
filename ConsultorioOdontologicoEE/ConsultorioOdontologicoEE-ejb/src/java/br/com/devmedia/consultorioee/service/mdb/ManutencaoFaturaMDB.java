@@ -29,7 +29,7 @@ import javax.jms.MessageListener;
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ManutencaoFaturaMDB implements MessageListener {
     
-    @EJB
+        @EJB
     private ManutencaoFaturaService manutencaoFaturaService;
     
     public ManutencaoFaturaMDB() {
@@ -49,6 +49,6 @@ public class ManutencaoFaturaMDB implements MessageListener {
         infoMDB.setMensagem("Processando essa leva de faturas");
         manutencaoFaturaService.setInfoMDB(infoMDB);
         System.out.println("a Mensagem chegou !!! "+message);
-    }
-    
+        throw new IllegalArgumentException("Erro errado para dar erro");
+    }    
 }

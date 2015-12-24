@@ -4,7 +4,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 template="./base.xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:define name="titleOfPage">
         Manutencao das faturas dos clientes
@@ -12,7 +13,40 @@
 
     <ui:define name="content">
         <h:messages errorClass="msg_erro"/>
-        <h:form>
+        <c:if test="#{manutencaoFaturaControl.processando}">
+            <img src="/ConsutorioOdontologicoEE-war/resources/images/processando.gif"/><br/>
+            <img src="/ConsutorioOdontologicoEE-war/resources/images/processando2.gif"/><br/>
+            <h3>Clientes selecionados para envio de fatura:</h3>
+            <h:dataTable rowClasses="linhaPar,linhaImpar" styleClass="tabelaBasica" value="#{manutencaoFaturaControl.infoMDB.customers}" var="item">
+                <h:column>
+                    <f:facet name="header">
+                        Sel
+                    </f:facet>
+                    <h:selectBooleanCheckbox value="#{item.selecionado}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Nome
+                    </f:facet>
+                    #{item.cusName}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Cidade/Estado
+                    </f:facet>
+                    #{item.cusCity}/#{item.cusState} 
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        Ocupacao
+                    </f:facet>
+                    #{item.cusOcupation}
+                </h:column>
+            </h:dataTable>
+            <br/>
+            
+        </c:if>
+        <h:form rendered="#{!manutencaoFaturaControl.processando}">
             <table>
                 <tr>
                     <td width="20%">Nome a localizar :</td>
