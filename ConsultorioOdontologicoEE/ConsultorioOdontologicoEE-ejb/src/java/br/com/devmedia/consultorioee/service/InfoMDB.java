@@ -10,11 +10,12 @@ import java.util.List;
  */
 public class InfoMDB implements java.io.Serializable {
     
-    private int id;
+       private int id;
     private List<Customer> customers;
     private int porcentagemConcluida;
     private String mensagem;
     private boolean concluido = false;
+    private int tipoEnvio;
 
     public int getId() {
         return id;
@@ -82,8 +83,13 @@ public class InfoMDB implements java.io.Serializable {
     public void setConcluido(boolean concluido) {
         this.concluido = concluido;
     }
-    
-    
-    
+
+    public int getTipoEnvio() {
+        return tipoEnvio;
+    }
+
+    public void setTipoEnvio(int tipoEnvio) {
+        this.tipoEnvio = tipoEnvio;
+    }
     
 }

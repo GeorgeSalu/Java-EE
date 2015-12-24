@@ -50,11 +50,12 @@ public class ManutencaoFaturaService extends BasicService {
     }
     
     @Lock(LockType.WRITE)
-    public void processarEnvioDeFaturas(List<Customer> lista) {
+    public void processarEnvioDeFaturas(List<Customer> lista,int tipoEnvio) {
         if (infoMDB != null && !infoMDB.isConcluido()) {
             throw new IllegalArgumentException("Ja existe um item sendo processado !");
         }
         infoMDB = new InfoMDB();
+        infoMDB.setTipoEnvio(tipoEnvio);
         infoMDB.setCustomers(lista);
         infoMDB.setMensagem("Iniciando processamento");
         setInfoMDB(infoMDB);

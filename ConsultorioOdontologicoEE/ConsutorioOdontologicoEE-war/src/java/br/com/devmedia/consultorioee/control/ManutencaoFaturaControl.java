@@ -94,7 +94,7 @@ public class ManutencaoFaturaControl extends BasicControl implements java.io.Ser
             return "/restrito/faturas.faces";
         }
         createFacesInfoMessage("Requisição enviada para a fila.");
-        manutencaoFaturaService.processarEnvioDeFaturas(selectedCustomers);
+        manutencaoFaturaService.processarEnvioDeFaturas(selectedCustomers,getSelectedTipoEnvio());
         return "/restrito/faturas.faces?faces-redirect=true";
     }
     

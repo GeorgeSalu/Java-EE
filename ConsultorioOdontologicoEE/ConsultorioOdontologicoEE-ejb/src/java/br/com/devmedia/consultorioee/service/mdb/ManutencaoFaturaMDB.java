@@ -1,5 +1,6 @@
 package br.com.devmedia.consultorioee.service.mdb;
 
+import br.com.devmedia.consultorioee.entities.Customer;
 import br.com.devmedia.consultorioee.service.InfoMDB;
 import br.com.devmedia.consultorioee.service.ManutencaoFaturaService;
 import java.util.logging.Level;
@@ -31,10 +32,10 @@ public class ManutencaoFaturaMDB implements MessageListener {
     
         @EJB
     private ManutencaoFaturaService manutencaoFaturaService;
-    
+
     public ManutencaoFaturaMDB() {
     }
-    
+
     @Override
     public void onMessage(Message message) {
         if (message == null) {
@@ -46,9 +47,18 @@ public class ManutencaoFaturaMDB implements MessageListener {
         } catch (JMSException ex) {
             Logger.getLogger(ManutencaoFaturaMDB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        infoMDB.setMensagem("Processando essa leva de faturas");
+        infoMDB.setMensagem("Iniciando processamento");
+        infoMDB.setPorcentagemConcluida(0);
+        int quantasQuebras = (infoMDB.getCustomers().size() / 100) + 1;
         manutencaoFaturaService.setInfoMDB(infoMDB);
-        System.out.println("a Mensagem chegou !!! "+message);
-        throw new IllegalArgumentException("Erro errado para dar erro");
-    }    
+        infoMDB.setMensagem("Processando "+infoMDB.getCustomers().get(0));
+        for (Customer cus : infoMDB.getCustomers()) {
+
+            infoMDB.setMensagem("Processando ");
+            infoMDB.setPorcentagemConcluida(100);
+            infoMDB.setConcluido(true);
+            manutencaoFaturaService.setInfoMDB(infoMDB);
+        }
+    }
+    
 }
